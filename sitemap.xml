@@ -3,20 +3,61 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://jurjan.info/about/</loc>
-    <lastmod>2019-08-21T21:05:33+05:30</lastmod>
+    <loc>https://jurjan.info/categories/</loc>
+    <lastmod>2019-09-02T12:05:33+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/posts/sp/powershell/listitems/</loc>
+    <lastmod>2019-09-02T12:05:33+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://jurjan.info/</loc>
-    <lastmod>2019-08-21T21:05:33+05:30</lastmod>
+    <lastmod>2019-09-02T12:05:33+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://jurjan.info/posts/</loc>
-    <lastmod>2019-08-21T18:25:22+05:30</lastmod>
+    <lastmod>2019-09-02T12:05:33+02:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/</loc>
+    <lastmod>2019-09-02T12:05:33+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/on-prem/</loc>
+    <lastmod>2019-09-02T12:05:33+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/powershell/</loc>
+    <lastmod>2019-09-02T12:05:33+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/categories/sharepoint/</loc>
+    <lastmod>2019-09-02T12:05:33+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/sharepoint/</loc>
+    <lastmod>2019-09-02T12:05:33+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/about/</loc>
+    <lastmod>2019-08-21T21:05:33+05:30</lastmod>
   </url>
   
   <url>
@@ -27,16 +68,6 @@
   <url>
     <loc>https://jurjan.info/contact/</loc>
     <lastmod>2016-11-06T13:00:25+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/tags/</loc>
-    <priority>0</priority>
   </url>
   
 </urlset>

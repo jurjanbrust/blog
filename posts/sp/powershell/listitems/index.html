@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+<title>Inspect SharePoint list columns</title>
 <meta name="description" content="Development matters">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="all,follow">
@@ -104,26 +104,86 @@
   <div class="row">
     <div class="col-lg-8">
       <div class="content-column-content">
-         <h1></h1>
-         
+         <h1>Inspect SharePoint list columns</h1>
+         <p>This is a powershell script (op-prem) I use a lot to inspect SharePoint list columns.</p>
 
-<h1 id="about-me">About me</h1>
+<p>There are also great third party tools such as SPI-Insider and SharePoint Manager to do a deep-inspection of your SharePoint site.
+But I find that this simple powershell is also a great method to quickly inspect a list without starting a desktop application or browser plugin.</p>
 
-<p><img src="/img/jurjan_about.png" alt="This is me" /></p>
+<h3 id="preview">Preview</h3>
 
-<h4 id="background">Background</h4>
+<p><img src="/img/listItems/listItems_2019-09-02-13-56-51.png" alt="" /></p>
 
-<p>I am a passionate developer with experience in many different roles. Through acquired skills and knowledge in a large number of projects, I have experience in architecture design, development and management activities. Key words: analytical, careful, competent, positive attitude and sense of humor.</p>
+<h3 id="usage">Usage</h3>
 
-<h4 id="interests">Interests</h4>
+<ul>
+<li>First parameter is the url of the site</li>
+<li>Second is the name of the list &gt; If no list is found, all lists on the site will be displayed</li>
+<li>Third (optional) listitem ID, if no ID is supplied all list items in the list will be displayed</li>
+<li>Fourth (optional) filter on the list column names</li>
+</ul>
 
-<p>Always looking for opportunities to use my knowledge about computer science in technical applications.
-From personal interest I am working on IOT, Domotica and 3d printing. Designing and creating applications with ESP8266, Raspberry and Arduinos is therefore something I enjoy doing. You can find me at knowledge sessions on this topic via <a href="https://www.meetup.com/">meetup.com</a>.</p>
+<h3 id="code">Code</h3>
 
-<h4 id="work">Work</h4>
+<pre><code>param(
+	[Parameter(Mandatory=$True,Position=1)] [string]$url,
+	[Parameter(Mandatory=$True,Position=2)] [string]$listTitle,
+	[Parameter(Mandatory=$False,Position=3)] [string]$listItemID,
+	[Parameter(Mandatory=$False,Position=4)] [string]$filter
+)
 
-<p>I am a SharePoint / Office365 / Azure consultant at Ilionx, the Netherlands.</p>
+Write-Host &quot;usage: ListItems.ps1 [url] [listTitle] [listItemID] [filter]       (listItemID and filter is optional)&quot; -ForegroundColor Yellow -BackgroundColor Green
+if ($null -eq (Get-PSSnapin -Name Microsoft.SharePoint.PowerShell -ErrorAction SilentlyContinue))
+{
+    Add-PSSnapin Microsoft.SharePoint.PowerShell
+}
 
+try {
+	$web = Get-SPWeb $url -ErrorAction SilentlyContinue
+	$list = $web.Lists[$listTitle]
+} catch {
+	Write-Host &quot;$url does not exist&quot; -ForegroundColor Red
+	break
+}
+
+if(-not $listItemID)
+{
+	Write-Host &quot;ListItemID was not supplied, listing all listitems&quot; -BackgroundColor DarkGreen -ForegroundColor Black
+	if($null -eq $list)
+	{
+		Write-Host &quot;No list found, showing all available lists&quot; -ForegroundColor Red
+		$web.Lists | ForEach-Object {
+			Write-Host $_.Title
+		}
+	}
+	$list.Items | Format-Table
+}
+else 
+{
+	Write-Host &quot;Showing specific ListItem: &quot; -BackgroundColor DarkGreen -ForegroundColor Black
+	try {
+		$listItem = $list.GetItemByID($listItemID)
+	} catch {
+		Write-Host &quot;Listitem $listItemID does not exists&quot; -ForegroundColor Red
+		break
+	}
+	
+	if(-not $filter)
+	{
+		$listItem.Fields | ForEach-Object {
+	 		Write-Host $_.Title &quot;[&quot; $_.InternalName &quot;]`t`t&quot; -NoNewline -ForegroundColor Yellow -BackgroundColor DarkRed
+	 		Write-Host $listItem[$_.InternalName] -ForegroundColor Yellow -BackgroundColor Red
+		}
+	}
+	else
+	{
+		$listItem.Fields | Where-Object {$_.InternalName -match $filter} | ForEach-Object {
+	 		Write-Host $_.Title &quot;[&quot; $_.InternalName &quot;]`t`t&quot; -NoNewline -ForegroundColor Yellow -BackgroundColor DarkRed
+			Write-Host $listItem[$_.InternalName] -ForegroundColor Yellow -BackgroundColor Red
+		}
+	}
+}
+</code></pre>
          
       </div>
     </div>

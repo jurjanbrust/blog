@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Jurjan Brust</title>
-    <link>https://jurjan.info/posts/</link>
-    <description>Recent content in Posts on Jurjan Brust</description>
+    <title>on-prem on Jurjan Brust</title>
+    <link>https://jurjan.info/tags/on-prem/</link>
+    <description>Recent content in on-prem on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 02 Sep 2019 12:05:33 +0200</lastBuildDate>
     
-	<atom:link href="https://jurjan.info/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jurjan.info/tags/on-prem/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://jurjan.info/posts/sp/powershell/listitems/</guid>
       <description>&lt;p&gt;This is a powershell script (op-prem) I use a lot to inspect SharePoint list columns.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Welcome</title>
-      <link>https://jurjan.info/posts/my-first-post/</link>
-      <pubDate>Wed, 21 Aug 2019 18:25:22 +0530</pubDate>
-      
-      <guid>https://jurjan.info/posts/my-first-post/</guid>
-      <description>&lt;p&gt;I will post news about everything I encounter as a developer and the projects I am working on.&lt;/p&gt;</description>
     </item>
     
   </channel>

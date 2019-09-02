@@ -6,10 +6,19 @@
     <description>Recent content on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Aug 2019 21:05:33 +0530</lastBuildDate>
+    <lastBuildDate>Mon, 02 Sep 2019 12:05:33 +0200</lastBuildDate>
     
 	<atom:link href="https://jurjan.info/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Inspect SharePoint list columns</title>
+      <link>https://jurjan.info/posts/sp/powershell/listitems/</link>
+      <pubDate>Mon, 02 Sep 2019 12:05:33 +0200</pubDate>
+      
+      <guid>https://jurjan.info/posts/sp/powershell/listitems/</guid>
+      <description>&lt;p&gt;This is a powershell script (op-prem) I use a lot to inspect SharePoint list columns.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title></title>
