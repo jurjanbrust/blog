@@ -20,12 +20,6 @@
   </url>
   
   <url>
-    <loc>https://jurjan.info/posts/</loc>
-    <lastmod>2019-09-02T12:05:33+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://jurjan.info/tags/</loc>
     <lastmod>2019-09-02T12:05:33+02:00</lastmod>
     <priority>0</priority>
@@ -58,6 +52,11 @@
   <url>
     <loc>https://jurjan.info/about/</loc>
     <lastmod>2019-08-21T21:05:33+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/posts/</loc>
+    <lastmod>2019-08-21T18:25:22+05:30</lastmod>
   </url>
   
   <url>
