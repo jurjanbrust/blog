@@ -948,6 +948,9 @@ a:active {
 }
 .box-masonry .box-masonry-image:hover {
   text-decoration: none;
+  -webkit-transform:scale(1.15) rotate(3deg);
+  -ms-transfor:scale(1.15) rotate(3deg);
+  transform:scale(1.15) rotate(3deg);
 }
 .box-simple {
   text-align: center;
