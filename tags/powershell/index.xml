@@ -13,10 +13,10 @@
     
     <item>
       <title>Inspect SharePoint list columns</title>
-      <link>https://jurjan.info/posts/sp/powershell/listitems/</link>
+      <link>https://jurjan.info/posts/sharepoint/powershell/listitems/</link>
       <pubDate>Mon, 02 Sep 2019 12:05:33 +0200</pubDate>
       
-      <guid>https://jurjan.info/posts/sp/powershell/listitems/</guid>
+      <guid>https://jurjan.info/posts/sharepoint/powershell/listitems/</guid>
       <description>&lt;p&gt;This is a powershell script (op-prem) I use a lot to inspect SharePoint list columns.&lt;/p&gt;</description>
     </item>
     

@@ -30,3 +30,23 @@ h6,
   line-height: 1.2;
   color: #313131;
 }
+
+.fa-calendar {
+    color: #2065a1;
+    font-size: smaller;
+}
+
+.categories { 
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    display:inline-block;
+    color: #2065a1;
+    font-size: smaller;
+}
+
+.categories:before {
+    content: "\f097";
+}
