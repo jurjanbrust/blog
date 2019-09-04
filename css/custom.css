@@ -68,6 +68,9 @@ img[src~="medium"] {
 img[src~="border"] {
     border: 1px solid black;
 }
+img[src~="margin"] {
+    margin: 20px;
+}
 img[src~="shadow"] {
     box-shadow: 10px 10px 5px #ccc;
     -webkit-box-shadow: 10px 10px 5px #ccc;
