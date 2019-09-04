@@ -61,7 +61,7 @@ img[src~="small"] {
     width:150px;
     height: auto;
 }
-img[src~="mediumn"] {
+img[src~="medium"] {
     width:300px;
     height: auto;
 }
