@@ -4,31 +4,54 @@
   
   <url>
     <loc>https://jurjan.info/tags/</loc>
-    <lastmod>2019-09-03T15:52:31+02:00</lastmod>
+    <lastmod>2019-09-04T09:37:50+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://jurjan.info/posts/azure/az900/</loc>
+    <lastmod>2019-09-04T09:37:50+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://jurjan.info/categories/</loc>
-    <lastmod>2019-09-03T15:52:31+02:00</lastmod>
+    <lastmod>2019-09-04T09:37:50+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/</loc>
+    <lastmod>2019-09-04T09:37:50+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/</loc>
+    <lastmod>2019-09-04T09:37:50+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/categories/azure/</loc>
+    <lastmod>2019-09-04T09:37:50+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/azure/</loc>
+    <lastmod>2019-09-04T09:37:50+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/training/</loc>
+    <lastmod>2019-09-04T09:37:50+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://jurjan.info/posts/ignite2019/</loc>
     <lastmod>2019-09-03T15:52:31+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/</loc>
-    <lastmod>2019-09-03T15:52:31+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/tags/</loc>
-    <lastmod>2019-09-03T15:52:31+02:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -55,13 +78,13 @@
   </url>
   
   <url>
-    <loc>https://jurjan.info/tags/sharepoint/</loc>
+    <loc>https://jurjan.info/categories/sharepoint/</loc>
     <lastmod>2019-09-02T12:05:33+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://jurjan.info/categories/sharepoint/</loc>
+    <loc>https://jurjan.info/tags/sharepoint/</loc>
     <lastmod>2019-09-02T12:05:33+02:00</lastmod>
     <priority>0</priority>
   </url>
