@@ -50,7 +50,7 @@
   </url>
   
   <url>
-    <loc>https://jurjan.info/posts/ignite2019/</loc>
+    <loc>https://jurjan.info/posts/ignite/ignite2019/</loc>
     <lastmod>2019-09-03T15:52:31+02:00</lastmod>
   </url>
   
@@ -100,8 +100,14 @@
   </url>
   
   <url>
-    <loc>https://jurjan.info/posts/my-first-post/</loc>
+    <loc>https://jurjan.info/posts/general/my-first-post/</loc>
     <lastmod>2019-08-21T18:25:22+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/categories/general/</loc>
+    <lastmod>2019-08-21T18:25:22+05:30</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>

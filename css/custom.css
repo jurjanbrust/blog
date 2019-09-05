@@ -82,3 +82,25 @@ img[src~="rotate"] {
     transform: rotate(2deg);
     margin: 20px;
 }
+
+#avatar {
+    border: 2px solid #d4a259;
+    border-radius: 100%;
+    display: block;
+    width: 100px;
+    margin-bottom:20px;
+}
+
+.sidebar-content {
+    text-align: center;
+}
+.sidebar-heading {
+    margin-bottom: 5px;
+}
+
+.sidebar-menu li:before {
+    content: '';
+}
+.sidebar-menu li {
+    border-top: 1px solid #333;
+}
