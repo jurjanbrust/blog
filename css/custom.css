@@ -83,12 +83,12 @@ img[src~="rotate"] {
     margin: 20px;
 }
 
-#avatar {
+.avatar {
     border: 2px solid #d4a259;
     border-radius: 100%;
     display: block;
     width: 100px;
-    margin-bottom:20px;
+    margin: 0 auto 20px;
 }
 
 .sidebar-content {
