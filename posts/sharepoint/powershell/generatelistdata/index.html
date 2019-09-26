@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Jurjan Brust - SharePoint listdata generator</title>
+<meta name="description" content="Development">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" href="https://jurjan.info/css/bootstrap.min.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:100">
+<link rel="stylesheet" href="https://jurjan.info/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://jurjan.info/css/owl.carousel.css">
+<link rel="stylesheet" href="https://jurjan.info/css/owl.theme.css">
+
+
+  <link href="https://jurjan.info/css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
+
+ 
+
+  
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+
+<link href="https://jurjan.info/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="https://jurjan.info/img/favicon.png">
+
+
+
+</head>
+<body>
+  <div id="all">
+      <div class="container-fluid">
+          <div class="row row-offcanvas row-offcanvas-left">
+              <div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+  <div class="sidebar-content">
+    <a href="/"> <img src="/img/jurjan.png" class="avatar" /> </a>
+    <h1 class="sidebar-heading"><a href="https://jurjan.info/">Jurjan Brust</a></h1>
+    
+      <p class="sidebar-p">SharePoint | O365 | Azure | IoT</p>
+    
+    <ul class="sidebar-menu">
+      
+        <li><a href="https://jurjan.info/posts/">HOME</a></li>
+      
+        <li><a href="https://jurjan.info/categories/azure">AZURE</a></li>
+      
+        <li><a href="https://jurjan.info/categories/sharepoint">SHAREPOINT / O365</a></li>
+      
+        <li><a href="https://jurjan.info/about/">ABOUT</a></li>
+      
+        <li><a href="https://jurjan.info/contact/">CONTACT</a></li>
+      
+    </ul>
+    <p class="social">
+  
+  <a href="/index.xml" data-animate-hover="pulse" class="email">
+    <i class="fa fa-rss"></i>
+  </a>
+  
+  
+  <a href="https://www.linkedin.com/in/jurjanbrust/" data-animate-hover="pulse" class="external">
+    <i class="fa fa-linkedin"></i>
+  </a>
+  
+  
+  
+  
+  <a href="https://twitter.com/jurjanbrust" data-animate-hover="pulse" class="external twitter">
+    <i class="fa fa-twitter"></i>
+  </a>
+  
+  
+  
+  
+  <a href="https://github.com/jurjanbrust" data-animate-hover="pulse" class="external">
+    <i class="fa fa-github"></i>
+  </a>
+  
+  
+  
+  
+  <a href="mailto:mail@jurjan.info" data-animate-hover="pulse" class="email">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+</p>
+
+
+    <div class="copyright">
+      <p class="credit">
+        
+          &copy;2019 Jurjan Brust
+        
+        
+      </p>
+    </div>
+  </div>
+</div>
+
+              
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+  <div class="small-navbar visible-xs">
+  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
+  <h1 class="small-navbar-heading"><a href="https://jurjan.info/">Jurjan Brust</a></h1>
+</div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="content-column-content">
+         <h1>SharePoint listdata generator</h1>
+         <p>Testing your application with large numbers of data is important but sadly often forgotten.
+SharePoint is no exception to this rule.</p>
+
+<h2 id="the-problem">The problem</h2>
+
+<p>Not having tested your application for large volume of data almost always has big consequences. Problems more often than not arise only after a certain period of time.
+Your application can run flawless for months or even years. Suddenly a limit is reached and your applications starts to fail.</p>
+
+<p>If you have worked with large lists in SharePoint, you have probably received errors due to the threshold limit. SharePoint is configured with a default threshold limit of 5000 items in a list or library. This means that if the items in a list or library exceed that number, any views, grouping and queries will will no longer work.</p>
+
+<h2 id="time-to-hunt-for-this-hidden-timebomb">Time to hunt for this hidden timebomb</h2>
+
+<p>Fill it up! Yes, although another valid approach to simulate this SharePoint limit would be to lower the listview-treshhold to a low number like 50 it will not always reveal all the problems having large lists.</p>
+
+<p>So we need to fill the list manually. But wait&hellip; filling SharePoint lists with more than 5000 items is laborious and repetitive work, even when using Excel.
+PowerShell is a perfect tool for this.
+Like most of my SharePoint PowerShell scripts, I like to use the CSOM (Client-side object model) Using CSOM allows me to use this script without being on the SharePoint server itself.</p>
+
+<h3 id="preview">Preview</h3>
+
+<p>The PowerShell listed below creates a list and generates the specified number of listitems. The number of listitems to be created can be configured and is really fast. Generating 5000 listitems generally only takes a number of seconds.</p>
+
+<p><img src="/img/generateListData/generateListData_2019-09-25-14-42-28.png# shadow small" alt="" /></p>
+
+<h3 id="usage">Usage</h3>
+
+<p>Output of the PowerShell should look like this.</p>
+
+<p><img src="/img/generateListData/generateListData_2019-09-25-14-42-40.png# shadow medium" alt="" /></p>
+
+<h3 id="code">Code</h3>
+
+<p>In order to get this to work, you will first need to copy the &lsquo;<strong>Microsoft.SharePoint.Client.dll</strong>&rsquo; and &lsquo;<strong>Microsoft.SharePoint.Client.Runtime.dll</strong>&rsquo; to the same folder of this script.
+The script listed here should be seen as a starting point for your own specific SharePoint list.
+If no <strong>$listName</strong> list is found it will create a list for you to fiddle around with.
+In your situation you will probably already have a SharePoint list with some content-types or list fields added to it.
+In this example I only use a field called &ldquo;<strong>QuestionType</strong>&rdquo;. Ofcourse you can- and probably will add fields to this to suit your situation.</p>
+
+<pre><code># Script to create and fill a list with listitems. Usefull for detecting problems with listview-treshhold issues (&gt; 5000 listitems).
+# Note that listview-treshhold issues can be solved by using SharePoint indexed columns.
+# Change this script to include other columns besides 'QuestionType'. 'QuestionType' is only implemented here to serve as an example.
+
+# change the following three lines to your likings
+$url = &quot;http://yourdevelopmentsitecollection/&quot;
+$listName = &quot;sometestlist&quot;
+$itemsToCreate = 5010
+
+$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+Add-PSSnapin Microsoft.SharePoint.PowerShell -EA SilentlyContinue
+Add-Type -Path &quot;$ScriptDir\Microsoft.SharePoint.Client.dll&quot; 
+Add-Type -Path &quot;$ScriptDir\Microsoft.SharePoint.Client.Runtime.dll&quot;
+
+# open the site
+$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($url);
+$web = $clientContext.Web;
+$clientContext.Load($web)
+$clientContext.ExecuteQuery()
+Write-Host $web.Title $web.ServerRelativeUrl -ForegroundColor Red -BackgroundColor Yellow
+
+# open the list, if no list is found it will create one
+$list = $web.Lists.GetByTitle($listName);
+$clientContext.Load($list)
+try {
+    $clientContext.ExecuteQuery()
+    Write-Host &quot;Opened list&quot; $list.Title -ForegroundColor Red -BackgroundColor Yellow
+} catch {
+    Write-Host &quot;No list found, creating a new one&quot;
+    $listCreateInfo = New-Object Microsoft.SharePoint.Client.ListCreationInformation;
+    $listCreateInfo.Title = $listName; 
+    $listCreateInfo.TemplateType = [Microsoft.SharePoint.Client.ListTemplateType]::GenericList
+    $list = $web.Lists.Add($listCreateInfo)
+    $list.Update(); 
+    $clientContext.ExecuteQuery(); 
+
+	# add some listfields for example purposes
+	$a = $list.Fields.AddFieldAsXml(&quot;&lt;Field Type='Choice' DisplayName='QuestionType'&gt;
+                            &lt;CHOICES&gt;
+                                &lt;CHOICE&gt;Office 365&lt;/CHOICE&gt;
+                                &lt;CHOICE&gt;General&lt;/CHOICE&gt;
+                                &lt;CHOICE&gt;Email&lt;/CHOICE&gt;
+                                &lt;CHOICE&gt;OneDrive&lt;/CHOICE&gt;
+                                &lt;CHOICE&gt;SharePoint&lt;/CHOICE&gt;
+                                &lt;CHOICE&gt;Office Apps&lt;/CHOICE&gt;
+                                &lt;CHOICE&gt;Office Online&lt;/CHOICE&gt;
+                                &lt;CHOICE&gt;Other&lt;/CHOICE&gt;
+                            &lt;/CHOICES&gt;&lt;/Field&gt;&quot;,$true,[Microsoft.SharePoint.Client.AddFieldOptions]::AddFieldToDefaultView)
+}
+
+# random words used to create listitems
+$words = &quot;Lorem&quot;,&quot;Ipsum&quot;,&quot;Donald&quot;,&quot;Duck&quot;,&quot;Wine&quot;,&quot;Chees&quot;,&quot;Fruit&quot;,&quot;Garlic&quot;,&quot;Weather&quot;,&quot;Together&quot;,&quot;Car&quot;,&quot;Pizza&quot;
+$choices = &quot;Office 365&quot;, &quot;General&quot;, &quot;Email&quot;, &quot;SharePoint&quot;
+
+for($index = 1; $index -lt $itemsToCreate+1; $index++) {
+    $randomText = $words | Get-Random -count 1
+    $titleText = &quot;$index $randomText&quot;
+    Write-Host &quot;[$index/$itemsToCreate] Creating '$titleText'&quot; -ForegroundColor Green -BackgroundColor Red
+
+    $newListItem = $list.AddItem($itemCreateInfo)
+    $newListItem[&quot;Title&quot;] =  $titleText
+    $newListItem[&quot;QuestionType&quot;] = $choices | Get-Random -count 1
+    $newListItem.Update()
+	if($index % 100 -eq 0)
+	{
+		Write-Host $index
+		$clientContext.ExecuteQuery()
+	}
+}
+$clientContext.ExecuteQuery()
+Write-Host &quot;Done!&quot; -ForegroundColor Green
+</code></pre>
+         
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+      </div>
+  </div>
+  <script src="https://jurjan.info/js/jquery.min.js"></script>
+<script src="https://jurjan.info/js/bootstrap.min.js"></script>
+<script src="https://jurjan.info/js/jquery.cookie.js"> </script>
+<script src="https://jurjan.info/js/ekko-lightbox.js"></script>
+<script src="https://jurjan.info/js/jquery.scrollTo.min.js"></script>
+<script src="https://jurjan.info/js/masonry.pkgd.min.js"></script>
+<script src="https://jurjan.info/js/imagesloaded.pkgd.min.js"></script>
+<script src="https://jurjan.info/js/owl.carousel.min.js"></script>
+<script src="https://jurjan.info/js/front.js"></script>
+
+
+
+</body>
+</html>

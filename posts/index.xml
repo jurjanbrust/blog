@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>SharePoint listdata generator</title>
+      <link>https://jurjan.info/posts/sharepoint/powershell/generatelistdata/</link>
+      <pubDate>Wed, 25 Sep 2019 14:38:37 +0200</pubDate>
+      
+      <guid>https://jurjan.info/posts/sharepoint/powershell/generatelistdata/</guid>
+      <description>&lt;p&gt;Testing your application with large numbers of data is important but sadly often forgotten.
+SharePoint is no exception to this rule.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>AZ-900 exam preparations</title>
       <link>https://jurjan.info/posts/azure/az900/</link>
       <pubDate>Wed, 04 Sep 2019 09:37:50 +0200</pubDate>
