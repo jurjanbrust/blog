@@ -91,9 +91,10 @@ img[src~="rotate"] {
     margin: 0 auto 20px;
 }
 
+/* left navigation all black */
 .sidebar-content {
     text-align: center;
-    min-height: 95.7vh;
+    min-height: 96.2vh;
 }
 .sidebar-heading {
     margin-bottom: 5px;
@@ -106,3 +107,7 @@ img[src~="rotate"] {
     border-top: 1px solid #333;
 }
 
+/* hide vertical scrollbar in Edge */
+.grid {
+    overflow-y: visible;
+}
