@@ -107,7 +107,14 @@ img[src~="rotate"] {
     border-top: 1px solid #333;
 }
 
-/* hide vertical scrollbar in Edge */
+/* fix to hide vertical scrollbar in Edge */
 .grid {
     overflow-y: visible;
+}
+
+/* if chrome use hidden for vertical scrollbar*/
+@media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
+    .grid {
+        overflow-y: hidden;
+    }
 }
