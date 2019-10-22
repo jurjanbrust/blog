@@ -134,7 +134,7 @@ Like most of my SharePoint PowerShell scripts, I like to use the CSOM (Client-si
 
 <h3 id="preview">Preview</h3>
 
-<p>The PowerShell listed below creates a list and generates the specified number of listitems. The number of listitems to be created can be configured and is really fast. Generating 5000 listitems generally only takes a number of seconds.</p>
+<p>The PowerShell listed below creates a list and generates the specified number of list items. The number of list items to be created can be configured and is really fast. Generating 5000 list items generally only takes a number of seconds.</p>
 
 <p><img src="/img/generateListData/generateListData_2019-09-25-14-42-28.png# shadow small" alt="" /></p>
 
@@ -150,7 +150,7 @@ Like most of my SharePoint PowerShell scripts, I like to use the CSOM (Client-si
 The script listed here should be seen as a starting point for your own specific SharePoint list.
 If no <strong>$listName</strong> list is found it will create a list for you to fiddle around with.
 In your situation you will probably already have a SharePoint list with some content-types or list fields added to it.
-In this example I only use a field called &ldquo;<strong>QuestionType</strong>&rdquo;. Ofcourse you can- and probably will add fields to this to suit your situation.</p>
+In this example I only use a field called &ldquo;<strong>QuestionType</strong>&rdquo;. Of course you can- and probably will add fields to this to suit your situation.</p>
 
 <pre><code># Script to create and fill a list with listitems. Usefull for detecting problems with listview-treshhold issues (&gt; 5000 listitems).
 # Note that listview-treshhold issues can be solved by using SharePoint indexed columns.
