@@ -124,3 +124,22 @@ img[src~="rotate"] {
         overflow-y: hidden;
     }
 }
+
+table {
+    margin: 10px;
+    margin-bottom: 40px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border:1px solid #333;
+    box-shadow: 5px 10px 5px #95979b;
+}
+
+th {
+    padding: 4px;
+    border:1px solid #000000;
+}
+
+td {
+    padding: 4px;
+    border:1px solid #000000;
+}

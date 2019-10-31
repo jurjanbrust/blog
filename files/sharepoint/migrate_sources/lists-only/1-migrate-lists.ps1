@@ -5,13 +5,8 @@ if ($null -eq $endIndex) {
     break
 }
 
-if ($null -eq $dstSiteUrl) {
-    Write-Host "check environment.ps1, missing dstSiteUrl" -ForegroundColor Yellow
-    break
-}
-
-$input = [Array](Import-Csv -Path $inputFile)
-$dstSite = Connect-Site -Url $dstSiteUrl -Browser
+$input = [Array](Import-Csv -Path $listsFile)
+$sites = [Array](Import-Csv -Path $sitesFile)
 
 $i = 1
 foreach ($line in $input) {
@@ -20,25 +15,30 @@ foreach ($line in $input) {
         continue
     }
     
-    $url = $line.SiteUrl
-    $projectNr = $url.split("/")[-1]
-    Write-Host "$i-$endIndex [$url] -> [$dstSiteUrl/$projectNr]" -ForegroundColor DarkGray
-    
+    $url = $line.Url
+    $dstSiteUrl = $sites | Where-Object { $_.SourceUrl -eq $url }
+
+    if ($null -eq $dstSiteUrl) {
+        Write-Host "Destination URL not found"
+        break
+    }
+    $dstSiteUrl = $dstSiteUrl.DestURL
+    Write-Host "$i-$endIndex["$url/$($line.ListName)"] -> ["$dstSiteUrl"]" -ForegroundColor DarkGray -NoNewline
+
     $srcSite = Connect-Site -Url $url
+    $dstSite = Connect-Site -Url $dstSiteUrl
+    $srcList = Get-List -Site $srcSite -name $line.ListName
+    if ($null -eq $srcList) {
+        Write-Host "Source list not found"
+        break
+    }
 
     $mappings = New-MappingSettings	
     Import-UserAndGroupMapping -MappingSettings $mappings -Path "$(Get-Location)\UserAndGroupMappings.sgum" | Out-Null
-    Import-SiteTemplateMapping -MappingSettings $mappings -Path "$(Get-Location)\SiteTemplateMappings.sgwtm" | Out-Null
-    Import-PermissionLevelMapping -MappingSettings $mappings -Path "$(Get-Location)\PermissionLevelMappings.sgrm" | Out-Null
 
-    Write-Host $(Get-Date -Format "dddd MM/dd/yyyy HH:mm") -ForegroundColor White
-
-    $copysettings = New-CopySettings -OnContentItemExists Skip -OnSiteObjectExists Skip
-
-    $result = Copy-Site -MappingSettings $mappings -CopySettings $copysettings -Site $srcSite -DestinationSite $dstSite -NoCustomPermissions -NoWorkflows -NoSiteFeatures #-NoContent #-NoCustomizedFormsAndViews -NoNavigation
+    $copysettings = New-CopySettings -OnContentItemExists Skip
+    $result = Copy-List -List $srcList -DestinationSite $dstSite -CopySettings $copysettings -MappingSettings $mappings
     Write-Host " Errors:" $result.Errors "Warnings:" $result.Warnings "Copied:" $result.ItemsCopied
-
-    Write-Host $(Get-Date -Format "dddd MM/dd/yyyy HH:mm") -ForegroundColor White
 
     $statusMessage = "OK"
     if ($result.Warnings -gt 0) {
@@ -50,9 +50,9 @@ foreach ($line in $input) {
         Write-Host "Error during copy" -ForegroundColor Red
     }
 
-    $filename = "$($i)-$($statusMessage).csv"
+    $filename = "$i-$($statusMessage).csv"
     Export-Report $result -Path "./log/$filename" -Overwrite | Out-Null
-
+   
     Write-Host "Showing logfile errors and warnings ./log/$filename" -ForegroundColor Green
     $input = Import-Csv "./log/$filename"
 
@@ -66,10 +66,8 @@ foreach ($line in $input) {
             Write-Host "Warning [$($_.Title)]" -NoNewline -ForegroundColor Magenta
             Write-Host $_.Details -ForegroundColor Yellow
         }
-
     }
 
-    Write-Host
     if ($i++ -ge $endIndex) {
         Write-Host "break because of endIndex limit" -ForegroundColor DarkYellow
         break

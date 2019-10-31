@@ -10,7 +10,7 @@ if ($null -eq $dstSiteUrl) {
     break
 }
 
-$input = [Array](Import-Csv -Path $inputFile)
+$input = [Array](Import-Csv -Path $listsFile)
 
 $i = 1
 foreach ($line in $input) {
@@ -19,8 +19,9 @@ foreach ($line in $input) {
         continue
     }
 
-    $url = $line.SiteUrl
-    Write-Host "$i-$endIndex [$url] -> [$dstSiteUrl]" -ForegroundColor DarkGray
+    $url = $line.Url
+    $url2 = $line.ListName
+    Write-Host "$i-$endIndex [$url] -> [$url2]" -ForegroundColor DarkGray
 
     if ($i++ -ge $endIndex) {
         Write-Host "break because of endIndex limit" -ForegroundColor DarkYellow
