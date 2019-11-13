@@ -248,24 +248,26 @@ $clientContext.Load($currentWeb)
 $clientContext.Load($childWebs)
 $clientContext.ExecuteQuery()
 
-## use -recursive to incude all subsites
+$function = [Options]::lists    # change this to the type of analysis to start
+switch ($function) {
+    #### infopath is a big indication of customization (use -recursive to incude all subsites)
+    ([Options]::items) {export -function ([Options]::items) -searchPattern ".xsn"} 
 
-#### infopath is a big indication of customization
-export -function ([Options]::items) -searchPattern ".xsn" #-recursive
+    #### javascript: javascipt is a big indication of customization (use -recursive to incude all subsites)
+    ([Options]::items) {export -function ([Options]::items) -searchPattern ".js"}
 
-#### javascript: javascipt is a big indication of customization
-export -function ([Options]::items) -searchPattern ".js" #-recursive
+    #### workflows: workflows are a big indication of customizations (use -recursive to incude all subsites)
+    ([Options]::workflows) { export -function ([Options]::workflows) }
 
-#### workflows: workflows are a big indication of customizations
-export -function ([Options]::workflows) #-recursive
+    #### lists information gives insight into
+    # - itemcount
+    # - list base types (for example kpi lists)
+    #  (use -recursive to incude all subsites)
+    ([Options]::lists) { export -function ([Options]::lists) }
 
-#### lists information gives insight into
-# - itemcount
-# - list base types (for example kpi lists)
-export -function ([Options]::lists) #-recursive
+    # large files: find files larger than destination limit : 250 is default for onprem (use -recursive to incude all subsites)
+    ([Options]::largeFiles) { export -function ([Options]::largeFiles) }
 
-# large files: find files larger than destination limit : 250 is default for onprem
-export -function ([Options]::largeFiles) #-recursive
-
-# versions: document versions can take up a lot of space, especially for non-office documents. track down these files and limit the number of versions if possible.
-export -function ([Options]::versions) #-recursive
+    # versions: document versions can take up a lot of space, especially for non-office documents. track down these files and limit the number of versions if possible. (use -recursive to incude all subsites)
+    ([Options]::versions) { export -function ([Options]::versions) }
+}
