@@ -6,15 +6,24 @@
     <description>Recent content in Categories on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Sep 2019 14:38:37 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://jurjan.info/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>o365</title>
+      <link>https://jurjan.info/categories/o365/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://jurjan.info/categories/o365/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>sharepoint</title>
       <link>https://jurjan.info/categories/sharepoint/</link>
-      <pubDate>Wed, 25 Sep 2019 14:38:37 +0200</pubDate>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
       <guid>https://jurjan.info/categories/sharepoint/</guid>
       <description></description>

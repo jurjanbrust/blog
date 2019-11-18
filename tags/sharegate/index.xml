@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>sharepoint on Jurjan Brust</title>
-    <link>https://jurjan.info/tags/sharepoint/</link>
-    <description>Recent content in sharepoint on Jurjan Brust</description>
+    <title>sharegate on Jurjan Brust</title>
+    <link>https://jurjan.info/tags/sharegate/</link>
+    <description>Recent content in sharegate on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://jurjan.info/tags/sharepoint/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jurjan.info/tags/sharegate/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -45,25 +45,6 @@
       
       <guid>https://jurjan.info/posts/sharepoint/migration/iv.verification/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>SharePoint listdata generator</title>
-      <link>https://jurjan.info/posts/sharepoint/powershell/generatelistdata/</link>
-      <pubDate>Wed, 25 Sep 2019 14:38:37 +0200</pubDate>
-      
-      <guid>https://jurjan.info/posts/sharepoint/powershell/generatelistdata/</guid>
-      <description>&lt;p&gt;Testing your application with large numbers of data is important but sadly often forgotten.
-SharePoint is no exception to this rule.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Inspect SharePoint list columns</title>
-      <link>https://jurjan.info/posts/sharepoint/powershell/listitems/</link>
-      <pubDate>Mon, 02 Sep 2019 12:05:33 +0200</pubDate>
-      
-      <guid>https://jurjan.info/posts/sharepoint/powershell/listitems/</guid>
-      <description>&lt;p&gt;This is a PowerShell script (op-prem) I use a lot to inspect SharePoint list columns.&lt;/p&gt;</description>
     </item>
     
   </channel>
