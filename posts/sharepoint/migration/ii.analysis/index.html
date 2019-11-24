@@ -113,76 +113,434 @@
     <div class="col-lg-8">
       <div class="content-column-content">
          <h1>Migrating large corporate SharePoint intranets</h1>
-         <ul>
-<li><input checked="" disabled="" type="checkbox"><a href="/posts/sharepoint/migration/i.approach/">Approach</a> (part I of IV)</li>
-<li><input checked="" disabled="" type="checkbox"><a href="/posts/sharepoint/migration/ii.analysis">Analysis</a> (part II of IV)</li>
-<li><input disabled="" type="checkbox"><a href="/posts/sharepoint/migration/iii.migrate">Migration</a> (part III of IV)</li>
-<li><input disabled="" type="checkbox"><a href="/posts/sharepoint/migration/iv.verification">Verification</a> (part IV of IV)</li>
+         <ul class="task-list">
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <a href="/posts/sharepoint/migration/i.approach/">Approach</a> (part I of IV)</label></li>
+<li><label><input type="checkbox" checked disabled class="task-list-item"> <a href="/posts/sharepoint/migration/ii.analysis">Analysis</a> (part II of IV)</label></li>
+<li><label><input type="checkbox" disabled class="task-list-item"> <a href="/posts/sharepoint/migration/iii.migrate">Migration</a> (part III of IV)</label></li>
+<li><label><input type="checkbox" disabled class="task-list-item"> <a href="/posts/sharepoint/migration/iv.verification">Verification</a> (part IV of IV)</label></li>
 </ul>
+
 <h2 id="analysis">Analysis</h2>
+
 <p>Your most valuable resource for information about the to-be-migrated environment will be the users itself. Getting to know who is working on the SharePoint site and how they are using it is vital for your analysis. Also use the opportunity to give insights about your migration strategy.
 Your second most valuable tool will be to use scripting in order to analyse the environment. I included the complete source-code of the scripts that I am using in this post.</p>
+
 <h3 id="when-customizations-become-an-application">When customizations become an application</h3>
+
 <p>Co-workers in the organization start to use SharePoint as a tool to facilitate daily work. Some used only by a few people and others used by a large group of people as a daily driver. These co-workers who created these customisation often are called &lsquo;power users&rsquo; or &lsquo;citizen developers&rsquo;. Power users are focussed on solving business problems and less on topics such as performance, scalability, security, efficiency and product lifecycle.</p>
+
 <p>What started as a small simple customization can eventually become a full blown business critical application with data exchanges to other line-of-business systems.
 These SharePoint applications will become harder to maintain over time and SharePoint boundaries will become impossible to solve without a complete redesign.
 Changes that are being applied lead to unavailability of the application. Often due to simple user errors or otherwise because the changes require hours to implement manually.</p>
+
 <p>When you find such an application it is important to ask yourself the following questions.</p>
-<ul>
-<li><input disabled="" type="checkbox">Is SharePoint still the right platform for this to run?</li>
-<li><input disabled="" type="checkbox">Is the application still manageable?</li>
-<li><input disabled="" type="checkbox">Are web parts / tooling / other parts still supported in the Microsoft roadmap?</li>
+
+<ul class="task-list">
+<li><label><input type="checkbox" disabled class="task-list-item"> Is SharePoint still the right platform for this to run?</label></li>
+<li><label><input type="checkbox" disabled class="task-list-item"> Is the application still manageable?</label></li>
+<li><label><input type="checkbox" disabled class="task-list-item"> Are web parts / tooling / other parts still supported in the Microsoft roadmap?</label></li>
 </ul>
+
 <p>If the answer of one of these questions is no you should consider to rebuild instead of migrate.</p>
+
 <h3 id="finding-customizations">Finding customizations</h3>
+
 <p>Once you talked to the end-users and / or business owner of the SharePoint site(s) and explained the migration strategy it is time to use tooling in order to analyse the farm.
 A list of items to look for is:</p>
+
 <ol>
 <li>InfoPath forms: this is a big indication of customization.</li>
 <li>JavaScript files: this is yet another big indication of customization.</li>
 <li>SharePoint Workflows: workflows are an indication for business processes.</li>
 <li>List information. List information gives insight into:
+
 <ol>
 <li>item count.</li>
-<li>list base types such as KPI (key performance indicator). KPI is an excellent example of a problem when migrating to SharePoint online. This because SharePoint 2010 / 2013 KPI's are deprecated. A redesign will be unavoidable.</li>
-</ol>
-</li>
+<li>list base types such as KPI (key performance indicator). KPI is an excellent example of a problem when migrating to SharePoint online. This because SharePoint 2010 / 2013 KPI&rsquo;s are deprecated. A redesign will be unavoidable.</li>
+</ol></li>
 <li>Large files: find files larger than destination limit : 250 is default for on premises.</li>
 <li>File versions: document versions can take up a lot of space, especially for non-office documents. track down these files and limit the number of versions if possible.</li>
 </ol>
+
 <p>Other filetypes to look for are: CSS, XML, DOCM, ACCESS, HTML, XSL/T.
 Know which site-templates have been used and how permissions have been set and finally the content types used.</p>
+
 <h4 id="folder-structure">Folder structure</h4>
+
 <p>In the folder structure you will see all the files needed in order to do an analysis of the content in the SharePoint environment. All files displayed below will be explained in descending order.</p>
-<p>![folder](/img/II.Analysis/II.Analysis_2019-10-22-15-12-58.png# shadow)</p>
-<h4 id="allfilesinonecmd">allfilesinone.cmd</h4>
+
+<p><img src="/img/II.Analysis/II.Analysis_2019-10-22-15-12-58.png# shadow" alt="folder" /></p>
+
+<h4 id="allfilesinone-cmd">allfilesinone.cmd</h4>
+
 <p>The <strong>analyseSharePoint.ps1</strong> script described below will generate a separate .csv file for every line in sites.csv. This .cmd will combine all these separate files into one combined.csv and only keep one column-header line. This allows the combines.csv to be opened in Excel. Excel is a great way to create PowerPivot tables and do all kinds of calculations on the data.</p>
-<!-- raw HTML omitted -->
-<p><!-- raw HTML omitted -->open raw file<!-- raw HTML omitted --></p>
-<h4 id="analysesharepointstartps1">analyseSharePoint_Start.ps1</h4>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>@echo off
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>ECHO Set working directory
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>pushd %~dp0
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>del combined.csv
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>setlocal ENABLEDELAYEDEXPANSION
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>REM set count to 1
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>set cnt=1
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>REM <span style="color:#66d9ef">for</span> each file that matches *.csv
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span style="color:#66d9ef">for</span> /D %<span style="color:#66d9ef">%</span>d <span style="color:#66d9ef">in</span> (*) <span style="color:#66d9ef">do</span> (
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>ECHO %<span style="color:#66d9ef">%</span>d
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span style="color:#66d9ef">for</span> %<span style="color:#66d9ef">%</span>i <span style="color:#66d9ef">in</span> (%<span style="color:#66d9ef">%</span>d\*.csv) <span style="color:#66d9ef">do</span> (
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>  REM <span style="color:#66d9ef">if</span> count is 1 it<span style="color:#e6db74">&#39;s the first time running
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span style="color:#e6db74">    if !cnt!==1 (
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span style="color:#e6db74">  REM push the entire file complete with header into combined.csv - this will also create combined.csv
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span style="color:#e6db74">      for /f &#34;delims=&#34; %%j in (&#39;</span>type <span style="color:#e6db74">&#34;%%i&#34;</span><span style="color:#e6db74">&#39;) do echo %%j &gt;&gt; combined.csv
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span style="color:#e6db74">  REM otherwise, make sure we&#39;</span>re not working with the combined file and
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>    ) <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> %<span style="color:#66d9ef">%</span>i NEQ combined.csv (
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>  REM push the file without the header into combined.csv
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>      <span style="color:#66d9ef">for</span> /f <span style="color:#e6db74">&#34;skip=1 delims=&#34;</span> %<span style="color:#66d9ef">%</span>j <span style="color:#66d9ef">in</span> (<span style="color:#e6db74">&#39;type &#34;%%i&#34;&#39;</span>) <span style="color:#66d9ef">do</span> echo %<span style="color:#66d9ef">%</span>j &gt;&gt; combined.csv
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>    )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>  REM increment count by 1
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>    set /a cnt+=1
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>  )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>)</code></pre></div>
+
+<p><a class="button" href="/files/sharepoint/analyse_sources/allfilesinone.cmd">open raw file</a></p>
+
+<h4 id="analysesharepoint-start-ps1">analyseSharePoint_Start.ps1</h4>
+
 <p>This script is the script that is to be executed. It reads an comma separated file called &lsquo;sites.csv&rsquo; that is containing all the URLs to analyse. Note that it is possible to analyse all the subsites by using only one URL (recursion).</p>
-<p><code>Note: in order to allow the PowerShell to execute on your local machine you might need to change the execution policy (Set-ExecutionPolicy)</code></p>
-<!-- raw HTML omitted -->
-<p><!-- raw HTML omitted -->open raw file<!-- raw HTML omitted --></p>
-<h4 id="analysesharepointps1">analyseSharePoint.ps1</h4>
+
+<p><code>Note: in order to allow the PowerShell to execute on your local machine you might need to change the execution policy (Set-ExecutionPolicy)
+</code></p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#960050;background-color:#1e0010">﻿</span>$input = <span style="color:#66d9ef">[Array]</span>(Import-Csv -Path <span style="color:#e6db74">&#34;sites.csv&#34;</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#75715e"># setup output directory</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>$outputFolderName = <span style="color:#e6db74">&#34;.\output&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#66d9ef">if</span>(Test-Path $outputFolderName) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>    Remove-Item $outputFolderName -Verbose -Recurse
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>New-Item -ItemType Directory -Force -Path $outputFolderName
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>Write-Host <span style="color:#e6db74">&#34;Creating directory $outputFolderName&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span style="color:#66d9ef">foreach</span>($line <span style="color:#66d9ef">in</span> $input) 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>   .\analyseSharePoint.ps1 -url $line.SiteUrl $outputFolderName
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>}
+</code></pre></div>
+
+<p><a class="button" href="/files/sharepoint/analyse_sources/analyseSharePoint_Start.ps1">open raw file</a></p>
+
+<h4 id="analysesharepoint-ps1">analyseSharePoint.ps1</h4>
+
 <p>The main script that contains all the functions needed in order to analyse. I know that it is big, but it is also well structured and easy to extend.
 It is using SharePoint CSOM to connect and query the SharePoint farm.
 Change the following variable to change the type of analysis:</p>
+
 <pre><code>$function = [Options]::lists 
-</code></pre><!-- raw HTML omitted -->
-<p><!-- raw HTML omitted -->open raw file<!-- raw HTML omitted --></p>
-<h4 id="microsoftsharepointclient">Microsoft.SharePoint.Client</h4>
+</code></pre>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#960050;background-color:#1e0010">﻿</span><span style="color:#66d9ef">Param</span>(
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $True, <span style="color:#66d9ef">Position</span> = 0)] <span style="color:#66d9ef">[string]</span>$url,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $True, <span style="color:#66d9ef">Position</span> = 1)] <span style="color:#66d9ef">[string]</span>$outputFolderName
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6</span>$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7</span>Add-Type -Path <span style="color:#e6db74">&#34;$ScriptDir\Microsoft.SharePoint.Client.dll&#34;</span> 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8</span>Add-Type -Path <span style="color:#e6db74">&#34;$ScriptDir\Microsoft.SharePoint.Client.Runtime.dll&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10</span>$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($url);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12</span>enum Options {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13</span>    lists = 1
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14</span>    items = 2
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15</span>    workflows = 3
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16</span>    itemCount = 4
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17</span>    largeFiles = 5
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18</span>    versions = 6
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21</span><span style="color:#66d9ef">function</span> getQuery() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22</span>    <span style="color:#66d9ef">Param</span> (
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23</span>        [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $true, <span style="color:#66d9ef">Position</span> = 0)] <span style="color:#66d9ef">[Options]</span>$function,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24</span>        [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $false, <span style="color:#66d9ef">Position</span> = 1)] <span style="color:#66d9ef">[string]</span>$searchPattern
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25</span>    )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26</span>    <span style="color:#66d9ef">if</span> ($searchPattern <span style="color:#f92672">-ne</span> <span style="color:#e6db74">&#34;&#34;</span>) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27</span>        <span style="color:#75715e"># query filenames containing $searchPattern</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28</span>        $query = <span style="color:#e6db74">&#34;&lt;View Scope=&#39;Recursive&#39;&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29</span><span style="color:#e6db74">                    &lt;Query&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30</span><span style="color:#e6db74">                        &lt;Where&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31</span><span style="color:#e6db74">                            &lt;Contains&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32</span><span style="color:#e6db74">                                &lt;FieldRef Name=&#39;FileLeafRef&#39; /&gt;&lt;Value Type=&#39;Text&#39;&gt;$searchPattern&lt;/Value&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33</span><span style="color:#e6db74">                            &lt;/Contains&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34</span><span style="color:#e6db74">                        &lt;/Where&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35</span><span style="color:#e6db74">                    &lt;/Query&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36</span><span style="color:#e6db74">                  &lt;/View&gt;&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38</span>    <span style="color:#66d9ef">else</span> {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39</span>        <span style="color:#75715e"># query all list items</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40</span>        $query = <span style="color:#e6db74">&#34;&lt;View Scope=&#39;Recursive&#39;&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41</span><span style="color:#e6db74">                     &lt;Query&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42</span><span style="color:#e6db74">                     &lt;/Query&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43</span><span style="color:#e6db74">                  &lt;/View&gt;&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46</span>    <span style="color:#75715e"># find large files that exceed the &#39;configured&#39; max size of the destination SharePoint farm.</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47</span>    <span style="color:#66d9ef">if</span> ($function <span style="color:#f92672">-eq</span> <span style="color:#66d9ef">[Options]</span>::largeFiles) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48</span>        $sizeInMB = 1024 * 1024 * 250  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49</span>        $query = <span style="color:#e6db74">&#34;&lt;View Scope=&#39;Recursive&#39;&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50</span><span style="color:#e6db74">                    &lt;Query&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51</span><span style="color:#e6db74">                        &lt;Where&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52</span><span style="color:#e6db74">                            &lt;Gt&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53</span><span style="color:#e6db74">                                &lt;FieldRef Name=&#39;File_x0020_Size&#39; /&gt;&lt;Value Type=&#39;Text&#39;&gt;$sizeInMB&lt;/Value&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54</span><span style="color:#e6db74">                            &lt;/Gt&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55</span><span style="color:#e6db74">                        &lt;/Where&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56</span><span style="color:#e6db74">                    &lt;/Query&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57</span><span style="color:#e6db74">                   &lt;/View&gt;&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59</span>    <span style="color:#66d9ef">return</span> $query
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62</span><span style="color:#75715e"># export listnames, itemcount and basetemplates. Also shows lastmodified date.</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63</span><span style="color:#66d9ef">function</span> lists() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65</span>    $output = @();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66</span>    $lists = $currentWeb.Lists
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67</span>    $clientContext.Load($lists)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68</span>    $clientContext.ExecuteQuery()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70</span>    <span style="color:#66d9ef">foreach</span> ($list <span style="color:#66d9ef">in</span> $lists) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71</span>        Write-Host <span style="color:#e6db74">&#34;[&#34;</span> $list.ItemCount <span style="color:#e6db74">&#34;] &#34;</span> -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72</span>        Write-Host $list.Title -ForegroundColor Yellow -BackgroundColor DarkGray -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73</span>        Write-Host <span style="color:#e6db74">&#34; &#34;</span> $list.DefaultDisplayFormUrl -ForegroundColor Green -BackgroundColor DarkRed
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75</span>        $o = new-object psobject
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;Url&#34;</span> -value $url;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;Web Title&#34;</span> -value $currentWeb.Title;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;Web url&#34;</span> -value $currentWeb.ServerRelativeUrl;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;Web creation date&#34;</span> -value $currentWeb.Created;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;Web last item modified&#34;</span> -value $currentWeb.LastItemModifiedDate;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;ListName&#34;</span> -value $list.Title;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;List BaseType&#34;</span> -value $list.BaseType;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;List BaseTemplate&#34;</span> -value $list.BaseTemplate;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;List DefaultViewUrl&#34;</span> -value $baseUrl$($list.DefaultViewUrl)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;List ItemCount&#34;</span> -value $list.ItemCount;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86</span>        $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;List LastItemModifiedDate&#34;</span> -value $list.LastItemModifiedDate;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87</span>        $output += $o;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89</span>    
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90</span>    <span style="color:#66d9ef">if</span> ($null <span style="color:#f92672">-ne</span> $output) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91</span>        saveToFile $output
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95</span><span style="color:#75715e"># track down workflows, workflows are a strong indication of user customizations</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96</span><span style="color:#66d9ef">function</span> workflows() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98</span>    $output = @();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99</span>    $lists = $currentWeb.Lists
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100</span>    $clientContext.Load($lists)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101</span>    $clientContext.ExecuteQuery()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103</span>    <span style="color:#66d9ef">foreach</span> ($list <span style="color:#66d9ef">in</span> $lists) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104</span>        $wfa = $list.WorkflowAssociations
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105</span>        $clientContext.Load($wfa)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106</span>        $clientContext.ExecuteQuery()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108</span>        <span style="color:#66d9ef">foreach</span> ($wf <span style="color:#66d9ef">in</span> $wfa) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109</span>            Write-Host <span style="color:#e6db74">&#34;[&#34;</span> $wf.Name <span style="color:#e6db74">&#34;]&#34;</span> -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110</span>            Write-Host $list.Title -ForegroundColor Yellow -BackgroundColor DarkGray -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111</span>            Write-Host $wf.Created -ForegroundColor Green -BackgroundColor DarkGray -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112</span>            Write-Host $wf.Modified -ForegroundColor Green -BackgroundColor DarkRed
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114</span>            $o = new-object psobject
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115</span>            $o | Add-Member -MemberType noteproperty -Name WorkflowName -value $wf.Name;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116</span>            $o | Add-Member -MemberType noteproperty -Name Created -value $wf.Created;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117</span>            $o | Add-Member -MemberType noteproperty -Name Modified -value $wf.Modified;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118</span>            $o | Add-Member -MemberType noteproperty -Name ListTitle -value $list[<span style="color:#e6db74">&#39;Title&#39;</span>];
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119</span>            $o | Add-Member -MemberType noteproperty -Name ListURL -value $list.DefaultDisplayFormUrl;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120</span>            $output += $o;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123</span>    
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124</span>    <span style="color:#66d9ef">if</span> ($null <span style="color:#f92672">-ne</span> $output) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125</span>        saveToFile $output
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129</span><span style="color:#75715e"># general purpose function to find files with a matching $pattern in their filenames. Example: &#39;.js&#39;, &#39;xsn&#39;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130</span><span style="color:#66d9ef">function</span> listItems() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131</span>    <span style="color:#66d9ef">Param</span> (
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132</span>        [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $true, <span style="color:#66d9ef">Position</span> = 0)] <span style="color:#66d9ef">[Options]</span>$function,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">133</span>        [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $false, <span style="color:#66d9ef">Position</span> = 1)] <span style="color:#66d9ef">[string]</span>$searchPattern,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">134</span>        [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $false, <span style="color:#66d9ef">Position</span> = 2)] <span style="color:#66d9ef">[string]</span>$listBaseType
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">135</span>    )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">136</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">137</span>    $output = @();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">138</span>    $lists = $currentWeb.Lists
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">139</span>    $clientContext.Load($lists)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">140</span>    $clientContext.ExecuteQuery()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">141</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">142</span>    <span style="color:#75715e"># optional filtering on base list type</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">143</span>    <span style="color:#66d9ef">if</span> ($listBaseType <span style="color:#f92672">-ne</span> <span style="color:#e6db74">&#34;&#34;</span>) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">144</span>        $lists = $lists | Where-Object { $_.BaseType <span style="color:#f92672">-eq</span> $listBaseType }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">145</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">146</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">147</span>    $query = New-Object Microsoft.SharePoint.Client.CamlQuery;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">148</span>    $query.ViewXml = getQuery $function $searchPattern
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">149</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">150</span>    <span style="color:#66d9ef">foreach</span> ($list <span style="color:#66d9ef">in</span> $lists) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">151</span>        $listItems = $list.GetItems($query);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">152</span>        $clientContext.Load($listItems);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">153</span>        $clientContext.ExecuteQuery();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">154</span>        $nrOfItemsFound = <span style="color:#e6db74">&#34;{0:0000}&#34;</span> <span style="color:#f92672">-f</span> $listItems.Count
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">155</span>        
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">156</span>        <span style="color:#66d9ef">if</span> ($listItems.Count <span style="color:#f92672">-gt</span> 0) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">157</span>            Write-Host <span style="color:#e6db74">&#34;[&#34;</span> $nrOfItemsFound <span style="color:#e6db74">&#34;] &#34;</span> -NoNewline -ForegroundColor Green
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">158</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">159</span>        <span style="color:#66d9ef">else</span> {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">160</span>            Write-Host <span style="color:#e6db74">&#34;[&#34;</span> $nrOfItemsFound <span style="color:#e6db74">&#34;] &#34;</span> -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">161</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">162</span>        
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">163</span>        Write-Host $currentWeb.Title -ForegroundColor Yellow -BackgroundColor DarkGray -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">164</span>        Write-Host <span style="color:#e6db74">&#34; &#34;</span> -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">165</span>        Write-Host $list.Title -ForegroundColor Yellow -BackgroundColor DarkGreen -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">166</span>        Write-Host <span style="color:#e6db74">&#34; &#34;</span> -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">167</span>        Write-Host $list.DefaultDisplayFormUrl -ForegroundColor Green -BackgroundColor DarkRed
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">168</span>        
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">169</span>        <span style="color:#66d9ef">foreach</span> ($listItem <span style="color:#66d9ef">in</span> $listItems) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">170</span>            $o = new-object psobject
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">171</span>            $o | Add-Member -MemberType noteproperty -Name url -value $url;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">172</span>            $o | Add-Member -MemberType noteproperty -Name FileRef -value $listItem[<span style="color:#e6db74">&#39;FileRef&#39;</span>];
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">173</span>            $o | Add-Member -MemberType noteproperty -Name FileDirRef -value $listItem[<span style="color:#e6db74">&#39;FileDirRef&#39;</span>];
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">174</span>            $o | Add-Member -MemberType noteproperty -Name FileLeafRef -value $listItem[<span style="color:#e6db74">&#39;FileLeafRef&#39;</span>];
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">175</span>            $o | Add-Member -MemberType noteproperty -Name Modified_x0020_By -value $listItem.FieldValues.Modified_x0020_By
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">176</span>            $o | Add-Member -MemberType noteproperty -Name Last_x0020_Modified -value $listItem.FieldValues.Last_x0020_Modified
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">177</span>            $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;SizeMegaBytes&#34;</span> -value $(<span style="color:#66d9ef">[convert]</span>::ToInt32($listItem[<span style="color:#e6db74">&#39;File_x0020_Size&#39;</span>], 10) / (1024 * 1024))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">178</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">179</span>            <span style="color:#75715e"># only execute if versions are to be analysed, because this is a timeconsuming operation</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">180</span>            <span style="color:#66d9ef">if</span> ($function <span style="color:#f92672">-eq</span> <span style="color:#66d9ef">[Options]</span>::versions) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">181</span>                $file = $listItem.File
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">182</span>                $clientContext.Load($file)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">183</span>                $clientContext.ExecuteQuery();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">184</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">185</span>                $versions = $file.Versions
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">186</span>                $clientContext.Load($versions)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">187</span>                $clientContext.ExecuteQuery();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">188</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">189</span>                $o | Add-Member -MemberType noteproperty -Name <span style="color:#e6db74">&#34;Versions&#34;</span> -value $versions.Count;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">190</span>                <span style="color:#75715e">#only output to file if there are multiple versions</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">191</span>                <span style="color:#66d9ef">if</span> ($versions.Count <span style="color:#f92672">-gt</span> 0) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">192</span>                    $output += $o;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">193</span>                }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">194</span>            }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">195</span>            <span style="color:#66d9ef">else</span> {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">196</span>                $output += $o;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">197</span>            }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">198</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">199</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">200</span>    <span style="color:#66d9ef">if</span> ($null <span style="color:#f92672">-ne</span> $output) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">201</span>        saveToFile $output
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">202</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">203</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">204</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">205</span><span style="color:#66d9ef">function</span> saveToFile(<span style="color:#66d9ef">[object]</span>$lines) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">206</span>    $a = Get-Date
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">207</span>    $lines | export-csv <span style="color:#e6db74">&#34;$outputFolderName\Export_</span>$($a.Ticks)<span style="color:#e6db74">.csv&#34;</span> -noTypeInformation;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">208</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">209</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">210</span><span style="color:#66d9ef">function</span> export() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">211</span>    <span style="color:#66d9ef">Param</span> (
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">212</span>        [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $true, <span style="color:#66d9ef">Position</span> = 0)] <span style="color:#66d9ef">[Options]</span>$function,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">213</span>        [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $false, <span style="color:#66d9ef">Position</span> = 1)] <span style="color:#66d9ef">[string]</span>$searchPattern,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">214</span>        [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $false, <span style="color:#66d9ef">Position</span> = 2)] <span style="color:#66d9ef">[switch]</span>$recursive
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">215</span>    )
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">216</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">217</span>    Write-Host <span style="color:#e6db74">&#34;[</span>$($childWebs.Count)<span style="color:#e6db74"> sub websites] [</span>$($currentWeb.ServerRelativeUrl)<span style="color:#e6db74">]&#34;</span> -ForegroundColor Red -BackgroundColor Yellow
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">218</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">219</span>    <span style="color:#66d9ef">try</span> {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">220</span>        <span style="color:#66d9ef">switch</span> ($function) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">221</span>            (<span style="color:#66d9ef">[Options]</span>::items) { listItems -function $function -searchPattern $searchPattern; <span style="color:#66d9ef">break</span> }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">222</span>            (<span style="color:#66d9ef">[Options]</span>::largeFiles) { listItems -function $function -listBaseType <span style="color:#e6db74">&#34;DocumentLibrary&#34;</span>; <span style="color:#66d9ef">break</span> }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">223</span>            (<span style="color:#66d9ef">[Options]</span>::versions) { listItems -function $function -listBaseType <span style="color:#e6db74">&#34;DocumentLibrary&#34;</span>; <span style="color:#66d9ef">break</span> }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">224</span>            (<span style="color:#66d9ef">[Options]</span>::workflows) { workflows; <span style="color:#66d9ef">break</span> }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">225</span>            (<span style="color:#66d9ef">[Options]</span>::lists) { lists; <span style="color:#66d9ef">break</span> }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">226</span>            
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">227</span>            <span style="color:#66d9ef">default</span> {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">228</span>                Write-Host <span style="color:#e6db74">&#34;Invalid function&#34;</span> -ForegroundColor Red
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">229</span>            }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">230</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">231</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">232</span>    <span style="color:#66d9ef">catch</span> { Write-Host $_.Exception.Message -ForegroundColor Red }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">233</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">234</span>    <span style="color:#66d9ef">if</span> ($recursive) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">235</span>        <span style="color:#66d9ef">foreach</span> ($web <span style="color:#66d9ef">in</span> $childWebs) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">236</span>            $currentWeb = $web;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">237</span>            $childWebs = $currentWeb.Webs
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">238</span>            $clientContext.Load($childWebs)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">239</span>            $clientContext.ExecuteQuery()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">240</span>            export $function $searchPattern $recursive;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">241</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">242</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">243</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">244</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">245</span>$currentWeb = $clientContext.Web;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">246</span>$childWebs = $clientContext.Web.Webs
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">247</span>$clientContext.Load($currentWeb)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">248</span>$clientContext.Load($childWebs)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">249</span>$clientContext.ExecuteQuery()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">250</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">251</span>$function = <span style="color:#66d9ef">[Options]</span>::lists    <span style="color:#75715e"># change this to the type of analysis to start</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">252</span><span style="color:#66d9ef">switch</span> ($function) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">253</span>    <span style="color:#75715e">#### infopath is a big indication of customization (use -recursive to incude all subsites)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">254</span>    (<span style="color:#66d9ef">[Options]</span>::items) {export -function (<span style="color:#66d9ef">[Options]</span>::items) -searchPattern <span style="color:#e6db74">&#34;.xsn&#34;</span>} 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">255</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">256</span>    <span style="color:#75715e">#### javascript: javascipt is a big indication of customization (use -recursive to incude all subsites)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">257</span>    (<span style="color:#66d9ef">[Options]</span>::items) {export -function (<span style="color:#66d9ef">[Options]</span>::items) -searchPattern <span style="color:#e6db74">&#34;.js&#34;</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">258</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">259</span>    <span style="color:#75715e">#### workflows: workflows are a big indication of customizations (use -recursive to incude all subsites)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">260</span>    (<span style="color:#66d9ef">[Options]</span>::workflows) { export -function (<span style="color:#66d9ef">[Options]</span>::workflows) }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">261</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">262</span>    <span style="color:#75715e">#### lists information gives insight into</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">263</span>    <span style="color:#75715e"># - itemcount</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">264</span>    <span style="color:#75715e"># - list base types (for example kpi lists)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">265</span>    <span style="color:#75715e">#  (use -recursive to incude all subsites)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">266</span>    (<span style="color:#66d9ef">[Options]</span>::lists) { export -function (<span style="color:#66d9ef">[Options]</span>::lists) }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">267</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">268</span>    <span style="color:#75715e"># large files: find files larger than destination limit : 250 is default for onprem (use -recursive to incude all subsites)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">269</span>    (<span style="color:#66d9ef">[Options]</span>::largeFiles) { export -function (<span style="color:#66d9ef">[Options]</span>::largeFiles) }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">270</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">271</span>    <span style="color:#75715e"># versions: document versions can take up a lot of space, especially for non-office documents. track down these files and limit the number of versions if possible. (use -recursive to incude all subsites)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">272</span>    (<span style="color:#66d9ef">[Options]</span>::versions) { export -function (<span style="color:#66d9ef">[Options]</span>::versions) }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">273</span>}</code></pre></div>
+
+<p><a class="button" href="/files/sharepoint/analyse_sources/analyseSharePoint.ps1">open raw file</a></p>
+
+<h4 id="microsoft-sharepoint-client">Microsoft.SharePoint.Client</h4>
+
 <p>The client DLLs included in this package are SharePoint 2010 assemblies. These can be replaced by the assemblies of other SharePoint versions.</p>
+
 <h4 id="see-it-in-action">See it in action</h4>
+
 <p>Download the complete solution <a href="/files/sharepoint/analyse_sources/analyse_sources.zip">here</a></p>
+
 <p>Just to give you an idea of the solution here are some screenshots:</p>
-<p>![doclib](/img/II.Analysis/II.Analysis_2019-10-23-07-59-40.png# shadow)</p>
+
+<p><img src="/img/II.Analysis/II.Analysis_2019-10-23-07-59-40.png# shadow" alt="doclib" /></p>
+
 <p>Screenshot of a document library that contains some InfoPath files.</p>
-<p>![script](/img/II.Analysis/II.Analysis_2019-10-23-08-00-07.png# shadow)</p>
+
+<p><img src="/img/II.Analysis/II.Analysis_2019-10-23-08-00-07.png# shadow" alt="script" /></p>
+
 <p>Screenshot of the script-output.</p>
-<p>![csv](/img/II.Analysis/II.Analysis_2019-10-23-08-00-25.png# shadow)</p>
+
+<p><img src="/img/II.Analysis/II.Analysis_2019-10-23-08-00-25.png# shadow" alt="csv" /></p>
+
 <p>Screenshot of the generated .csv output</p>
-<h6 id="continue-reading-this-series-herepostssharepointmigrationiiimigrate">Continue reading this series <a href="/posts/sharepoint/migration/iii.migrate/">here</a></h6>
+
+<h6 id="continue-reading-this-series-here-posts-sharepoint-migration-iii-migrate">Continue reading this series <a href="/posts/sharepoint/migration/iii.migrate/">here</a></h6>
          
       </div>
     </div>
