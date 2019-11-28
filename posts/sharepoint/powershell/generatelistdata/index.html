@@ -115,116 +115,29 @@
          <h1>SharePoint listdata generator</h1>
          <p>Testing your application with large numbers of data is important but sadly often forgotten.
 SharePoint is no exception to this rule.</p>
-
 <h2 id="the-problem">The problem</h2>
-
 <p>Not having tested your application for large volume of data almost always has big consequences. Problems more often than not arise only after a certain period of time.
 Your application can run flawless for months or even years. Suddenly a limit is reached and your applications starts to fail.</p>
-
 <p>If you have worked with large lists in SharePoint, you have probably received errors due to the threshold limit. SharePoint is configured with a default threshold limit of 5000 items in a list or library. This means that if the items in a list or library exceed that number, any views, grouping and queries will will no longer work.</p>
-
 <h2 id="time-to-hunt-for-this-hidden-timebomb">Time to hunt for this hidden timebomb</h2>
-
 <p>Fill it up! Yes, although another valid approach to simulate this SharePoint limit would be to lower the listview-treshhold to a low number like 50 it will not always reveal all the problems having large lists.</p>
-
 <p>So we need to fill the list manually. But wait&hellip; filling SharePoint lists with more than 5000 items is laborious and repetitive work, even when using Excel.
 PowerShell is a perfect tool for this.
 Like most of my SharePoint PowerShell scripts, I like to use the CSOM (Client-side object model) Using CSOM allows me to use this script without being on the SharePoint server itself.</p>
-
 <h3 id="preview">Preview</h3>
-
 <p>The PowerShell listed below creates a list and generates the specified number of list items. The number of list items to be created can be configured and is really fast. Generating 5000 list items generally only takes a number of seconds.</p>
-
-<p><img src="/img/generateListData/generateListData_2019-09-25-14-42-28.png# shadow small" alt="" /></p>
-
+<p>![](/img/generateListData/generateListData_2019-09-25-14-42-28.png# shadow small)</p>
 <h3 id="usage">Usage</h3>
-
 <p>Output of the PowerShell should look like this.</p>
-
-<p><img src="/img/generateListData/generateListData_2019-09-25-14-42-40.png# shadow medium" alt="" /></p>
-
+<p>![](/img/generateListData/generateListData_2019-09-25-14-42-40.png# shadow medium)</p>
 <h3 id="code">Code</h3>
-
 <p>In order to get this to work, you will first need to copy the &lsquo;<strong>Microsoft.SharePoint.Client.dll</strong>&rsquo; and &lsquo;<strong>Microsoft.SharePoint.Client.Runtime.dll</strong>&rsquo; to the same folder of this script.
 The script listed here should be seen as a starting point for your own specific SharePoint list.
 If no <strong>$listName</strong> list is found it will create a list for you to fiddle around with.
 In your situation you will probably already have a SharePoint list with some content-types or list fields added to it.
-In this example I only use a field called &ldquo;<strong>QuestionType</strong>&rdquo;. Of course you can- and probably will add fields to this to suit your situation.</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#960050;background-color:#1e0010">﻿</span><span style="color:#75715e"># Script to create and fill a list with listitems. Usefull for detecting problems with listview-treshhold issues (&gt; 5000 listitems).</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#75715e"># Note that listview-treshhold issues can be solved by using SharePoint indexed columns.</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#75715e"># Change this script to include other columns besides &#39;QuestionType&#39;. &#39;QuestionType&#39; is only implemented here to serve as an example.</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span style="color:#75715e"># change the following three lines to your likings</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>$url = <span style="color:#e6db74">&#34;http://yourdevelopmentsitecollection/&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>$listName = <span style="color:#e6db74">&#34;sometestlist&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>$itemsToCreate = 5010
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>Add-PSSnapin Microsoft.SharePoint.PowerShell -EA SilentlyContinue
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>Add-Type -Path <span style="color:#e6db74">&#34;$ScriptDir\Microsoft.SharePoint.Client.dll&#34;</span> 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>Add-Type -Path <span style="color:#e6db74">&#34;$ScriptDir\Microsoft.SharePoint.Client.Runtime.dll&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span style="color:#75715e"># open the site</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($url);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>$web = $clientContext.Web;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>$clientContext.Load($web)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>$clientContext.ExecuteQuery()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>Write-Host $web.Title $web.ServerRelativeUrl -ForegroundColor Red -BackgroundColor Yellow
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span style="color:#75715e"># open the list, if no list is found it will create one</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>$list = $web.Lists.GetByTitle($listName);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>$clientContext.Load($list)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span style="color:#66d9ef">try</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>    $clientContext.ExecuteQuery()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>    Write-Host <span style="color:#e6db74">&#34;Opened list&#34;</span> $list.Title -ForegroundColor Red -BackgroundColor Yellow
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>} <span style="color:#66d9ef">catch</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>    Write-Host <span style="color:#e6db74">&#34;No list found, creating a new one&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>    $listCreateInfo = New-Object Microsoft.SharePoint.Client.ListCreationInformation;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>    $listCreateInfo.Title = $listName; 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>    $listCreateInfo.TemplateType = <span style="color:#66d9ef">[Microsoft.SharePoint.Client.ListTemplateType]</span>::GenericList
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>    $list = $web.Lists.Add($listCreateInfo)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>    $list.Update(); 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>    $clientContext.ExecuteQuery(); 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>    <span style="color:#75715e"># add some listfields for example purposes</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>    $a = $list.Fields.AddFieldAsXml(<span style="color:#e6db74">&#34;&lt;Field Type=&#39;Choice&#39; DisplayName=&#39;QuestionType&#39;&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span style="color:#e6db74">                            &lt;CHOICES&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span style="color:#e6db74">                                &lt;CHOICE&gt;Office 365&lt;/CHOICE&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span style="color:#e6db74">                                &lt;CHOICE&gt;General&lt;/CHOICE&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span><span style="color:#e6db74">                                &lt;CHOICE&gt;Email&lt;/CHOICE&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span style="color:#e6db74">                                &lt;CHOICE&gt;OneDrive&lt;/CHOICE&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span><span style="color:#e6db74">                                &lt;CHOICE&gt;SharePoint&lt;/CHOICE&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span><span style="color:#e6db74">                                &lt;CHOICE&gt;Office Apps&lt;/CHOICE&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span><span style="color:#e6db74">                                &lt;CHOICE&gt;Office Online&lt;/CHOICE&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span><span style="color:#e6db74">                                &lt;CHOICE&gt;Other&lt;/CHOICE&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span><span style="color:#e6db74">                            &lt;/CHOICES&gt;&lt;/Field&gt;&#34;</span>,$true,<span style="color:#66d9ef">[Microsoft.SharePoint.Client.AddFieldOptions]</span>::AddFieldToDefaultView)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span><span style="color:#75715e"># random words used to create listitems</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span>$words = <span style="color:#e6db74">&#34;Lorem&#34;</span>,<span style="color:#e6db74">&#34;Ipsum&#34;</span>,<span style="color:#e6db74">&#34;Donald&#34;</span>,<span style="color:#e6db74">&#34;Duck&#34;</span>,<span style="color:#e6db74">&#34;Wine&#34;</span>,<span style="color:#e6db74">&#34;Chees&#34;</span>,<span style="color:#e6db74">&#34;Fruit&#34;</span>,<span style="color:#e6db74">&#34;Garlic&#34;</span>,<span style="color:#e6db74">&#34;Weather&#34;</span>,<span style="color:#e6db74">&#34;Together&#34;</span>,<span style="color:#e6db74">&#34;Car&#34;</span>,<span style="color:#e6db74">&#34;Pizza&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span>$choices = <span style="color:#e6db74">&#34;Office 365&#34;</span>, <span style="color:#e6db74">&#34;General&#34;</span>, <span style="color:#e6db74">&#34;Email&#34;</span>, <span style="color:#e6db74">&#34;SharePoint&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span><span style="color:#66d9ef">for</span>($index = 1; $index <span style="color:#f92672">-lt</span> $itemsToCreate+1; $index++) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>    $randomText = $words | Get-Random -count 1
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span>    $titleText = <span style="color:#e6db74">&#34;$index $randomText&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span>    Write-Host <span style="color:#e6db74">&#34;[$index/$itemsToCreate] Creating &#39;$titleText&#39;&#34;</span> -ForegroundColor Green -BackgroundColor Red
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60</span>    $newListItem = $list.AddItem($itemCreateInfo)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span>    $newListItem[<span style="color:#e6db74">&#34;Title&#34;</span>] =  $titleText
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span>    $newListItem[<span style="color:#e6db74">&#34;QuestionType&#34;</span>] = $choices | Get-Random -count 1
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span>    $newListItem.Update()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span>    <span style="color:#66d9ef">if</span>($index % 100 <span style="color:#f92672">-eq</span> 0)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65</span>    {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66</span>        Write-Host $index
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67</span>        $clientContext.ExecuteQuery()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68</span>    }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70</span>$clientContext.ExecuteQuery()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71</span>Write-Host <span style="color:#e6db74">&#34;Done!&#34;</span> -ForegroundColor Green
-</code></pre></div>
-
-<p><a class="button" href="/files/sharepoint/lists/GenerateListTestData.ps1">open raw file</a></p>
+In this example I only use a field called &ldquo;<strong>QuestionType</strong>&quot;. Of course you can- and probably will add fields to this to suit your situation.</p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->open raw file<!-- raw HTML omitted --></p>
          
       </div>
     </div>
