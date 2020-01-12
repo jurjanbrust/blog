@@ -5,11 +5,6 @@ if (document.readyState == 'loading') {
 }
 
 function ready() {
-    var removeCartItemButtons = document.getElementsByClassName('btn-danger')
-    for (var i = 0; i < removeCartItemButtons.length; i++) {
-        var button = removeCartItemButtons[i]
-        button.addEventListener('click', removeCartItem)
-    }
 
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
     for (var i = 0; i < quantityInputs.length; i++) {
@@ -24,15 +19,25 @@ function ready() {
     }
 
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
+    document.getElementsByClassName('btn-payment')[0].addEventListener('click', paymentClicked)
+    document.getElementsByClassName('btn-purchase')[0].style.display = "none"
 }
 
 function purchaseClicked() {
-    alert('Thank you for your purchase')
+    //alert('Thank you for your purchase')
     var cartItems = document.getElementsByClassName('cart-items')[0]
     while (cartItems.hasChildNodes()) {
         cartItems.removeChild(cartItems.firstChild)
     }
     updateCartTotal()
+    document.getElementById('checkout').style.display = "none"
+    document.getElementById('address').style.display = "block"
+}
+
+function paymentClicked() {
+    alert("pay")
+    document.getElementById('checkout').style.display = "none"
+    document.getElementById('address').style.display = "none"
 }
 
 function removeCartItem(event) {
@@ -101,4 +106,5 @@ function updateCartTotal() {
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '€' + total
     document.getElementsByClassName('cart-total-price-top')[0].innerText = '€' + total
+    document.getElementsByClassName('btn-purchase')[0].style.display = (total > 0) ? "block":"none"
 }

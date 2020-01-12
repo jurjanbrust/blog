@@ -67,12 +67,19 @@
 }
 .product_details {
   margin: 10px;
+  color: white;
+  background-color: rgb(67, 170, 196);
+  border: none;
+  border-radius: .3em;
+
 }
 .product_buy {
   margin: 10px;
   color: white;
-  border-color: #f85e5e;
-  background-color: #f85e5e;
+  background-color: #EB5757;
+  border: none;
+  border-radius: .3em;
+  font-weight: bold;
 }
 .product .buy-button {
   margin-left: 30px;
