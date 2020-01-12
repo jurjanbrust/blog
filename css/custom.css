@@ -14,6 +14,10 @@ body {
     background-color: white;
 }
 
+.content-column-content p, .content-column-content li {
+    color: #5a5959;
+}
+
 h1,
 h2,
 h3,
@@ -62,6 +66,10 @@ img[src~="small"] {
     height: auto;
 }
 img[src~="medium"] {
+    width:200px;
+    height: auto;
+}
+img[src~="large"] {
     width:300px;
     height: auto;
 }

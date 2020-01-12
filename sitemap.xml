@@ -43,6 +43,11 @@
   </url>
   
   <url>
+    <loc>https://jurjan.info/posts/</loc>
+    <lastmod>2019-11-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://jurjan.info/tags/sharegate/</loc>
     <lastmod>2019-11-18T00:00:00+00:00</lastmod>
   </url>
@@ -98,16 +103,6 @@
   </url>
   
   <url>
-    <loc>https://jurjan.info/categories/ignite/</loc>
-    <lastmod>2019-09-03T15:52:31+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/posts/ignite/ignite2019/</loc>
-    <lastmod>2019-09-03T15:52:31+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://jurjan.info/posts/sharepoint/powershell/listitems/</loc>
     <lastmod>2019-09-02T12:05:33+02:00</lastmod>
   </url>
@@ -115,11 +110,6 @@
   <url>
     <loc>https://jurjan.info/about/</loc>
     <lastmod>2019-08-21T21:05:33+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/posts/</loc>
-    <lastmod>2019-08-21T18:25:22+05:30</lastmod>
   </url>
   
   <url>

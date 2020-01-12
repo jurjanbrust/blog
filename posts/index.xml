@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blog on Jurjan Brust</title>
+    <title>Posts on Jurjan Brust</title>
     <link>https://jurjan.info/posts/</link>
-    <description>Recent content in Blog on Jurjan Brust</description>
+    <description>Recent content in Posts on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Aug 2019 18:25:22 +0530</lastBuildDate>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://jurjan.info/posts/index.xml" rel="self" type="application/rss+xml" />
     
@@ -64,15 +64,6 @@ SharePoint is no exception to this rule.&lt;/p&gt;</description>
       
       <guid>https://jurjan.info/posts/azure/az900/</guid>
       <description>&lt;p&gt;This year I will start on earning my Azure certifications. First will be &lt;a href=&#34;https://www.microsoft.com/en-us/learning/exam-az-900.aspx&#34;&gt;AZ-900&lt;/a&gt;, followed by &lt;a href=&#34;https://www.microsoft.com/en-us/learning/exam-AZ-203.aspx&#34;&gt;AZ-203&lt;/a&gt; &lt;a href=&#34;https://www.microsoft.com/en-us/learning/azure-developer.aspx&#34;&gt;developer track&lt;/a&gt;.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Ignite 2019</title>
-      <link>https://jurjan.info/posts/ignite/ignite2019/</link>
-      <pubDate>Tue, 03 Sep 2019 15:52:31 +0200</pubDate>
-      
-      <guid>https://jurjan.info/posts/ignite/ignite2019/</guid>
-      <description>&lt;p&gt;This year I will attend the Microsoft Ignite conference located in Orlando, Florida!&lt;/p&gt;</description>
     </item>
     
     <item>
