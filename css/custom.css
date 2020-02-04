@@ -73,6 +73,10 @@ img[src~="large"] {
     width:300px;
     height: auto;
 }
+img[src~="extralarge"] {
+    width:600px;
+    height: auto;
+}
 img[src~="border"] {
     border: 1px solid black;
 }

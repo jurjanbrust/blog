@@ -6,10 +6,19 @@
     <description>Recent content in Tags on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 04 Feb 2020 11:15:32 +0100</lastBuildDate>
     
 	<atom:link href="https://jurjan.info/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>powershell</title>
+      <link>https://jurjan.info/tags/powershell/</link>
+      <pubDate>Tue, 04 Feb 2020 11:15:32 +0100</pubDate>
+      
+      <guid>https://jurjan.info/tags/powershell/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>migration</title>
@@ -44,15 +53,6 @@
       <pubDate>Wed, 25 Sep 2019 14:38:37 +0200</pubDate>
       
       <guid>https://jurjan.info/tags/onprem/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>powershell</title>
-      <link>https://jurjan.info/tags/powershell/</link>
-      <pubDate>Wed, 25 Sep 2019 14:38:37 +0200</pubDate>
-      
-      <guid>https://jurjan.info/tags/powershell/</guid>
       <description></description>
     </item>
     
