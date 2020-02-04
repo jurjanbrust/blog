@@ -13,10 +13,10 @@
     
     <item>
       <title>Powershell security measures you should know about</title>
-      <link>https://jurjan.info/posts/powershell/security/</link>
+      <link>https://jurjan.info/posts/powershell/executionpolicy/</link>
       <pubDate>Tue, 04 Feb 2020 11:15:32 +0100</pubDate>
       
-      <guid>https://jurjan.info/posts/powershell/security/</guid>
+      <guid>https://jurjan.info/posts/powershell/executionpolicy/</guid>
       <description>&lt;p&gt;I use PowerShell a lot to make life easier as a developer. Also for system administrators PowerShell can be a great solution for various tasks. There are little things that cannot be done using PowerShell when you would compare it to for example an executable file. Microsoft made some security measures to protect you from running any malicious PowerShell scripts and in this article I will summarise the information I found regarding this topic.&lt;/p&gt;</description>
     </item>
     
