@@ -176,17 +176,17 @@ First we need to check what the actual execution policy is set to on the compute
 <p><img src="/img/security/security_2020-02-04-12-11-02.png" alt="" /></p>
 </blockquote>
 
-<p>When we set the execution policy to unrestricted using <code>Set-ExecutionPolicy Unrestricted</code> and try to execute a locked PowerShell we will see the following error message which got me quite puzzled until I now know that in such situations the file is locked.</p>
+<p>When we set the execution policy to unrestricted using <code>Set-ExecutionPolicy Unrestricted</code> and try to execute a blocked PowerShell we will see the following error message which got me quite puzzled until I now know that in such situations the file is blocked.</p>
 
 <p><img src="/img/security/security_2020-02-04-16-43-36.png" alt="" /></p>
 
-<p>Once we unlock the file, using the checkbox of the file properties, we can finally run the script without any warnings. Another way to unlock scripts is to use the <code>Unblock-File</code> cmdlet.</p>
+<p>Once we unblock the file, using the checkbox of the file properties, we can finally run the script without any warnings. Another way to unblock scripts is to use the <code>Unblock-File</code> cmdlet.</p>
 
-<p>Finally, when the execution-policy is set to RemoteSigned any locked file will get the error message (so not even the security-warning) and all unlocked files will be executed without any warnings.</p>
+<p>Finally, when the execution-policy is set to RemoteSigned any blocked file will get the error message (so not even the security-warning) and all unblocked files will be executed without any warnings.</p>
 
 <h3 id="final-words">Final words</h3>
 
-<p>When working with PowerShell scripts I would advice to set the execution-policy to RemoteSigned and never to Unrestricted. This way any unlocked file can be executed, while locked files have to be unlocked first. Always open the script first to see what it does before executing.</p>
+<p>When working with PowerShell scripts I would advice to set the execution-policy to RemoteSigned and never to Unrestricted. This way any unblocked file can be executed, while blocked files have to be unblocked first. Always open the script first to see what it does before executing.</p>
          
       </div>
     </div>
