@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Feb 2020 11:15:32 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 09 Feb 2020 13:48:10 +0100</lastBuildDate>
     
 	<atom:link href="https://jurjan.info/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Controlling a VFD with an ESP8266</title>
+      <link>https://jurjan.info/posts/iot/vfd/</link>
+      <pubDate>Sun, 09 Feb 2020 13:48:10 +0100</pubDate>
+      
+      <guid>https://jurjan.info/posts/iot/vfd/</guid>
+      <description>&lt;p&gt;In this project I have build an information-display using an ESP8266 to control a Vacuum Fluorescent Display (VFD).&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Powershell security measures you should know about</title>

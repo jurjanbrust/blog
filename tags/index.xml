@@ -6,10 +6,37 @@
     <description>Recent content in Tags on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Feb 2020 11:15:32 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 09 Feb 2020 13:48:10 +0100</lastBuildDate>
     
 	<atom:link href="https://jurjan.info/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>esp8266</title>
+      <link>https://jurjan.info/tags/esp8266/</link>
+      <pubDate>Sun, 09 Feb 2020 13:48:10 +0100</pubDate>
+      
+      <guid>https://jurjan.info/tags/esp8266/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iot</title>
+      <link>https://jurjan.info/tags/iot/</link>
+      <pubDate>Sun, 09 Feb 2020 13:48:10 +0100</pubDate>
+      
+      <guid>https://jurjan.info/tags/iot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vfd</title>
+      <link>https://jurjan.info/tags/vfd/</link>
+      <pubDate>Sun, 09 Feb 2020 13:48:10 +0100</pubDate>
+      
+      <guid>https://jurjan.info/tags/vfd/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>powershell</title>
