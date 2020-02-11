@@ -128,18 +128,28 @@
   </url>
   
   <url>
-    <loc>https://jurjan.info/categories/azure/</loc>
+    <loc>https://jurjan.info/tags/azure/</loc>
     <lastmod>2019-09-04T09:37:50+02:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jurjan.info/tags/azure/</loc>
+    <loc>https://jurjan.info/categories/azure/</loc>
     <lastmod>2019-09-04T09:37:50+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://jurjan.info/tags/training/</loc>
     <lastmod>2019-09-04T09:37:50+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/categories/ignite/</loc>
+    <lastmod>2019-09-03T15:52:31+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/posts/ignite/ignite2019/</loc>
+    <lastmod>2019-09-03T15:52:31+02:00</lastmod>
   </url>
   
   <url>
