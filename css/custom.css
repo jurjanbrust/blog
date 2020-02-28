@@ -3,7 +3,8 @@
 }
 
 .sidebar-heading a:hover {
-    color: #2065a1;
+    color: #2b7551;
+    text-decoration: none;
 }
 
 #sidebar {
