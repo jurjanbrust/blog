@@ -169,16 +169,19 @@ You can visit my <a href="https://github.com/jurjanbrust/esp8266_vfd">github rep
 <ol>
 <li>weather forecast</li>
 <li>traffic information</li>
+<li>Fitbit information</li>
+<li>Calendar (central family)
+<br /></li>
 </ol>
 
 <p>Other possible future things to add are:</p>
 
 <ol>
-<li>Calendar (central family)</li>
 <li>Tesla car status (charge level, location)</li>
-<li>Fitbit information</li>
 <li>Information of my current 3d print job</li>
 </ol>
+
+<p>The WebAPI uses OAuth 2.0 for both the Graph API and Fitbit API. I only implemented the refresh-token logic, so there is no Authorization logic (using the Microsoft.Owin library). Instead I used <a href="https://www.postman.com/downloads/">Postman</a> to get my user authorization code, access code and refresh token. You can <a href="https://docs.microsoft.com/en-us/graph/auth-register-app-v2">read more about this here</a>. As instructed in the code you only need to enter these tokens once&hellip; The WebAPI will store and update the tokens into AzureKeyVault on its own.</p>
 
 <p>If this project help you reduce time to develop, you can give me a cup of coffee :)</p>
 
