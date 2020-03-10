@@ -1,3 +1,7 @@
+button, input, optgroup, select, textarea {
+    margin-right: 10px !important;
+}
+
 .sidebar-heading a {
     color: #fff;
 }
@@ -62,34 +66,34 @@ h6,
     content: "\f097";
 }
 
-img[src~="small"] {
+img[alt~="small"] {
     width:150px;
     height: auto;
 }
-img[src~="medium"] {
+img[alt~="medium"] {
     width:200px;
     height: auto;
 }
-img[src~="large"] {
+img[alt~="large"] {
     width:300px;
     height: auto;
 }
-img[src~="extralarge"] {
+img[alt~="extralarge"] {
     width:600px;
     height: auto;
 }
-img[src~="border"] {
+img[alt~="border"] {
     border: 1px solid black;
 }
-img[src~="margin"] {
+img[alt~="margin"] {
     margin: 20px;
 }
-img[src~="shadow"] {
+img[alt~="shadow"] {
     box-shadow: 10px 10px 5px #ccc;
     -webkit-box-shadow: 10px 10px 5px #ccc;
     -moz-box-shadow: 10px 10px 5px #ccc;
 }
-img[src~="rotate"] {
+img[alt~="rotate"] {
     -webkit-transform: rotate(2deg);
     -moz-transform: rotate(2deg);
     transform: rotate(2deg);

@@ -125,42 +125,27 @@
          <h1>SharePoint listdata generator</h1>
          <p>Testing your application with large numbers of data is important but sadly often forgotten.
 SharePoint is no exception to this rule.</p>
-
 <h2 id="the-problem">The problem</h2>
-
 <p>Not having tested your application for large volume of data almost always has big consequences. Problems more often than not arise only after a certain period of time.
 Your application can run flawless for months or even years. Suddenly a limit is reached and your applications starts to fail.</p>
-
 <p>If you have worked with large lists in SharePoint, you have probably received errors due to the threshold limit. SharePoint is configured with a default threshold limit of 5000 items in a list or library. This means that if the items in a list or library exceed that number, any views, grouping and queries will will no longer work.</p>
-
 <h2 id="time-to-hunt-for-this-hidden-timebomb">Time to hunt for this hidden timebomb</h2>
-
 <p>Fill it up! Yes, although another valid approach to simulate this SharePoint limit would be to lower the listview-treshhold to a low number like 50 it will not always reveal all the problems having large lists.</p>
-
 <p>So we need to fill the list manually. But wait&hellip; filling SharePoint lists with more than 5000 items is laborious and repetitive work, even when using Excel.
 PowerShell is a perfect tool for this.
 Like most of my SharePoint PowerShell scripts, I like to use the CSOM (Client-side object model) Using CSOM allows me to use this script without being on the SharePoint server itself.</p>
-
 <h3 id="preview">Preview</h3>
-
 <p>The PowerShell listed below creates a list and generates the specified number of list items. The number of list items to be created can be configured and is really fast. Generating 5000 list items generally only takes a number of seconds.</p>
-
-<p><img src="/img/generateListData/generateListData_2019-09-25-14-42-28.png# shadow small" alt="" /></p>
-
+<p><img src="/img/generateListData/generateListData_2019-09-25-14-42-28.png" alt="shadow small"></p>
 <h3 id="usage">Usage</h3>
-
 <p>Output of the PowerShell should look like this.</p>
-
-<p><img src="/img/generateListData/generateListData_2019-09-25-14-42-40.png# shadow medium" alt="" /></p>
-
+<p><img src="/img/generateListData/generateListData_2019-09-25-14-42-40.png" alt="shadow medium"></p>
 <h3 id="code">Code</h3>
-
 <p>In order to get this to work, you will first need to copy the &lsquo;<strong>Microsoft.SharePoint.Client.dll</strong>&rsquo; and &lsquo;<strong>Microsoft.SharePoint.Client.Runtime.dll</strong>&rsquo; to the same folder of this script.
 The script listed here should be seen as a starting point for your own specific SharePoint list.
 If no <strong>$listName</strong> list is found it will create a list for you to fiddle around with.
 In your situation you will probably already have a SharePoint list with some content-types or list fields added to it.
-In this example I only use a field called &ldquo;<strong>QuestionType</strong>&rdquo;. Of course you can- and probably will add fields to this to suit your situation.</p>
-
+In this example I only use a field called &ldquo;<strong>QuestionType</strong>&quot;. Of course you can- and probably will add fields to this to suit your situation.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#960050;background-color:#1e0010">﻿</span><span style="color:#75715e"># Script to create and fill a list with listitems. Usefull for detecting problems with listview-treshhold issues (&gt; 5000 listitems).</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#75715e"># Note that listview-treshhold issues can be solved by using SharePoint indexed columns.</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#75715e"># Change this script to include other columns besides &#39;QuestionType&#39;. &#39;QuestionType&#39; is only implemented here to serve as an example.</span>
@@ -197,8 +182,8 @@ In this example I only use a field called &ldquo;<strong>QuestionType</strong>&r
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>    $list.Update(); 
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>    $clientContext.ExecuteQuery(); 
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>    <span style="color:#75715e"># add some listfields for example purposes</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>    $a = $list.Fields.AddFieldAsXml(<span style="color:#e6db74">&#34;&lt;Field Type=&#39;Choice&#39; DisplayName=&#39;QuestionType&#39;&gt;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>	<span style="color:#75715e"># add some listfields for example purposes</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>	$a = $list.Fields.AddFieldAsXml(<span style="color:#e6db74">&#34;&lt;Field Type=&#39;Choice&#39; DisplayName=&#39;QuestionType&#39;&gt;
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span style="color:#e6db74">                            &lt;CHOICES&gt;
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span style="color:#e6db74">                                &lt;CHOICE&gt;Office 365&lt;/CHOICE&gt;
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span style="color:#e6db74">                                &lt;CHOICE&gt;General&lt;/CHOICE&gt;
@@ -224,16 +209,15 @@ In this example I only use a field called &ldquo;<strong>QuestionType</strong>&r
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span>    $newListItem[<span style="color:#e6db74">&#34;Title&#34;</span>] =  $titleText
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span>    $newListItem[<span style="color:#e6db74">&#34;QuestionType&#34;</span>] = $choices | Get-Random -count 1
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span>    $newListItem.Update()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span>    <span style="color:#66d9ef">if</span>($index % 100 <span style="color:#f92672">-eq</span> 0)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65</span>    {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66</span>        Write-Host $index
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67</span>        $clientContext.ExecuteQuery()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span>	<span style="color:#66d9ef">if</span>($index % 100 <span style="color:#f92672">-eq</span> 0)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65</span>	{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66</span>		Write-Host $index
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67</span>		$clientContext.ExecuteQuery()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68</span>	}
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69</span>}
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70</span>$clientContext.ExecuteQuery()
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71</span>Write-Host <span style="color:#e6db74">&#34;Done!&#34;</span> -ForegroundColor Green
 </code></pre></div>
-
 <p><a class="button" href="/files/sharepoint/lists/GenerateListTestData.ps1">open raw file</a></p>
          
       </div>

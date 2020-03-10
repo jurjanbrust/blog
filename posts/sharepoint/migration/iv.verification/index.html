@@ -123,38 +123,26 @@
     <div class="col-lg-8">
       <div class="content-column-content">
          <h1>Migrating large corporate SharePoint intranets</h1>
-         <ul class="task-list">
-<li><label><input type="checkbox" checked disabled class="task-list-item"> <a href="/posts/sharepoint/migration/i.approach/">Approach</a> (part I of IV)</label></li>
-<li><label><input type="checkbox" checked disabled class="task-list-item"> <a href="/posts/sharepoint/migration/ii.analysis">Analysis</a> (part II of IV)</label></li>
-<li><label><input type="checkbox" checked disabled class="task-list-item"> <a href="/posts/sharepoint/migration/iii.migrate">Migration</a> (part III of IV)</label></li>
-<li><label><input type="checkbox" checked disabled class="task-list-item"> <a href="/posts/sharepoint/migration/iv.verification">Verification</a> (part IV of IV)</label></li>
+         <ul>
+<li><input checked="" disabled="" type="checkbox"><a href="/posts/sharepoint/migration/i.approach/">Approach</a> (part I of IV)</li>
+<li><input checked="" disabled="" type="checkbox"><a href="/posts/sharepoint/migration/ii.analysis">Analysis</a> (part II of IV)</li>
+<li><input checked="" disabled="" type="checkbox"><a href="/posts/sharepoint/migration/iii.migrate">Migration</a> (part III of IV)</li>
+<li><input checked="" disabled="" type="checkbox"><a href="/posts/sharepoint/migration/iv.verification">Verification</a> (part IV of IV)</li>
 </ul>
-
 <h2 id="verification">Verification</h2>
-
 <p>For most of my migration projects I have used ShareGate very successfully as the primary migration tool. ShareGate has got quite excessive logging to get insights about the quality of the migration. But what if ShareGate logs that everything is fine, but when in fact it is not?
 To get better confidence about the quality of ShareGate (which is just fine in my opinion) I also developed a PowerShell script to check if all documents have been migrated.</p>
-
 <h3 id="script">Script</h3>
-
 <p>The following screenshot shows how the script should be used. Replace the <strong>source</strong> and <strong>destination</strong> URLs to your situation. Also change the <strong>Documents</strong> list name if needed.</p>
-
-<p><img src="/img/IV.Verification/IV.Verification_2019-10-23-14-24-42.png# shadow" alt="" /></p>
-
+<p><img src="/img/IV.Verification/IV.Verification_2019-10-23-14-24-42.png" alt="shadow"></p>
 <p>Next the username and password should be supplied to connect to the SharePoint online tenant. The current user credentials are being used to connect to the source on-premise tenant.</p>
-
 <p>Screen output:</p>
-
-<p><img src="/img/IV.Verification/IV.Verification_2019-10-23-14-34-55.png# shadow" alt="" /></p>
-
+<p><img src="/img/IV.Verification/IV.Verification_2019-10-23-14-34-55.png" alt="shadow"></p>
 <p>and csv output:</p>
-
-<p><img src="/img/IV.Verification/IV.Verification_2019-10-23-14-36-32.png# shadow" alt="" /></p>
-
+<p><img src="/img/IV.Verification/IV.Verification_2019-10-23-14-36-32.png" alt="shadow"></p>
 <blockquote>
 <p>listCompare.ps1</p>
 </blockquote>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#66d9ef">param</span>(
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $False, <span style="color:#66d9ef">Position</span> = 1)] <span style="color:#66d9ef">[string]</span>$siteUrlOnPrem,
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $False, <span style="color:#66d9ef">Position</span> = 2)] <span style="color:#66d9ef">[string]</span>$siteUrlOnline,
@@ -236,7 +224,7 @@ To get better confidence about the quality of ShareGate (which is just fine in m
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79</span>Write-Host $differences.Count files are missing, starting export to csv file <span style="color:#e6db74">&#34;&#39;ListCompare_Export_$fileName.csv&#39;&#34;</span> -ForegroundColor Red
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81</span>$differences | <span style="color:#66d9ef">ForEach</span>-Object { 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82</span>   $completed = ($i*100)/$differences.Count
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82</span>	$completed = ($i*100)/$differences.Count
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83</span>    Write-Progress -Activity <span style="color:#e6db74">&#34;Export &#34;</span> -percentComplete $completed; 
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84</span>    Write-Host $_.SideIndicator $_.InputObject -ForegroundColor DarkYellow
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85</span>
@@ -265,18 +253,12 @@ To get better confidence about the quality of ShareGate (which is just fine in m
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108</span>}
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110</span>$tasks | export-csv <span style="color:#e6db74">&#34;.\ListCompare_Export_$fileName.csv&#34;</span> -noTypeInformation;</code></pre></div>
-
 <p><a class="button" href="/files/sharepoint/analyse_sources/listCompare.ps1">open raw file</a></p>
-
 <h4 id="final-words">Final words</h4>
-
 <p>This concludes my blog post about SharePoint migrations. For questions, remarks or suggestions feel free to drop me a note in the contact form on the left.</p>
-
 <p>If this project help you reduce time to develop, you can give me a cup of coffee :)</p>
-
-<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=FEAWWGSBYLMZL&amp;currency_code=EUR&amp;source=url"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="Donate" /></a></p>
-
-<p><img src="/img/donate.png" alt="qr" /></p>
+<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=FEAWWGSBYLMZL&amp;currency_code=EUR&amp;source=url"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="Donate"></a></p>
+<p><img src="/img/donate.png" alt="qr"></p>
          
       </div>
     </div>

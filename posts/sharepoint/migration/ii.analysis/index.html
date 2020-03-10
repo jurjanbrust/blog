@@ -123,68 +123,50 @@
     <div class="col-lg-8">
       <div class="content-column-content">
          <h1>Migrating large corporate SharePoint intranets</h1>
-         <ul class="task-list">
-<li><label><input type="checkbox" checked disabled class="task-list-item"> <a href="/posts/sharepoint/migration/i.approach/">Approach</a> (part I of IV)</label></li>
-<li><label><input type="checkbox" checked disabled class="task-list-item"> <a href="/posts/sharepoint/migration/ii.analysis">Analysis</a> (part II of IV)</label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> <a href="/posts/sharepoint/migration/iii.migrate">Migration</a> (part III of IV)</label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> <a href="/posts/sharepoint/migration/iv.verification">Verification</a> (part IV of IV)</label></li>
+         <ul>
+<li><input checked="" disabled="" type="checkbox"><a href="/posts/sharepoint/migration/i.approach/">Approach</a> (part I of IV)</li>
+<li><input checked="" disabled="" type="checkbox"><a href="/posts/sharepoint/migration/ii.analysis">Analysis</a> (part II of IV)</li>
+<li><input disabled="" type="checkbox"><a href="/posts/sharepoint/migration/iii.migrate">Migration</a> (part III of IV)</li>
+<li><input disabled="" type="checkbox"><a href="/posts/sharepoint/migration/iv.verification">Verification</a> (part IV of IV)</li>
 </ul>
-
 <h2 id="analysis">Analysis</h2>
-
 <p>Your most valuable resource for information about the to-be-migrated environment will be the users itself. Getting to know who is working on the SharePoint site and how they are using it is vital for your analysis. Also use the opportunity to give insights about your migration strategy.
 Your second most valuable tool will be to use scripting in order to analyse the environment. I included the complete source-code of the scripts that I am using in this post.</p>
-
 <h3 id="when-customizations-become-an-application">When customizations become an application</h3>
-
 <p>Co-workers in the organization start to use SharePoint as a tool to facilitate daily work. Some used only by a few people and others used by a large group of people as a daily driver. These co-workers who created these customisation often are called &lsquo;power users&rsquo; or &lsquo;citizen developers&rsquo;. Power users are focussed on solving business problems and less on topics such as performance, scalability, security, efficiency and product lifecycle.</p>
-
 <p>What started as a small simple customization can eventually become a full blown business critical application with data exchanges to other line-of-business systems.
 These SharePoint applications will become harder to maintain over time and SharePoint boundaries will become impossible to solve without a complete redesign.
 Changes that are being applied lead to unavailability of the application. Often due to simple user errors or otherwise because the changes require hours to implement manually.</p>
-
 <p>When you find such an application it is important to ask yourself the following questions.</p>
-
-<ul class="task-list">
-<li><label><input type="checkbox" disabled class="task-list-item"> Is SharePoint still the right platform for this to run?</label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> Is the application still manageable?</label></li>
-<li><label><input type="checkbox" disabled class="task-list-item"> Are web parts / tooling / other parts still supported in the Microsoft roadmap?</label></li>
+<ul>
+<li><input disabled="" type="checkbox">Is SharePoint still the right platform for this to run?</li>
+<li><input disabled="" type="checkbox">Is the application still manageable?</li>
+<li><input disabled="" type="checkbox">Are web parts / tooling / other parts still supported in the Microsoft roadmap?</li>
 </ul>
-
 <p>If the answer of one of these questions is no you should consider to rebuild instead of migrate.</p>
-
 <h3 id="finding-customizations">Finding customizations</h3>
-
 <p>Once you talked to the end-users and / or business owner of the SharePoint site(s) and explained the migration strategy it is time to use tooling in order to analyse the farm.
 A list of items to look for is:</p>
-
 <ol>
 <li>InfoPath forms: this is a big indication of customization.</li>
 <li>JavaScript files: this is yet another big indication of customization.</li>
 <li>SharePoint Workflows: workflows are an indication for business processes.</li>
 <li>List information. List information gives insight into:
-
 <ol>
 <li>item count.</li>
 <li>list base types such as KPI (key performance indicator). KPI is an excellent example of a problem when migrating to SharePoint online. This because SharePoint 2010 / 2013 KPI&rsquo;s are deprecated. A redesign will be unavoidable.</li>
-</ol></li>
+</ol>
+</li>
 <li>Large files: find files larger than destination limit : 250 is default for on premises.</li>
 <li>File versions: document versions can take up a lot of space, especially for non-office documents. track down these files and limit the number of versions if possible.</li>
 </ol>
-
 <p>Other filetypes to look for are: CSS, XML, DOCM, ACCESS, HTML, XSL/T.
 Know which site-templates have been used and how permissions have been set and finally the content types used.</p>
-
 <h4 id="folder-structure">Folder structure</h4>
-
 <p>In the folder structure you will see all the files needed in order to do an analysis of the content in the SharePoint environment. All files displayed below will be explained in descending order.</p>
-
-<p><img src="/img/II.Analysis/II.Analysis_2019-10-22-15-12-58.png# shadow" alt="folder" /></p>
-
-<h4 id="allfilesinone-cmd">allfilesinone.cmd</h4>
-
+<p><img src="/img/II.Analysis/II.Analysis_2019-10-22-15-12-58.png" alt="shadow"></p>
+<h4 id="allfilesinonecmd">allfilesinone.cmd</h4>
 <p>The <strong>analyseSharePoint.ps1</strong> script described below will generate a separate .csv file for every line in sites.csv. This .cmd will combine all these separate files into one combined.csv and only keep one column-header line. This allows the combines.csv to be opened in Excel. Excel is a great way to create PowerPivot tables and do all kinds of calculations on the data.</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>@echo off
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>ECHO Set working directory
@@ -214,16 +196,10 @@ Know which site-templates have been used and how permissions have been set and f
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>    set /a cnt+=1
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>  )
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>)</code></pre></div>
-
 <p><a class="button" href="/files/sharepoint/analyse_sources/allfilesinone.cmd">open raw file</a></p>
-
-<h4 id="analysesharepoint-start-ps1">analyseSharePoint_Start.ps1</h4>
-
+<h4 id="analysesharepoint_startps1">analyseSharePoint_Start.ps1</h4>
 <p>This script is the script that is to be executed. It reads an comma separated file called &lsquo;sites.csv&rsquo; that is containing all the URLs to analyse. Note that it is possible to analyse all the subsites by using only one URL (recursion).</p>
-
-<p><code>Note: in order to allow the PowerShell to execute on your local machine you might need to change the execution policy (Set-ExecutionPolicy)
-</code></p>
-
+<p><code>Note: in order to allow the PowerShell to execute on your local machine you might need to change the execution policy (Set-ExecutionPolicy)</code></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#960050;background-color:#1e0010">﻿</span>$input = <span style="color:#66d9ef">[Array]</span>(Import-Csv -Path <span style="color:#e6db74">&#34;sites.csv&#34;</span>)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#75715e"># setup output directory</span>
@@ -240,19 +216,13 @@ Know which site-templates have been used and how permissions have been set and f
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>   .\analyseSharePoint.ps1 -url $line.SiteUrl $outputFolderName
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>}
 </code></pre></div>
-
 <p><a class="button" href="/files/sharepoint/analyse_sources/analyseSharePoint_Start.ps1">open raw file</a></p>
-
-<h4 id="analysesharepoint-ps1">analyseSharePoint.ps1</h4>
-
+<h4 id="analysesharepointps1">analyseSharePoint.ps1</h4>
 <p>The main script that contains all the functions needed in order to analyse. I know that it is big, but it is also well structured and easy to extend.
 It is using SharePoint CSOM to connect and query the SharePoint farm.
 Change the following variable to change the type of analysis:</p>
-
 <pre><code>$function = [Options]::lists 
-</code></pre>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#960050;background-color:#1e0010">﻿</span><span style="color:#66d9ef">Param</span>(
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#960050;background-color:#1e0010">﻿</span><span style="color:#66d9ef">Param</span>(
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $True, <span style="color:#66d9ef">Position</span> = 0)] <span style="color:#66d9ef">[string]</span>$url,
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $True, <span style="color:#66d9ef">Position</span> = 1)] <span style="color:#66d9ef">[string]</span>$outputFolderName
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4</span>)
@@ -525,32 +495,19 @@ Change the following variable to change the type of analysis:</p>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">271</span>    <span style="color:#75715e"># versions: document versions can take up a lot of space, especially for non-office documents. track down these files and limit the number of versions if possible. (use -recursive to incude all subsites)</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">272</span>    (<span style="color:#66d9ef">[Options]</span>::versions) { export -function (<span style="color:#66d9ef">[Options]</span>::versions) }
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">273</span>}</code></pre></div>
-
 <p><a class="button" href="/files/sharepoint/analyse_sources/analyseSharePoint.ps1">open raw file</a></p>
-
-<h4 id="microsoft-sharepoint-client">Microsoft.SharePoint.Client</h4>
-
+<h4 id="microsoftsharepointclient">Microsoft.SharePoint.Client</h4>
 <p>The client DLLs included in this package are SharePoint 2010 assemblies. These can be replaced by the assemblies of other SharePoint versions.</p>
-
 <h4 id="see-it-in-action">See it in action</h4>
-
 <p>Download the complete solution <a href="/files/sharepoint/analyse_sources/analyse_sources.zip">here</a></p>
-
 <p>Just to give you an idea of the solution here are some screenshots:</p>
-
-<p><img src="/img/II.Analysis/II.Analysis_2019-10-23-07-59-40.png# shadow" alt="doclib" /></p>
-
+<p><img src="/img/II.Analysis/II.Analysis_2019-10-23-07-59-40.png" alt="doclib shadow"></p>
 <p>Screenshot of a document library that contains some InfoPath files.</p>
-
-<p><img src="/img/II.Analysis/II.Analysis_2019-10-23-08-00-07.png# shadow" alt="script" /></p>
-
+<p><img src="/img/II.Analysis/II.Analysis_2019-10-23-08-00-07.png" alt="script shadow"></p>
 <p>Screenshot of the script-output.</p>
-
-<p><img src="/img/II.Analysis/II.Analysis_2019-10-23-08-00-25.png# shadow" alt="csv" /></p>
-
+<p><img src="/img/II.Analysis/II.Analysis_2019-10-23-08-00-25.png" alt="csv shadow"></p>
 <p>Screenshot of the generated .csv output</p>
-
-<h6 id="continue-reading-this-series-here-posts-sharepoint-migration-iii-migrate">Continue reading this series <a href="/posts/sharepoint/migration/iii.migrate/">here</a></h6>
+<h6 id="continue-reading-this-series-herepostssharepointmigrationiiimigrate">Continue reading this series <a href="/posts/sharepoint/migration/iii.migrate/">here</a></h6>
          
       </div>
     </div>
