@@ -296,35 +296,36 @@ In this example I only use a field called &ldquo;<strong>QuestionType</strong>&q
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73</span>            $spprops[$_.InternalName] = <span style="color:#66d9ef">[System.DateTime]</span>::Now.AddDays($days)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74</span>        }
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75</span>        <span style="color:#66d9ef">if</span>($_.TypeAsString <span style="color:#f92672">-eq</span> <span style="color:#e6db74">&#34;TaxonomyFieldType&#34;</span>) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76</span>            $terms = Get-PnPTerm -TermSet $_.TermSetId -TermGroup $_.Group
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76</span>            $terms = Get-PnPTerm -TermSet $_.TermSetId -TermGroup $_.Group -IncludeChildTerms
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77</span>            $randomTerm =  $terms | Get-Random -Count 1
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78</span>            $taxFields[$_.InternalName] = $randomTerm.Id
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79</span>        }
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80</span>        <span style="color:#66d9ef">if</span>($_.TypeAsString <span style="color:#f92672">-eq</span> <span style="color:#e6db74">&#34;TaxonomyFieldTypeMulti&#34;</span> <span style="color:#f92672">-and</span> $_.InternalName <span style="color:#f92672">-ne</span> <span style="color:#e6db74">&#34;TaxKeyword&#34;</span>) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81</span>            $terms = Get-PnPTerm -TermSet $_.TermSetId -TermGroup $_.Group -ErrorAction <span style="color:#66d9ef">Continue</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81</span>            $terms = Get-PnPTerm -TermSet $_.TermSetId -TermGroup $_.Group -IncludeChildTerms -ErrorAction <span style="color:#66d9ef">Continue</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82</span>            $randomTerm =  $terms | Get-Random -Count 1
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83</span>            <span style="color:#66d9ef">if</span>($randomTerm <span style="color:#f92672">-ne</span> $null) {
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84</span>                $taxFields[$_.InternalName] = $randomTerm.Id
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85</span>            }
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86</span>        }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87</span>        <span style="color:#66d9ef">if</span>($($spprops[$_.InternalName]) <span style="color:#f92672">-ne</span> $null) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88</span>            Write-Host <span style="color:#e6db74">&#34;</span>$($_.InternalName)<span style="color:#e6db74">:&#34;</span> -NoNewline -ForegroundColor Red
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89</span>            Write-Host <span style="color:#e6db74">&#34;</span>$($spprops[$_.InternalName])<span style="color:#e6db74">&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90</span>        }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91</span>    }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92</span>    $file = Add-PnPFile -Path testfile1.txt -Folder $list.EntityTypeName -NewFileName $fileName -Values $spprops 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93</span>    <span style="color:#66d9ef">if</span>($null <span style="color:#f92672">-ne</span> $file) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94</span>        Write-Host <span style="color:#e6db74">&#34;Added List item: </span>$($file.ListItemAllFields.Id)<span style="color:#e6db74"> - </span>$($file.Title)<span style="color:#e6db74">&#34;</span> -ForegroundColor Green
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95</span>        <span style="color:#75715e"># I was unable to set the taxonomy fields directly, so I do it here by using Set-PnpTaxonomyFieldValue</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96</span>        <span style="color:#66d9ef">foreach</span> ($h <span style="color:#66d9ef">in</span> $taxFields.GetEnumerator()) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97</span>            Write-Host <span style="color:#e6db74">&#34;Setting Taxfield: &#34;</span>  -ForegroundColor Green -NoNewline
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98</span>            Write-Host <span style="color:#e6db74">&#34;</span>$($h.Name)<span style="color:#e6db74"> - </span>$($h.Value)<span style="color:#e6db74">&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99</span>            Set-PnPTaxonomyFieldValue -ListItem $file.ListItemAllFields -InternalFieldName $h.Name -TermId  $h.Value
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100</span>        }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101</span>    }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104</span>Write-Host <span style="color:#e6db74">&#34;Done!&#34;</span> -ForegroundColor Green
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87</span>                
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88</span>        <span style="color:#66d9ef">if</span>($($spprops[$_.InternalName]) <span style="color:#f92672">-ne</span> $null) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89</span>            Write-Host <span style="color:#e6db74">&#34;</span>$($_.InternalName)<span style="color:#e6db74">:&#34;</span> -NoNewline -ForegroundColor Red
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90</span>            Write-Host <span style="color:#e6db74">&#34;</span>$($spprops[$_.InternalName])<span style="color:#e6db74">&#34;</span> -ForegroundColor Yellow
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93</span>    $file = Add-PnPFile -Path testfile1.txt -Folder $list.EntityTypeName -NewFileName $fileName -Values $spprops 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94</span>    <span style="color:#66d9ef">if</span>($null <span style="color:#f92672">-ne</span> $file) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95</span>        Write-Host <span style="color:#e6db74">&#34;Added List item: </span>$($file.ListItemAllFields.Id)<span style="color:#e6db74"> - </span>$($file.Title)<span style="color:#e6db74">&#34;</span> -ForegroundColor Green
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96</span>        <span style="color:#75715e"># I was unable to set the taxonomy fields directly, so I do it here by using Set-PnpTaxonomyFieldValue</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97</span>        <span style="color:#66d9ef">foreach</span> ($h <span style="color:#66d9ef">in</span> $taxFields.GetEnumerator()) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98</span>            Write-Host <span style="color:#e6db74">&#34;Setting Taxfield: &#34;</span>  -ForegroundColor Green -NoNewline
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99</span>            Write-Host <span style="color:#e6db74">&#34;</span>$($h.Name)<span style="color:#e6db74"> - </span>$($h.Value)<span style="color:#e6db74">&#34;</span> -ForegroundColor Yellow
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100</span>            Set-PnPTaxonomyFieldValue -ListItem $file.ListItemAllFields -InternalFieldName $h.Name -TermId  $h.Value
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105</span>Write-Host <span style="color:#e6db74">&#34;Done!&#34;</span> -ForegroundColor Green
 </code></pre></div>
 <p><a class="button" href="/files/sharepoint/lists/DocumentLibrary/generateDocumentLibraryItems.ps1">open raw file</a></p>
 <p>Make sure you have a dummy text-file in the same directory named &lsquo;testfile1.txt&rsquo;</p>
