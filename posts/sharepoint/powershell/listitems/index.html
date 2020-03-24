@@ -136,64 +136,69 @@ But I find that this simple PowerShell is also a great method to quickly inspect
 <li>Fourth (optional) filter on the list column names</li>
 </ul>
 <h2 id="code">Code</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#66d9ef">param</span>(
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>	[<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span>=$True,<span style="color:#66d9ef">Position</span>=1)] <span style="color:#66d9ef">[string]</span>$url,
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>	[<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span>=$True,<span style="color:#66d9ef">Position</span>=2)] <span style="color:#66d9ef">[string]</span>$listTitle,
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>	[<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span>=$False,<span style="color:#66d9ef">Position</span>=3)] <span style="color:#66d9ef">[string]</span>$listItemID,
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>	[<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span>=$False,<span style="color:#66d9ef">Position</span>=4)] <span style="color:#66d9ef">[string]</span>$filter
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>Write-Host <span style="color:#e6db74">&#34;usage: ListItems.ps1 [url] [listTitle] [listItemID] [filter]       (listItemID and filter is optional)&#34;</span> -ForegroundColor Yellow -BackgroundColor Green
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#66d9ef">if</span> ($null <span style="color:#f92672">-eq</span> (Get-PSSnapin -Name Microsoft.SharePoint.PowerShell -ErrorAction SilentlyContinue))
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>    Add-PSSnapin Microsoft.SharePoint.PowerShell
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span style="color:#66d9ef">try</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>	$web = Get-SPWeb $url -ErrorAction SilentlyContinue
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>	$list = $web.Lists[$listTitle]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>} <span style="color:#66d9ef">catch</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>	Write-Host <span style="color:#e6db74">&#34;$url does not exist&#34;</span> -ForegroundColor Red
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>	<span style="color:#66d9ef">break</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span style="color:#66d9ef">if</span>(<span style="color:#f92672">-not</span> $listItemID)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>	Write-Host <span style="color:#e6db74">&#34;ListItemID was not supplied, listing all listitems&#34;</span> -BackgroundColor DarkGreen -ForegroundColor Black
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>	<span style="color:#66d9ef">if</span>($null <span style="color:#f92672">-eq</span> $list)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>	{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>		Write-Host <span style="color:#e6db74">&#34;No list found, showing all available lists&#34;</span> -ForegroundColor Red
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>		$web.Lists | <span style="color:#66d9ef">ForEach</span>-Object {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>			Write-Host $_.Title
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>		}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>	}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>	$list.Items | Format-Table
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span style="color:#66d9ef">else</span> 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>	Write-Host <span style="color:#e6db74">&#34;Showing specific ListItem: &#34;</span> -BackgroundColor DarkGreen -ForegroundColor Black
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>	<span style="color:#66d9ef">try</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>		$listItem = $list.GetItemByID($listItemID)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>	} <span style="color:#66d9ef">catch</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>		Write-Host <span style="color:#e6db74">&#34;Listitem $listItemID does not exists&#34;</span> -ForegroundColor Red
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>		<span style="color:#66d9ef">break</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>	}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span>	
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>	<span style="color:#66d9ef">if</span>(<span style="color:#f92672">-not</span> $filter)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>	{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>		$listItem.Fields | <span style="color:#66d9ef">ForEach</span>-Object {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>	 		Write-Host $_.Title <span style="color:#e6db74">&#34;[&#34;</span> $_.InternalName <span style="color:#e6db74">&#34;]</span><span style="color:#ae81ff">`t`t</span><span style="color:#e6db74">&#34;</span> -NoNewline -ForegroundColor Yellow -BackgroundColor DarkRed
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>	 		Write-Host $listItem[$_.InternalName] -ForegroundColor Yellow -BackgroundColor Red
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>		}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>	}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span>	<span style="color:#66d9ef">else</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span>	{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span>		$listItem.Fields | Where-Object {$_.InternalName <span style="color:#f92672">-match</span> $filter} | <span style="color:#66d9ef">ForEach</span>-Object {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span>	 		Write-Host $_.Title <span style="color:#e6db74">&#34;[&#34;</span> $_.InternalName <span style="color:#e6db74">&#34;]</span><span style="color:#ae81ff">`t`t</span><span style="color:#e6db74">&#34;</span> -NoNewline -ForegroundColor Yellow -BackgroundColor DarkRed
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span>			Write-Host $listItem[$_.InternalName] -ForegroundColor Yellow -BackgroundColor Red
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>		}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span>	}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span>}</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#75715e"># Copyright (C) www.jurjan.info - All Rights Reserved</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#75715e"># Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &#34;Software&#34;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#75715e"># The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#75715e"># THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#66d9ef">param</span>(
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>	[<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span>=$True,<span style="color:#66d9ef">Position</span>=1)] <span style="color:#66d9ef">[string]</span>$url,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>	[<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span>=$True,<span style="color:#66d9ef">Position</span>=2)] <span style="color:#66d9ef">[string]</span>$listTitle,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>	[<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span>=$False,<span style="color:#66d9ef">Position</span>=3)] <span style="color:#66d9ef">[string]</span>$listItemID,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>	[<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span>=$False,<span style="color:#66d9ef">Position</span>=4)] <span style="color:#66d9ef">[string]</span>$filter
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>Write-Host <span style="color:#e6db74">&#34;usage: ListItems.ps1 [url] [listTitle] [listItemID] [filter]       (listItemID and filter is optional)&#34;</span> -ForegroundColor Yellow -BackgroundColor Green
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span style="color:#66d9ef">if</span> ($null <span style="color:#f92672">-eq</span> (Get-PSSnapin -Name Microsoft.SharePoint.PowerShell -ErrorAction SilentlyContinue))
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    Add-PSSnapin Microsoft.SharePoint.PowerShell
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span style="color:#66d9ef">try</span> {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>	$web = Get-SPWeb $url -ErrorAction SilentlyContinue
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>	$list = $web.Lists[$listTitle]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>} <span style="color:#66d9ef">catch</span> {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>	Write-Host <span style="color:#e6db74">&#34;$url does not exist&#34;</span> -ForegroundColor Red
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>	<span style="color:#66d9ef">break</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span><span style="color:#66d9ef">if</span>(<span style="color:#f92672">-not</span> $listItemID)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>	Write-Host <span style="color:#e6db74">&#34;ListItemID was not supplied, listing all listitems&#34;</span> -BackgroundColor DarkGreen -ForegroundColor Black
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>	<span style="color:#66d9ef">if</span>($null <span style="color:#f92672">-eq</span> $list)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>	{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>		Write-Host <span style="color:#e6db74">&#34;No list found, showing all available lists&#34;</span> -ForegroundColor Red
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>		$web.Lists | <span style="color:#66d9ef">ForEach</span>-Object {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>			Write-Host $_.Title
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>		}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>	$list.Items | Format-Table
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span style="color:#66d9ef">else</span> 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>	Write-Host <span style="color:#e6db74">&#34;Showing specific ListItem: &#34;</span> -BackgroundColor DarkGreen -ForegroundColor Black
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>	<span style="color:#66d9ef">try</span> {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span>		$listItem = $list.GetItemByID($listItemID)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>	} <span style="color:#66d9ef">catch</span> {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>		Write-Host <span style="color:#e6db74">&#34;Listitem $listItemID does not exists&#34;</span> -ForegroundColor Red
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>		<span style="color:#66d9ef">break</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>	
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>	<span style="color:#66d9ef">if</span>(<span style="color:#f92672">-not</span> $filter)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>	{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span>		$listItem.Fields | <span style="color:#66d9ef">ForEach</span>-Object {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span>	 		Write-Host $_.Title <span style="color:#e6db74">&#34;[&#34;</span> $_.InternalName <span style="color:#e6db74">&#34;]</span><span style="color:#ae81ff">`t`t</span><span style="color:#e6db74">&#34;</span> -NoNewline -ForegroundColor Yellow -BackgroundColor DarkRed
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span>	 		Write-Host $listItem[$_.InternalName] -ForegroundColor Yellow -BackgroundColor Red
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span>		}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>	<span style="color:#66d9ef">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span>	{
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span>		$listItem.Fields | Where-Object {$_.InternalName <span style="color:#f92672">-match</span> $filter} | <span style="color:#66d9ef">ForEach</span>-Object {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span>	 		Write-Host $_.Title <span style="color:#e6db74">&#34;[&#34;</span> $_.InternalName <span style="color:#e6db74">&#34;]</span><span style="color:#ae81ff">`t`t</span><span style="color:#e6db74">&#34;</span> -NoNewline -ForegroundColor Yellow -BackgroundColor DarkRed
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60</span>			Write-Host $listItem[$_.InternalName] -ForegroundColor Yellow -BackgroundColor Red
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span>		}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span>}</code></pre></div>
 <p><a class="button" href="/files/sharepoint/lists/listItems.ps1">open raw file</a></p>
          
       </div>

@@ -143,116 +143,121 @@ To get better confidence about the quality of ShareGate (which is just fine in m
 <blockquote>
 <p>listCompare.ps1</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#66d9ef">param</span>(
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $False, <span style="color:#66d9ef">Position</span> = 1)] <span style="color:#66d9ef">[string]</span>$siteUrlOnPrem,
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $False, <span style="color:#66d9ef">Position</span> = 2)] <span style="color:#66d9ef">[string]</span>$siteUrlOnline,
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $False, <span style="color:#66d9ef">Position</span> = 3)] <span style="color:#66d9ef">[string]</span>$listTitle
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7</span>Set-ExecutionPolicy -Scope <span style="color:#66d9ef">Process</span> -ExecutionPolicy Bypass
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9</span>Add-Type -Path <span style="color:#e6db74">&#34;$PSScriptRoot\Microsoft.SharePoint.Client.dll&#34;</span> 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10</span>Add-Type -Path <span style="color:#e6db74">&#34;$PSScriptRoot\Microsoft.SharePoint.Client.Runtime.dll&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-PowerShell" data-lang="PowerShell"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#75715e"># Copyright (C) www.jurjan.info - All Rights Reserved</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2</span><span style="color:#75715e"># Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &#34;Software&#34;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3</span><span style="color:#75715e"># The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4</span><span style="color:#75715e"># THE SOFTWARE IS PROVIDED &#34;AS IS&#34;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6</span><span style="color:#66d9ef">param</span>(
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $False, <span style="color:#66d9ef">Position</span> = 1)] <span style="color:#66d9ef">[string]</span>$siteUrlOnPrem,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $False, <span style="color:#66d9ef">Position</span> = 2)] <span style="color:#66d9ef">[string]</span>$siteUrlOnline,
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9</span>    [<span style="color:#66d9ef">Parameter</span>(<span style="color:#66d9ef">Mandatory</span> = $False, <span style="color:#66d9ef">Position</span> = 3)] <span style="color:#66d9ef">[string]</span>$listTitle
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10</span>)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12</span><span style="color:#66d9ef">function</span> getAllListItems($_ctx, $_listName, $_rowLimit) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13</span>    $list = $_ctx.Web.Lists.GetByTitle($_listName)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14</span>    $_ctx.Load($list)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16</span>    $query = New-Object Microsoft.SharePoint.Client.CamlQuery
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17</span>    $query.ViewXml = <span style="color:#e6db74">&#34;&lt;View Scope=&#39;RecursiveAll&#39;&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18</span><span style="color:#e6db74">        &lt;RowLimit&gt;$_rowLimit&lt;/RowLimit&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19</span><span style="color:#e6db74">    &lt;/View&gt;&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12</span>Set-ExecutionPolicy -Scope <span style="color:#66d9ef">Process</span> -ExecutionPolicy Bypass
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14</span>Add-Type -Path <span style="color:#e6db74">&#34;$PSScriptRoot\Microsoft.SharePoint.Client.dll&#34;</span> 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15</span>Add-Type -Path <span style="color:#e6db74">&#34;$PSScriptRoot\Microsoft.SharePoint.Client.Runtime.dll&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17</span><span style="color:#66d9ef">function</span> getAllListItems($_ctx, $_listName, $_rowLimit) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18</span>    $list = $_ctx.Web.Lists.GetByTitle($_listName)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19</span>    $_ctx.Load($list)
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21</span>    $items = @()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22</span>    <span style="color:#66d9ef">do</span> {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23</span>        $listItems = $list.getItems($query)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24</span>        $_ctx.Load($listItems)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25</span>        $_ctx.ExecuteQuery()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26</span>        $query.ListItemCollectionPosition = $listItems.ListItemCollectionPosition
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28</span>        <span style="color:#66d9ef">foreach</span> ($item <span style="color:#66d9ef">in</span> $listItems) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29</span>            $items += $item
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30</span>        }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31</span>        Write-Host <span style="color:#e6db74">&#34;Getting next batch of $_rowLimit&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32</span>    }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33</span>    <span style="color:#66d9ef">While</span> ($null <span style="color:#f92672">-ne</span> $query.ListItemCollectionPosition)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35</span>    <span style="color:#66d9ef">return</span> $items
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38</span><span style="color:#75715e"># SharePoint Online (destination)</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39</span>$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($siteUrlOnline)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40</span>$userCredentials = Get-Credential
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41</span>$userName = $userCredentials.UserName
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42</span>$securePassword =  $userCredentials.Password
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43</span>$credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($userName, $securePassword)  
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44</span>$clientContext.Credentials = $credentials  
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46</span><span style="color:#66d9ef">if</span> (!$clientContext.ServerObjectIsNull.Value) {  
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47</span>    Write-Host <span style="color:#e6db74">&#34;Connected to SharePoint Online site: &#39;$siteUrlOnline&#39;&#34;</span> -ForegroundColor Green  
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50</span>$theitemsonline = getAllListItems $clientContext $listTitle 2000  <span style="color:#75715e"># get listitems in batches of 2000 (needed for large lists). Adjust 2000 to your own needs.</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51</span>Write-Host $theitemsonline.Count <span style="color:#e6db74">&#34;items found&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52</span>$onlineFiles = @()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53</span><span style="color:#66d9ef">foreach</span> ($onlineitem <span style="color:#66d9ef">in</span> $theitemsonline) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54</span>    $onlineFiles += $onlineitem[<span style="color:#e6db74">&#34;FileLeafRef&#34;</span>]
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57</span>Write-Host <span style="color:#e6db74">&#34;Connected to on-prem site: $siteUrlOnPrem&#34;</span> -ForegroundColor Green
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59</span>$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($siteUrlOnPrem)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60</span><span style="color:#75715e">#$clientContext.Credentials = Get-Credential # optional use other credentials than current user</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61</span>$currentWeb = $clientContext.Web
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63</span>$lists = $currentWeb.Lists
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64</span>$list = $lists.GetByTitle($listTitle) 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65</span>$theitemsonprem = getAllListItems $clientContext $listTitle 2000  <span style="color:#75715e"># get listitems in batches of 2000 (needed for large lists). Adjust 2000 to your own needs.</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66</span>Write-Host $theitemsonprem.Count <span style="color:#e6db74">&#34;items found&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21</span>    $query = New-Object Microsoft.SharePoint.Client.CamlQuery
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22</span>    $query.ViewXml = <span style="color:#e6db74">&#34;&lt;View Scope=&#39;RecursiveAll&#39;&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23</span><span style="color:#e6db74">        &lt;RowLimit&gt;$_rowLimit&lt;/RowLimit&gt;
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24</span><span style="color:#e6db74">    &lt;/View&gt;&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26</span>    $items = @()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27</span>    <span style="color:#66d9ef">do</span> {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28</span>        $listItems = $list.getItems($query)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29</span>        $_ctx.Load($listItems)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30</span>        $_ctx.ExecuteQuery()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31</span>        $query.ListItemCollectionPosition = $listItems.ListItemCollectionPosition
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33</span>        <span style="color:#66d9ef">foreach</span> ($item <span style="color:#66d9ef">in</span> $listItems) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34</span>            $items += $item
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36</span>        Write-Host <span style="color:#e6db74">&#34;Getting next batch of $_rowLimit&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38</span>    <span style="color:#66d9ef">While</span> ($null <span style="color:#f92672">-ne</span> $query.ListItemCollectionPosition)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40</span>    <span style="color:#66d9ef">return</span> $items
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43</span><span style="color:#75715e"># SharePoint Online (destination)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44</span>$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($siteUrlOnline)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45</span>$userCredentials = Get-Credential
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46</span>$userName = $userCredentials.UserName
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47</span>$securePassword =  $userCredentials.Password
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48</span>$credentials = New-Object Microsoft.SharePoint.Client.SharePointOnlineCredentials($userName, $securePassword)  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49</span>$clientContext.Credentials = $credentials  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51</span><span style="color:#66d9ef">if</span> (!$clientContext.ServerObjectIsNull.Value) {  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52</span>    Write-Host <span style="color:#e6db74">&#34;Connected to SharePoint Online site: &#39;$siteUrlOnline&#39;&#34;</span> -ForegroundColor Green  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55</span>$theitemsonline = getAllListItems $clientContext $listTitle 2000  <span style="color:#75715e"># get listitems in batches of 2000 (needed for large lists). Adjust 2000 to your own needs.</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56</span>Write-Host $theitemsonline.Count <span style="color:#e6db74">&#34;items found&#34;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57</span>$onlineFiles = @()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58</span><span style="color:#66d9ef">foreach</span> ($onlineitem <span style="color:#66d9ef">in</span> $theitemsonline) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59</span>    $onlineFiles += $onlineitem[<span style="color:#e6db74">&#34;FileLeafRef&#34;</span>]
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62</span>Write-Host <span style="color:#e6db74">&#34;Connected to on-prem site: $siteUrlOnPrem&#34;</span> -ForegroundColor Green
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64</span>$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($siteUrlOnPrem)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65</span><span style="color:#75715e">#$clientContext.Credentials = Get-Credential # optional use other credentials than current user</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66</span>$currentWeb = $clientContext.Web
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68</span>$onPremFiles = @()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69</span><span style="color:#66d9ef">foreach</span> ($onpremitem <span style="color:#66d9ef">in</span> $theitemsonprem) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70</span>    $onPremFiles += $onpremitem[<span style="color:#e6db74">&#34;FileLeafRef&#34;</span>] 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68</span>$lists = $currentWeb.Lists
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69</span>$list = $lists.GetByTitle($listTitle) 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70</span>$theitemsonprem = getAllListItems $clientContext $listTitle 2000  <span style="color:#75715e"># get listitems in batches of 2000 (needed for large lists). Adjust 2000 to your own needs.</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71</span>Write-Host $theitemsonprem.Count <span style="color:#e6db74">&#34;items found&#34;</span>
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73</span>$a = Get-Date
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74</span>$fileName = $a.Ticks 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75</span>$tasks = @()
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76</span>$i = 0
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73</span>$onPremFiles = @()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74</span><span style="color:#66d9ef">foreach</span> ($onpremitem <span style="color:#66d9ef">in</span> $theitemsonprem) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75</span>    $onPremFiles += $onpremitem[<span style="color:#e6db74">&#34;FileLeafRef&#34;</span>] 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76</span>}
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78</span>$differences = Compare-Object $onPremFiles $onlineFiles
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79</span>Write-Host $differences.Count files are missing, starting export to csv file <span style="color:#e6db74">&#34;&#39;ListCompare_Export_$fileName.csv&#39;&#34;</span> -ForegroundColor Red
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81</span>$differences | <span style="color:#66d9ef">ForEach</span>-Object { 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82</span>	$completed = ($i*100)/$differences.Count
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83</span>    Write-Progress -Activity <span style="color:#e6db74">&#34;Export &#34;</span> -percentComplete $completed; 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84</span>    Write-Host $_.SideIndicator $_.InputObject -ForegroundColor DarkYellow
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78</span>$a = Get-Date
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79</span>$fileName = $a.Ticks 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80</span>$tasks = @()
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81</span>$i = 0
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83</span>$differences = Compare-Object $onPremFiles $onlineFiles
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84</span>Write-Host $differences.Count files are missing, starting export to csv file <span style="color:#e6db74">&#34;&#39;ListCompare_Export_$fileName.csv&#39;&#34;</span> -ForegroundColor Red
 <span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86</span>    $inputObjectAsString = $_.InputObject
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88</span>    <span style="color:#66d9ef">if</span> ($_.SideIndicator <span style="color:#f92672">-eq</span> <span style="color:#e6db74">&#34;&lt;=&#34;</span>) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89</span>        Write-Host <span style="color:#e6db74">&#34; missing online: &#34;</span> -ForegroundColor DarkYellow -NoNewLine
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90</span>        Write-Host $_.SideIndicator $_.InputObject -ForegroundColor DarkYellow
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91</span>        $theitem = $theitemsonprem | Where-Object {$_[<span style="color:#e6db74">&#34;FileLeafRef&#34;</span>] <span style="color:#f92672">-eq</span> $inputObjectAsString} 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92</span>    }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94</span>    <span style="color:#66d9ef">if</span> ($_.SideIndicator <span style="color:#f92672">-eq</span> <span style="color:#e6db74">&#34;=&gt;&#34;</span>) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95</span>        Write-Host <span style="color:#e6db74">&#34; missing on-prem: &#34;</span> -ForegroundColor DarkYellow -NoNewLine
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96</span>        Write-Host $_.SideIndicator $_.InputObject -ForegroundColor DarkYellow
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97</span>        $theitem = $theitemsonline | Where-Object {$_[<span style="color:#e6db74">&#34;FileLeafRef&#34;</span>] <span style="color:#f92672">-eq</span> $inputObjectAsString} 
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98</span>    }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100</span>    <span style="color:#66d9ef">if</span> ($theitem <span style="color:#f92672">-ne</span> $null) {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101</span>        $o = new-object psobject
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102</span>        $o | Add-Member -MemberType noteproperty -Name SideIndicator -value $_.SideIndicator;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103</span>        $o | Add-Member -MemberType noteproperty -Name inputObjectAsString -value $inputObjectAsString;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104</span>        $o | Add-Member -MemberType noteproperty -Name FileRef -value $theitem[<span style="color:#e6db74">&#34;FileRef&#34;</span>];
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105</span>        $tasks += $o;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106</span>    }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107</span>    $i++
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108</span>}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110</span>$tasks | export-csv <span style="color:#e6db74">&#34;.\ListCompare_Export_$fileName.csv&#34;</span> -noTypeInformation;</code></pre></div>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86</span>$differences | <span style="color:#66d9ef">ForEach</span>-Object { 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87</span>	$completed = ($i*100)/$differences.Count
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88</span>    Write-Progress -Activity <span style="color:#e6db74">&#34;Export &#34;</span> -percentComplete $completed; 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89</span>    Write-Host $_.SideIndicator $_.InputObject -ForegroundColor DarkYellow
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91</span>    $inputObjectAsString = $_.InputObject
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93</span>    <span style="color:#66d9ef">if</span> ($_.SideIndicator <span style="color:#f92672">-eq</span> <span style="color:#e6db74">&#34;&lt;=&#34;</span>) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94</span>        Write-Host <span style="color:#e6db74">&#34; missing online: &#34;</span> -ForegroundColor DarkYellow -NoNewLine
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95</span>        Write-Host $_.SideIndicator $_.InputObject -ForegroundColor DarkYellow
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96</span>        $theitem = $theitemsonprem | Where-Object {$_[<span style="color:#e6db74">&#34;FileLeafRef&#34;</span>] <span style="color:#f92672">-eq</span> $inputObjectAsString} 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99</span>    <span style="color:#66d9ef">if</span> ($_.SideIndicator <span style="color:#f92672">-eq</span> <span style="color:#e6db74">&#34;=&gt;&#34;</span>) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100</span>        Write-Host <span style="color:#e6db74">&#34; missing on-prem: &#34;</span> -ForegroundColor DarkYellow -NoNewLine
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101</span>        Write-Host $_.SideIndicator $_.InputObject -ForegroundColor DarkYellow
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102</span>        $theitem = $theitemsonline | Where-Object {$_[<span style="color:#e6db74">&#34;FileLeafRef&#34;</span>] <span style="color:#f92672">-eq</span> $inputObjectAsString} 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105</span>    <span style="color:#66d9ef">if</span> ($theitem <span style="color:#f92672">-ne</span> $null) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106</span>        $o = new-object psobject
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107</span>        $o | Add-Member -MemberType noteproperty -Name SideIndicator -value $_.SideIndicator;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108</span>        $o | Add-Member -MemberType noteproperty -Name inputObjectAsString -value $inputObjectAsString;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109</span>        $o | Add-Member -MemberType noteproperty -Name FileRef -value $theitem[<span style="color:#e6db74">&#34;FileRef&#34;</span>];
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110</span>        $tasks += $o;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112</span>    $i++
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113</span>}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115</span>$tasks | export-csv <span style="color:#e6db74">&#34;.\ListCompare_Export_$fileName.csv&#34;</span> -noTypeInformation;</code></pre></div>
 <p><a class="button" href="/files/sharepoint/analyse_sources/listCompare.ps1">open raw file</a></p>
 <h4 id="final-words">Final words</h4>
 <p>This concludes my blog post about SharePoint migrations. For questions, remarks or suggestions feel free to drop me a note in the contact form on the left.</p>
