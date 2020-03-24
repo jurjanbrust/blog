@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>projects on Jurjan Brust</title>
-    <link>https://jurjan.info/categories/projects/</link>
-    <description>Recent content in projects on Jurjan Brust</description>
+    <title>domoticz on Jurjan Brust</title>
+    <link>https://jurjan.info/tags/domoticz/</link>
+    <description>Recent content in domoticz on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 24 Mar 2020 17:52:49 +0100</lastBuildDate>
     
-	<atom:link href="https://jurjan.info/categories/projects/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jurjan.info/tags/domoticz/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://jurjan.info/posts/iot/domoticz/</guid>
       <description>&lt;p&gt;In this post I will explain how you can create your home automation system using a simple Raspberry Pi.&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Controlling a VFD with an ESP8266</title>
-      <link>https://jurjan.info/posts/iot/vfd/</link>
-      <pubDate>Sun, 09 Feb 2020 13:48:10 +0100</pubDate>
-      
-      <guid>https://jurjan.info/posts/iot/vfd/</guid>
-      <description>&lt;p&gt;In this project I have build an information-display using an ESP8266 to control a Vacuum Fluorescent Display (VFD).&lt;/p&gt;</description>
     </item>
     
   </channel>

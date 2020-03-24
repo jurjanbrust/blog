@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Home automation explained</title>
+      <link>https://jurjan.info/posts/iot/domoticz/</link>
+      <pubDate>Tue, 24 Mar 2020 17:52:49 +0100</pubDate>
+      
+      <guid>https://jurjan.info/posts/iot/domoticz/</guid>
+      <description>&lt;p&gt;In this post I will explain how you can create your home automation system using a simple Raspberry Pi.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Controlling a VFD with an ESP8266</title>
       <link>https://jurjan.info/posts/iot/vfd/</link>
       <pubDate>Sun, 09 Feb 2020 13:48:10 +0100</pubDate>

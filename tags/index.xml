@@ -6,10 +6,28 @@
     <description>Recent content in Tags on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Feb 2020 13:48:10 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 24 Mar 2020 17:52:49 +0100</lastBuildDate>
     
 	<atom:link href="https://jurjan.info/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>domoticz</title>
+      <link>https://jurjan.info/tags/domoticz/</link>
+      <pubDate>Tue, 24 Mar 2020 17:52:49 +0100</pubDate>
+      
+      <guid>https://jurjan.info/tags/domoticz/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iot</title>
+      <link>https://jurjan.info/tags/iot/</link>
+      <pubDate>Tue, 24 Mar 2020 17:52:49 +0100</pubDate>
+      
+      <guid>https://jurjan.info/tags/iot/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>esp8266</title>
@@ -17,15 +35,6 @@
       <pubDate>Sun, 09 Feb 2020 13:48:10 +0100</pubDate>
       
       <guid>https://jurjan.info/tags/esp8266/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>iot</title>
-      <link>https://jurjan.info/tags/iot/</link>
-      <pubDate>Sun, 09 Feb 2020 13:48:10 +0100</pubDate>
-      
-      <guid>https://jurjan.info/tags/iot/</guid>
       <description></description>
     </item>
     

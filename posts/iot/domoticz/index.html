@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Jurjan Brust - Home automation explained</title>
+<meta name="description" content="jurjan.info">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<meta property='og:title' content='Home automation explained'/>
+<meta property='og:image' content='https://jurjan.info/img/domoticz/IMG_4544.png'/>
+<meta property='og:description' content='jurjan.info'/>
+<meta property='og:url' content='https://jurjan.info/posts/iot/domoticz/'/>
+<link rel="stylesheet" href="https://jurjan.info/css/bootstrap.min.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:100">
+<link rel="stylesheet" href="https://jurjan.info/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://jurjan.info/css/owl.carousel.css">
+<link rel="stylesheet" href="https://jurjan.info/css/owl.theme.css">
+
+
+  <link href="https://jurjan.info/css/style.green.css" rel="stylesheet" id="theme-stylesheet">
+
+ 
+
+  
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+
+<link href="https://jurjan.info/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="https://jurjan.info/img/favicon.png">
+
+
+</head>
+<body>
+  <div id="all">
+      <div class="container-fluid">
+          <div class="row row-offcanvas row-offcanvas-left">
+              <div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+  <div class="sidebar-content">
+    <a href="/"> <img src="/img/jurjan.png" class="avatar" /> </a>
+    <h1 class="sidebar-heading"><a href="https://jurjan.info/">Jurjan Brust</a></h1>
+    
+      <p class="sidebar-p">SharePoint | O365 | Azure | IoT</p>
+    
+    <ul class="sidebar-menu">
+      
+        <li><a href="https://jurjan.info/posts/">HOME</a></li>
+      
+        <li><a href="https://jurjan.info/categories/projects">PROJECTS</a></li>
+      
+        <li><a href="https://jurjan.info/categories/azure">AZURE</a></li>
+      
+        <li><a href="https://jurjan.info/categories/sharepoint">SHAREPOINT / O365</a></li>
+      
+        <li><a href="https://jurjan.info/about/">ABOUT</a></li>
+      
+        <li><a href="https://jurjan.info/contact/">CONTACT</a></li>
+      
+    </ul>
+    <p class="social">
+  
+  <a href="/index.xml" data-animate-hover="pulse" class="email">
+    <i class="fa fa-rss"></i>
+  </a>
+  
+  
+  <a href="https://www.linkedin.com/in/jurjanbrust/" data-animate-hover="pulse" class="external">
+    <i class="fa fa-linkedin"></i>
+  </a>
+  
+  
+  
+  
+  <a href="https://twitter.com/jurjanbrust" data-animate-hover="pulse" class="external twitter">
+    <i class="fa fa-twitter"></i>
+  </a>
+  
+  
+  <a href="https://www.instagram.com/jurjanbrust/" title="" class="external instagram">
+    <i class="fa fa-instagram"></i>
+  </a>
+  
+  
+  
+  <a href="https://github.com/jurjanbrust" data-animate-hover="pulse" class="external">
+    <i class="fa fa-github"></i>
+  </a>
+  
+  
+  
+  
+  <a href="mailto:mail@jurjan.info" data-animate-hover="pulse" class="email">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+</p>
+
+
+    <div class="copyright">
+      <p class="credit">
+        
+          &copy;2020 Jurjan Brust
+        
+        
+      </p>
+    </div>
+  </div>
+</div>
+
+              
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+  <div class="small-navbar visible-xs">
+  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
+  <h1 class="small-navbar-heading"><a href="https://jurjan.info/">Jurjan Brust</a></h1>
+</div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="content-column-content">
+         <h1>Home automation explained</h1>
+         <p>In this post I will explain how you can create your home automation system using a simple Raspberry Pi.</p>
+<p>This setup has been running flawlessly at my home for two years. It is capable of:</p>
+<ol>
+<li>Automate switching all kinds of devices and lights (both WIFI connected devices as well as 433 Mhz)</li>
+<li>Get telemetry of your gas- and electronic usage</li>
+<li>Switch KlikAanKlikUit devices (433 Mhz) using only a few cheap components!</li>
+</ol>
+<div class="row justify-content-center">
+    <div class="col-md-12">
+        <div class="row">
+            <a href="/img/domoticz/domoticz_2020-03-24-17-52-57.png?image=251" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-6" data-max-width="600">
+                <img src="/img/domoticz/domoticz_2020-03-24-17-52-57.png?image=251" class="img-fluid">
+            </a>
+            <a href="/img/domoticz/IMG_4544.png?image=252" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4" data-max-width="600">
+                <img src="/img/domoticz/IMG_4544.png?image=252" class="img-fluid">
+            </a>
+            <a href="/img/domoticz/IMG_4547.png?image=253" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4" data-max-width="600">
+                <img src="/img/domoticz/IMG_4547.png?image=253" class="img-fluid">
+            </a>
+            <a href="/img/domoticz/IMG_4559.png?image=255" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4" data-max-width="600">
+                <img src="/img/domoticz/IMG_4559.png?image=255" class="img-fluid">
+            </a>            
+            <a href="/img/domoticz/IMG_4553.png?image=254" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4" data-max-width="600">
+                <img src="/img/domoticz/IMG_4553.png?image=254" class="img-fluid">
+            </a>
+        </div>
+    </div>
+</div>
+<h3 id="hardware">Hardware</h3>
+<p>Since this setup will be running <a href="https://www.domoticz.com/">Domoticz</a> as home automation system as Raspberry Pi 2 will be more than enough CPU power to handle this. Because this server is on -all day- it is good to minimize the power consumption, so no need for a Raspberry Pi 3 or 4. I have also tried to run this on a Raspberry Pi Zero, but without reliable results. It is recommended to have a UTP networking connection (so no WIFI).</p>
+<p>See the electronics image above or <a class="button" href="/files/domoticz/Domoticz.fzz">download fritzing scheme</a>
+The parts I used are:</p>
+<ol>
+<li>Rapberry Pi model 2 + fast SD card. (16Gb is enough for me).</li>
+<li>433 Mhz Superheterodyne RF Receiver and Transmitter Module <a href="https://www.aliexpress.com/item/32737335032.html?spm=a2g0o.productlist.0.0.f05e7fe04sncZY&amp;algo_pvid=13f231a5-7d3e-479f-8af9-98db9ee1d47d&amp;algo_expid=13f231a5-7d3e-479f-8af9-98db9ee1d47d-0&amp;btsid=0b0a187915850749504538167ed921&amp;ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_">&gt; link to product</a> This module is only needed if you want to switch 433 Mhz devices (klikaanklikuit, and other)</li>
+<li>Antenna for 433 Mhz <a href="https://www.aliexpress.com/item/32981671438.html?spm=a2g0o.productlist.0.0.18c7148cjaiMhD&amp;algo_pvid=b96b6ff8-1896-4dd7-b137-f477e8157f6e&amp;algo_expid=b96b6ff8-1896-4dd7-b137-f477e8157f6e-2&amp;btsid=0b0a050115850766066447303e055d&amp;ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_">&gt; link to product</a></li>
+<li>Inverter for serial communication with smart-meter such as kaifa <a href="https://www.aliexpress.com/item/32902779272.html?spm=a2g0o.productlist.0.0.30396a4cxAtYzw&amp;algo_pvid=a87d8e5d-c832-47cc-8275-9ed5bca691bf&amp;algo_expid=a87d8e5d-c832-47cc-8275-9ed5bca691bf-0&amp;btsid=0b0a187b15850760648768784e9535&amp;ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_">&gt; link to product</a>
+<img src="/img/domoticz/domoticz_2020-03-24-19-57-04.png" alt="s rotate"></li>
+<li>Resistor (6.8k or 10k ohm)</li>
+</ol>
+<p>When ordering parts, please be so kind to use my <a href="https://a.aliexpress.com/_BTG7sL">referral link</a></p>
+<h3 id="p1---smart-meter-connection">P1 - Smart meter connection</h3>
+<p>For the wiring of the P1 port (telephone jacket) only three connections are needed (see fritzing diagram above):</p>
+<table>
+<thead>
+<tr>
+<th>Pin nr</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>NC (not connected)</td>
+</tr>
+<tr>
+<td>2 gold color line (connected to 5v)</td>
+<td>RTS (Request to send)</td>
+</tr>
+<tr>
+<td>3 green color line (connected to GND)</td>
+<td>GND (Ground)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>NC (no connected)</td>
+</tr>
+<tr>
+<td>5 black color line (connected to inverter &gt; Rx port of Pi)</td>
+<td>TxD (Transmit data)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>NC (not connected)</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/img/domoticz/domoticz_2020-03-24-20-18-56.png" alt="m shadow rotate"></p>
+<p>So are you all connected!? Great lets take a look at the software part!</p>
+<h3 id="software">Software</h3>
+<ol>
+<li>Download the latest version of Raspbian Like (I am running Raspbian Buster Lite) <a href="https://downloads.raspberrypi.org/raspbian_lite_latest">&gt; link to download</a></li>
+<li>Download <a href="https://etcher.io/">BalenaEtcher</a> so that you can burn Raspbian to your SD card</li>
+<li>After flashing, remove the SD card and insert it back into your computer. Click Cancel on all format windows:
+<img src="/img/domoticz/domoticz_2020-03-24-20-26-09.png" alt="shadow left"></li>
+<li>Create a file called &lsquo;ssh&rsquo; without fileextension! on the boot-drive so that we can connect using a terminal service
+<img src="/img/domoticz/domoticz_2020-03-24-20-29-23.png" alt="xl shadow left"></li>
+<li>If you connect using a UTP cable, you are done and power-up your raspberry.. If you connect using WIFI then see this post about <a href="https://www.raspberrypi.org/documentation/configuration/wireless/headless.md">headless installation</a></li>
+<li>In order to connect using SSH (on a Windows machine) I use this program from the Microsoft Store
+<img src="/img/domoticz/domoticz_2020-03-24-20-38-04.png" alt="xl left"></li>
+<li>Lookup the IP address of your connected Raspberry using your router and connect using the terminal program in step 6. Default password = &ldquo;raspberry&rdquo;</li>
+<li>Change the password of the pi user-account</li>
+</ol>
+<pre><code>sudo passwd pi
+</code></pre><ol start="9">
+<li>Install latest updates</li>
+</ol>
+<pre><code>sudo apt-get update
+sudo apt-get upgrade
+</code></pre><ol start="10">
+<li>Change settings</li>
+</ol>
+<pre><code>sudo raspi-config 
+</code></pre><p>Navigate using the menus and change the following settings:</p>
+<pre><code>- 2 hostname) Change the hostename in 'domoticz' (or whatever you like)
+- 4 localization options, I2 change time zone) Change time zone to your time zone (mine is Europe + Amsterdam)
+- 5 interfacing options, P6 serial
+    * Login shell to be accessible &gt; NO
+    * Serial port hardware enable &gt; Yes
+</code></pre>
+<ol start="9">
+<li>Reboot your raspberry</li>
+<li>Install Mosquitto (optional) MQTT message broker</li>
+</ol>
+<pre><code>sudo apt install mosquitto
+</code></pre><ol start="11">
+<li>Install Domoticz</li>
+</ol>
+<pre><code>curl -L install.domoticz.com | sudo bash 
+</code></pre><ol start="12">
+<li>Install software for 433 Mhz</li>
+</ol>
+<pre><code>git clone https://github.com/WiringPi/WiringPi.git
+cd wiringPi
+./build
+cd ..
+git clone git://github.com/ninjablocks/433Utils.git --recursive
+cd 433Utils/RPi_utils
+make all
+</code></pre><ol start="13">
+<li>Installation of Dashticz (optional) &gt; Useful for advanced home screen customizations</li>
+</ol>
+<pre><code>git clone https://github.com/robgeerts/dashticz_v2
+</code></pre><ol start="14">
+<li>Install PiHole (optional) &gt; The raspberry is also a great add-blocker and since it is always running why not make use of this</li>
+</ol>
+<pre><code>curl -sSL https://install.pi-hole.net | bash
+</code></pre><p>Software installation part is all DONE, Congratulations. lets go to the configuration of Domoticz.</p>
+<h3 id="domoticz-configuration">Domoticz configuration</h3>
+<p>Go to Settings &gt; Hardware (the screenshot below is of my configuration, but I will describe the steps below)
+<img src="/img/domoticz/domoticz_2020-03-24-20-59-28.png" alt="shadow"></p>
+<p>First, lets add the hardware to see if we can get data from the smart-meter.
+Add a device with the following settings:
+<img src="/img/domoticz/domoticz_2020-03-24-20-59-50.png" alt="shadow"></p>
+<p>Next add the MQTT device
+<img src="/img/domoticz/domoticz_2020-03-24-21-00-45.png" alt="shadow"></p>
+<p>Finally add a Dummy device
+<img src="/img/domoticz/domoticz_2020-03-24-21-02-31.png" alt="shadow"></p>
+<p>If everything is fine you should be able to see the following:</p>
+<p><img src="/img/domoticz/domoticz_2020-03-24-21-06-30.png" alt="shadow"></p>
+<p><img src="/img/domoticz/domoticz_2020-03-24-21-05-25.png" alt="shadow"></p>
+<h4 id="add-a-switch-to-operate-433mhz-devices">Add a switch to operate 433Mhz devices</h4>
+<p>Here you can see some of my switches, most are WIFI connected devices, but some are still 433Mhz klikaanklikuit. I will describe how to add these.</p>
+<p><img src="/img/domoticz/domoticz_2020-03-24-21-08-26.png" alt="shadow"></p>
+<p>First you will need to know the code of the 433 signal. So you will need the remote that came with the 433 device. This remote works best for me:
+<img src="/img/domoticz/domoticz_2020-03-24-21-14-59.png" alt=""></p>
+<ol>
+<li>Login on your domoticz server using SSH</li>
+</ol>
+<pre><code>cd 433Utils/RPi_utils/
+./RFSniffer
+</code></pre><p>If all went well you should see the codes received by the 433 Mhz Superheterodyne RF Receiver.
+<img src="/img/domoticz/domoticz_2020-03-24-21-13-39.png" alt="shadow"></p>
+<p>Press the on-and off button, because these codes are different and you will need them both.</p>
+<p>Now that we know the code we can go back to Domoticz and add a virtual-switch.
+Select the Manual Light/Switch button:</p>
+<p><img src="/img/domoticz/domoticz_2020-03-24-21-18-29.png" alt=""></p>
+<p>And select a not used House-code, unit-code.</p>
+<p><img src="/img/domoticz/domoticz_2020-03-24-21-19-04.png" alt=""></p>
+<p>Edit the created switch and enter the following On/Off actions:</p>
+<blockquote>
+<p>script:///home/pi/433Utils/RPi_utils/codesend [code of step above] 1</p>
+</blockquote>
+<p><img src="/img/domoticz/domoticz_2020-03-24-21-20-17.png" alt=""></p>
+<p>All Done!
+Please drop a line and let me know if it worked or not. Would be great to hear if this was helpful.
+If this project help you reduce time to develop, you can give me a cup of coffee :)</p>
+<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=FEAWWGSBYLMZL&amp;currency_code=EUR&amp;source=url"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="Donate"></a></p>
+<p><img src="/img/donate.png" alt="qr"></p>
+         
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+      </div>
+  </div>
+  <script src="https://jurjan.info/js/jquery.min.js"></script>
+<script src="https://jurjan.info/js/bootstrap.min.js"></script>
+<script src="https://jurjan.info/js/jquery.cookie.js"> </script>
+<script src="https://jurjan.info/js/ekko-lightbox.js"></script>
+<script src="https://jurjan.info/js/jquery.scrollTo.min.js"></script>
+<script src="https://jurjan.info/js/masonry.pkgd.min.js"></script>
+<script src="https://jurjan.info/js/imagesloaded.pkgd.min.js"></script>
+<script src="https://jurjan.info/js/owl.carousel.min.js"></script>
+<script src="https://jurjan.info/js/front.js"></script>
+
+
+
+</body>
+</html>
