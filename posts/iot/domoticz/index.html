@@ -130,6 +130,13 @@
 <li>Get telemetry of your gas- and electronic usage</li>
 <li>Switch KlikAanKlikUit devices (433 Mhz) using only a few cheap components!</li>
 </ol>
+<blockquote>
+<p>Note on the 433 Mhz receiver and sender assembly. There are also off-the-shelf products available such as <a href="http://www.rfxcom.com/">RFXCOM</a>
+These products will offer better results and are more feature rich. The do-it-yourself setup described here is not suitable for receiving a continuous flow of data from devices such as weather stations. Because I do not have such devices and I only use it to operate a handful of klikaanklikuit switches this solution works perfect for me without the added costs of a commercial product.</p>
+<p>As a second side note, I try to avoid the Mhz switches as much as possible because they are less reliable due to the one way communication. Devices connected to your WIFI network are much more reliable in that respect. The combination of using WIFI connected devices and Domoticz opens a whole new chapter of possibilities that goes beyond the scope of this blogpost.  But to just give you some directions have a look at
+<a href="https://www.aliexpress.com/item/4000046666272.html?spm=a2g0o.productlist.0.0.241f112dwYpgFg&amp;algo_pvid=e172a28c-56cb-4646-ab26-dc3eb96c6ace&amp;algo_expid=e172a28c-56cb-4646-ab26-dc3eb96c6ace-0&amp;btsid=0b0a3f8115852122881608099e447d&amp;ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_">Sonoff</a>
+and the custom firmware you can flash on these ESP8266 operated devices such as <a href="https://github.com/arendst/Tasmota">Tasmota</a> or <a href="https://github.com/letscontrolit/ESPEasy">ESPEasy</a>. The possibilities are endless, because it is possible to connect all types of Arduino based sensors to these things.</p>
+</blockquote>
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="row">
@@ -253,11 +260,13 @@ git clone git://github.com/ninjablocks/433Utils.git --recursive
 cd 433Utils/RPi_utils
 make all
 </code></pre><ol start="13">
-<li>Installation of Dashticz (optional) &gt; Useful for advanced home screen customizations</li>
-</ol>
-<pre><code>git clone https://github.com/robgeerts/dashticz_v2
-</code></pre><ol start="14">
-<li>Install PiHole (optional) &gt; The raspberry is also a great add-blocker and since it is always running why not make use of this</li>
+<li>
+<p>Installation of Dashticz (optional) &gt; Useful for advanced home screen customizations
+See <a href="https://dashticz.readthedocs.io/en/master/gettingstarted/installation.html">dashticz installation instructions</a></p>
+</li>
+<li>
+<p>Install PiHole (optional) &gt; The raspberry is also a great add-blocker and since it is always running why not make use of this</p>
+</li>
 </ol>
 <pre><code>curl -sSL https://install.pi-hole.net | bash
 </code></pre><p>Software installation part is all DONE, Congratulations. lets go to the configuration of Domoticz.</p>
