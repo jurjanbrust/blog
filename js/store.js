@@ -24,18 +24,32 @@ function ready() {
 }
 
 function purchaseClicked() {
+    ShowAddress()
+}
+
+function paymentClicked() {
+    HideAddress()
+
     //alert('Thank you for your purchase')
     var cartItems = document.getElementsByClassName('cart-items')[0]
     while (cartItems.hasChildNodes()) {
         cartItems.removeChild(cartItems.firstChild)
     }
     updateCartTotal()
+
+    ShowCheckOut()
+}
+
+function ShowCheckOut() {
+    document.getElementById('checkout').style.display = "block"
+}
+
+function ShowAddress() {
     document.getElementById('checkout').style.display = "none"
     document.getElementById('address').style.display = "block"
 }
 
-function paymentClicked() {
-    alert("pay")
+function HideAddress() {
     document.getElementById('checkout').style.display = "none"
     document.getElementById('address').style.display = "none"
 }
