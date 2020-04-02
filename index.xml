@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>Superheroes</title>
+      <link>https://jurjan.info/posts/programming/angularjs/superheroes/</link>
+      <pubDate>Thu, 02 Apr 2020 19:34:20 +0200</pubDate>
+      
+      <guid>https://jurjan.info/posts/programming/angularjs/superheroes/</guid>
+      <description>&lt;p&gt;Want to get started developing AngularJS / TypeScript applications using Visual Studio Code?
+In this blogpost I will show you how to get started in less time than a coffee break.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Home automation explained</title>
       <link>https://jurjan.info/posts/iot/domoticz/</link>
       <pubDate>Tue, 24 Mar 2020 17:52:49 +0100</pubDate>
