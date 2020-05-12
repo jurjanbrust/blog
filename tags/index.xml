@@ -6,10 +6,28 @@
     <description>Recent content in Tags on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2020 19:34:20 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2020 18:47:42 +0200</lastBuildDate>
     
 	<atom:link href="https://jurjan.info/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>iot</title>
+      <link>https://jurjan.info/tags/iot/</link>
+      <pubDate>Tue, 12 May 2020 18:47:42 +0200</pubDate>
+      
+      <guid>https://jurjan.info/tags/iot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lorawan</title>
+      <link>https://jurjan.info/tags/lorawan/</link>
+      <pubDate>Tue, 12 May 2020 18:47:42 +0200</pubDate>
+      
+      <guid>https://jurjan.info/tags/lorawan/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>angularjs</title>
@@ -35,15 +53,6 @@
       <pubDate>Tue, 24 Mar 2020 17:52:49 +0100</pubDate>
       
       <guid>https://jurjan.info/tags/domoticz/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>iot</title>
-      <link>https://jurjan.info/tags/iot/</link>
-      <pubDate>Tue, 24 Mar 2020 17:52:49 +0100</pubDate>
-      
-      <guid>https://jurjan.info/tags/iot/</guid>
       <description></description>
     </item>
     
