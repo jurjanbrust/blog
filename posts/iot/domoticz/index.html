@@ -294,8 +294,8 @@ We need to mount this USB stick automatically on every boot using the following 
 </code></pre><ol start="5">
 <li>copy the following into backup.sh and save the file (crtl+X and Y)</li>
 </ol>
-<pre><code>tar -vczf ./domoticz/domoticz-db.gz ./domoticz/domoticz.db ./domoticz/domoticz.db-wal ./domoticz/domoticz.db-shm
-rsync -avzh ./domoticz/domoticz-db.gz /media/usb/daily/
+<pre><code>tar -vcf ./domoticz/domoticz-db.tar ./domoticz/domoticz.db ./domoticz/domoticz.db-wal ./domoticz/domoticz.db-shm
+rsync -avzh ./domoticz/domoticz-db.tar /media/usb/daily/
 </code></pre><ol start="6">
 <li>make backup.sh executable</li>
 </ol>
@@ -308,8 +308,8 @@ rsync -avzh ./domoticz/domoticz-db.gz /media/usb/daily/
 <li>and add the following lines for a daily, weekly and monthly backup</li>
 </ol>
 <pre><code>0 5 * * * ./backup.sh                                                                                                                       
-0 5 * * 0 rsync -avzh ./domoticz/domoticz-db.gz /media/usb/weekly/                                                                          
-0 5 * 1-12 0 rsync -avzh ./domoticz/domoticz-db.gz /media/usb/monthly/                                                                      
+0 5 * * 0 rsync -avzh ./domoticz/domoticz-db.tar /media/usb/weekly/                                                                          
+0 5 * 1-12 0 rsync -avzh ./domoticz/domoticz-db.tar /media/usb/monthly/                                                                      
 </code></pre><h3 id="domoticz-configuration">Domoticz configuration</h3>
 <p>Start your browser and connect to http://192.168.0.16:8080/#/Dashboard  (your IP-Address will be different)</p>
 <p>Go to Settings &gt; Hardware (the screenshot below is of my configuration, but I will describe the steps below)
