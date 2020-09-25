@@ -3,22 +3,52 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://jurjan.info/categories/azure/</loc>
+    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://jurjan.info/categories/</loc>
-    <lastmod>2020-09-24T17:00:35+02:00</lastmod>
+    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://jurjan.info/</loc>
-    <lastmod>2020-09-24T17:00:35+02:00</lastmod>
+    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jurjan.info/tags/no-code/</loc>
-    <lastmod>2020-09-24T17:00:35+02:00</lastmod>
+    <loc>https://jurjan.info/posts/powerplatform/excel2pdf/</loc>
+    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/lowcode/</loc>
+    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/categories/lowcode/</loc>
+    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://jurjan.info/posts/</loc>
+    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/powerplatform/</loc>
+    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/</loc>
+    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/no-code/</loc>
     <lastmod>2020-09-24T17:00:35+02:00</lastmod>
   </url>
   
@@ -28,12 +58,7 @@
   </url>
   
   <url>
-    <loc>https://jurjan.info/categories/powerplatform/</loc>
-    <lastmod>2020-09-24T17:00:35+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/tags/</loc>
+    <loc>https://jurjan.info/categories/sharepoint/</loc>
     <lastmod>2020-09-24T17:00:35+02:00</lastmod>
   </url>
   
@@ -173,11 +198,6 @@
   </url>
   
   <url>
-    <loc>https://jurjan.info/categories/sharepoint/</loc>
-    <lastmod>2019-11-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://jurjan.info/tags/onprem/</loc>
     <lastmod>2019-09-25T14:38:37+02:00</lastmod>
   </url>
@@ -194,11 +214,6 @@
   
   <url>
     <loc>https://jurjan.info/tags/azure/</loc>
-    <lastmod>2019-09-04T09:37:50+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/categories/azure/</loc>
     <lastmod>2019-09-04T09:37:50+02:00</lastmod>
   </url>
   
