@@ -8,20 +8,11 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 25 Sep 2020 09:56:18 +0200</lastBuildDate><atom:link href="https://jurjan.info/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>azure</title>
+      <title>Azure</title>
       <link>https://jurjan.info/categories/azure/</link>
       <pubDate>Fri, 25 Sep 2020 09:56:18 +0200</pubDate>
       
       <guid>https://jurjan.info/categories/azure/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>lowcode</title>
-      <link>https://jurjan.info/categories/lowcode/</link>
-      <pubDate>Fri, 25 Sep 2020 09:56:18 +0200</pubDate>
-      
-      <guid>https://jurjan.info/categories/lowcode/</guid>
       <description></description>
     </item>
     
@@ -44,7 +35,7 @@
     </item>
     
     <item>
-      <title>programming</title>
+      <title>Programming</title>
       <link>https://jurjan.info/categories/programming/</link>
       <pubDate>Thu, 02 Apr 2020 19:34:20 +0200</pubDate>
       
@@ -53,7 +44,7 @@
     </item>
     
     <item>
-      <title>domotica</title>
+      <title>Domotica</title>
       <link>https://jurjan.info/categories/domotica/</link>
       <pubDate>Tue, 24 Mar 2020 17:52:49 +0100</pubDate>
       
@@ -62,7 +53,7 @@
     </item>
     
     <item>
-      <title>projects</title>
+      <title>Projects</title>
       <link>https://jurjan.info/categories/projects/</link>
       <pubDate>Tue, 24 Mar 2020 17:52:49 +0100</pubDate>
       
@@ -71,16 +62,7 @@
     </item>
     
     <item>
-      <title>esp8266</title>
-      <link>https://jurjan.info/categories/esp8266/</link>
-      <pubDate>Sun, 09 Feb 2020 13:48:10 +0100</pubDate>
-      
-      <guid>https://jurjan.info/categories/esp8266/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>powershell</title>
+      <title>Powershell</title>
       <link>https://jurjan.info/categories/powershell/</link>
       <pubDate>Tue, 04 Feb 2020 11:15:32 +0100</pubDate>
       
@@ -89,16 +71,16 @@
     </item>
     
     <item>
-      <title>o365</title>
-      <link>https://jurjan.info/categories/o365/</link>
+      <title>M365</title>
+      <link>https://jurjan.info/categories/m365/</link>
       <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://jurjan.info/categories/o365/</guid>
+      <guid>https://jurjan.info/categories/m365/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>ignite</title>
+      <title>Ignite</title>
       <link>https://jurjan.info/categories/ignite/</link>
       <pubDate>Tue, 03 Sep 2019 15:52:31 +0200</pubDate>
       
