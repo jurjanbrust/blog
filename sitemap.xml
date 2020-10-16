@@ -3,17 +3,47 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://jurjan.info/categories/azure/</loc>
-    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
+    <loc>https://jurjan.info/tags/azure/</loc>
+    <lastmod>2020-10-15T13:33:08+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://jurjan.info/categories/</loc>
-    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
+    <lastmod>2020-10-15T13:33:08+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://jurjan.info/</loc>
+    <lastmod>2020-10-15T13:33:08+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/posts/</loc>
+    <lastmod>2020-10-15T13:33:08+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/categories/programming/</loc>
+    <lastmod>2020-10-15T13:33:08+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/</loc>
+    <lastmod>2020-10-15T13:33:08+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/tags/wsl/</loc>
+    <lastmod>2020-10-15T13:33:08+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/posts/programming/wsl/azurequeue/</loc>
+    <lastmod>2020-10-15T13:33:08+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jurjan.info/categories/azure/</loc>
     <lastmod>2020-09-25T09:56:18+02:00</lastmod>
   </url>
   
@@ -28,17 +58,7 @@
   </url>
   
   <url>
-    <loc>https://jurjan.info/posts/</loc>
-    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://jurjan.info/tags/powerplatform/</loc>
-    <lastmod>2020-09-25T09:56:18+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/tags/</loc>
     <lastmod>2020-09-25T09:56:18+02:00</lastmod>
   </url>
   
@@ -79,11 +99,6 @@
   
   <url>
     <loc>https://jurjan.info/tags/angularjs/</loc>
-    <lastmod>2020-04-02T19:34:20+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/categories/programming/</loc>
     <lastmod>2020-04-02T19:34:20+02:00</lastmod>
   </url>
   
@@ -199,11 +214,6 @@
   
   <url>
     <loc>https://jurjan.info/posts/azure/az900/</loc>
-    <lastmod>2019-09-04T09:37:50+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jurjan.info/tags/azure/</loc>
     <lastmod>2019-09-04T09:37:50+02:00</lastmod>
   </url>
   

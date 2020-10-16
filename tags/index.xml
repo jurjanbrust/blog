@@ -6,7 +6,25 @@
     <description>Recent content in Tags on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Sep 2020 09:56:18 +0200</lastBuildDate><atom:link href="https://jurjan.info/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 Oct 2020 13:33:08 +0200</lastBuildDate><atom:link href="https://jurjan.info/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>azure</title>
+      <link>https://jurjan.info/tags/azure/</link>
+      <pubDate>Thu, 15 Oct 2020 13:33:08 +0200</pubDate>
+      
+      <guid>https://jurjan.info/tags/azure/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>wsl</title>
+      <link>https://jurjan.info/tags/wsl/</link>
+      <pubDate>Thu, 15 Oct 2020 13:33:08 +0200</pubDate>
+      
+      <guid>https://jurjan.info/tags/wsl/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>lowcode</title>
       <link>https://jurjan.info/tags/lowcode/</link>
@@ -139,15 +157,6 @@
       <pubDate>Wed, 25 Sep 2019 14:38:37 +0200</pubDate>
       
       <guid>https://jurjan.info/tags/onprem/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>azure</title>
-      <link>https://jurjan.info/tags/azure/</link>
-      <pubDate>Wed, 04 Sep 2019 09:37:50 +0200</pubDate>
-      
-      <guid>https://jurjan.info/tags/azure/</guid>
       <description></description>
     </item>
     

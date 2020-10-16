@@ -6,7 +6,16 @@
     <description>Recent content on Jurjan Brust</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Sep 2020 09:56:18 +0200</lastBuildDate><atom:link href="https://jurjan.info/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 Oct 2020 13:33:08 +0200</lastBuildDate><atom:link href="https://jurjan.info/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WSL 2 and docker compose</title>
+      <link>https://jurjan.info/posts/programming/wsl/azurequeue/</link>
+      <pubDate>Thu, 15 Oct 2020 13:33:08 +0200</pubDate>
+      
+      <guid>https://jurjan.info/posts/programming/wsl/azurequeue/</guid>
+      <description>&lt;p&gt;With the arrival of WSL 2 (Windows Subsystem for Linux), I thought it was a good time to learn more about this technology. I am surprised at the possibilities this offers. So let&amp;rsquo;s dive into this and use WSL 2 and Docker-Compose to fire up some containers to present sensor data in a Grafana dashboard.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Leverage the power of Azure</title>
       <link>https://jurjan.info/posts/powerplatform/excel2pdf/</link>
