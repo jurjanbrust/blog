@@ -132,7 +132,7 @@ For more background information and installation instructions have a look at thi
 </blockquote>
 <p>This makes it a perfect solution for a microservices architecture, since there is almost no penalty for using multiple containers. By using Docker-Compose we can easily separate the components that an application needs into multiple docker containers. In this example MySql, Grafana and a development container. You no longer have to go through an installation procedure of MySql or Grafana yourself. You literally take (compose) what others have created for you.</p>
 <blockquote>
-<p>But why do we use docker compose you might ask</p>
+<p>But why do we use docker compose you might ask.</p>
 </blockquote>
 <p>Docker compose provide connectivity between the containers. It allows network traffic. In this example we need network traffic between Grafana and MySql because Grafana itself does not store any data. A next step would be to use Kubernetes instead of docker compose but that&rsquo;s for another blog.</p>
 <p>All of the code is in my <a href="https://github.com/jurjanbrust/wsl2_mysql_grafana">Github repro</a> so make a clone and follow along.</p>
@@ -141,6 +141,7 @@ For more background information and installation instructions have a look at thi
 <li>WSL2: <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">see link</a></li>
 <li>Docker Desktop <a href="https://www.docker.com/get-started">see link</a></li>
 <li>Docker compose (This will be installed by default in step 2)</li>
+<li>Git, for example <a href="https://gitforwindows.org/">git for Windows</a></li>
 </ol>
 <h2 id="steps-to-follow-in-this-guide">Steps to follow in this guide</h2>
 <p>First clone the repository into some directory (mine is called D:\Example)</p>
