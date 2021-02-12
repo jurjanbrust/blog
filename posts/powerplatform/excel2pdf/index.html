@@ -1,288 +1,114 @@
-<!DOCTYPE html>
-<html lang="en-us">
-<head><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Jurjan Brust - Leverage the power of Azure</title>
-<meta name="description" content="jurjan.info">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="all,follow">
-<meta name="googlebot" content="index,follow,snippet,archive">
-<meta property='og:title' content='Leverage the power of Azure'/>
-<meta property='og:image' content='https://jurjan.info/img/excel2pdf/excel2pdf_2020-09-24-14-59-45.png'/>
-<meta property='og:description' content='jurjan.info'/>
-<meta property='og:url' content='https://jurjan.info/posts/powerplatform/excel2pdf/'/>
-<link rel="stylesheet" href="https://jurjan.info/css/bootstrap.min.css">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:100">
-<link rel="stylesheet" href="https://jurjan.info/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://jurjan.info/css/owl.carousel.css">
-<link rel="stylesheet" href="https://jurjan.info/css/owl.theme.css">
-
-
-  <link href="https://jurjan.info/css/style.green.css" rel="stylesheet" id="theme-stylesheet">
-
- 
-
-  
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  
-
-
-<link href="https://jurjan.info/css/custom.css" rel="stylesheet">
-<link rel="shortcut icon" href="https://jurjan.info/img/favicon.png">
-
-
-</head>
-<body>
-  <div id="all">
-      <div class="container-fluid">
-          <div class="row row-offcanvas row-offcanvas-left">
-              <div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
-  <div class="sidebar-content">
-    <a href="/"> <img src="/img/jurjan.png" class="avatar" /> </a>
-    <h1 class="sidebar-heading"><a href="https://jurjan.info/">Jurjan Brust</a></h1>
-    
-      <p class="sidebar-p">SharePoint | M365 | Azure | IoT</p>
-    
-    <ul class="sidebar-menu">
-      
-        <li><a href="https://jurjan.info/posts/">HOME</a></li>
-      
-        <li><a href="https://jurjan.info/categories/projects">PROJECTS</a></li>
-      
-        <li><a href="https://jurjan.info/categories/azure">AZURE</a></li>
-      
-        <li><a href="https://jurjan.info/categories/sharepoint">SHAREPOINT / M365</a></li>
-      
-        <li><a href="https://jurjan.info/about/">ABOUT</a></li>
-      
-        <li><a href="https://jurjan.info/contact/">CONTACT</a></li>
-      
-    </ul>
-    <p class="social">
-  
-  <a href="/index.xml" data-animate-hover="pulse" class="email">
-    <i class="fa fa-rss"></i>
-  </a>
-  
-  
-  <a href="https://www.linkedin.com/in/jurjanbrust/" data-animate-hover="pulse" class="external">
-    <i class="fa fa-linkedin"></i>
-  </a>
-  
-  
-  
-  
-  <a href="https://twitter.com/jurjanbrust" data-animate-hover="pulse" class="external twitter">
-    <i class="fa fa-twitter"></i>
-  </a>
-  
-  
-  <a href="https://www.instagram.com/jurjanbrust/" title="" class="external instagram">
-    <i class="fa fa-instagram"></i>
-  </a>
-  
-  
-  
-  <a href="https://github.com/jurjanbrust" data-animate-hover="pulse" class="external">
-    <i class="fa fa-github"></i>
-  </a>
-  
-  
-  
-  
-  <a href="mailto:mail@jurjan.info" data-animate-hover="pulse" class="email">
-    <i class="fa fa-envelope"></i>
-  </a>
-  
-</p>
-
-
-    <div class="copyright">
-      <p class="credit">
-        
-          &copy;2020 Jurjan Brust
-        
-        
-      </p>
-    </div>
-  </div>
-</div>
-
-              
-<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
-  <div class="small-navbar visible-xs">
-  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
-  <h1 class="small-navbar-heading"><a href="https://jurjan.info/">Jurjan Brust</a></h1>
-</div>
-
-  <div class="row">
-    <div class="col-lg-8">
-      <div class="content-column-content">
-         <h1>Leverage the power of Azure</h1>
-         <p>Combine the power of azure functions within PowerAutomate for unprecedented possibilities.</p>
-<h3 id="introduction">Introduction</h3>
-<p>In my previous blog post I showed how you can <a href="/posts/powerplatform/listitem2pdf">generate a PDF from a SharePoint list item</a>, purely by using the PowerPlatform. Now I&rsquo;ll show you how to convert Excel files to PDF documents using the best of both worlds from Azure and the PowerPlatform.</p>
-<h3 id="the-case">The case</h3>
-<p>A user places Excel documents in a SharePoint document library. These documents must be converted to PDF files and placed in a second document library. The Excel documents contain a large number columns, some business logic has to be applied to each these columns.</p>
-<h3 id="the-solution">The solution</h3>
-<p>For the conversion from Excel to PDF, we still need the conversion to HTML as an intermediate step. Because we will be using Azure for this, the complexity of the steps in PowerAutomate will become a lot easier.
-The solution consists of the following three parts:</p>
-<ol>
-<li>Create a PowerAutomate flow that will be triggered when a new document is added to a document library. His main task will be to push this document to an Azure blob storage for further processing of the Azure Function.</li>
-<li>The Azure function will do its job by converting the Excel file to an HTML file. This HTML file will be placed in the output folder of the BLOB storage.</li>
-<li>Create a second Power Automate flow with the output folder of the BLOB storage as trigger. This flow reads the HTML file, places it in OneDrive for conversion to PDF. As a final step, this flow will return the PDF file to SharePoint.</li>
-</ol>
-<h3 id="step-1">Step 1</h3>
-<p>The first flow consists of only two parts. The trigger when a document is created in the library and the blob action to copy the document to blob storage. PowerAutomate has made this step so simple using a standard connector. Awesome.</p>
-<p><img src="/img/excel2pdf/excel2pdf_2020-09-24-14-15-40.png" alt="shadow border larger"></p>
-<h3 id="step-2">Step 2</h3>
-<p>This is the Azure function implementation that will pick up any file places in the /input folder of the blob storage.</p>
-<p>The processing of the Excel file to HTML is greatly simplified for this example and contains little more than the necessary. Just like in the previous example, I use a template.html file for the conversion to HTML. I can imagine that in scenarios in which the HTML takes on more complex forms you want to make other choices, such as the &lsquo;html agility pack&rsquo;</p>
-<p>Something that is worth noticing is the way in which this <strong>template.html</strong> file is read in the Azure function. The classic method of loading Assembly files no longer works in Azure Functions. However, by using the ExecutionContext class it is possible to read embedded resource files. See line number <strong>24 and 31-32</strong>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#66d9ef">using</span> System;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2</span><span style="color:#66d9ef">using</span> System.IO;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3</span><span style="color:#66d9ef">using</span> Microsoft.Azure.WebJobs;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4</span><span style="color:#66d9ef">using</span> Microsoft.Extensions.Logging;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5</span><span style="color:#66d9ef">using</span> DocumentFormat.OpenXml.Packaging;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6</span><span style="color:#66d9ef">using</span> DocumentFormat.OpenXml.Spreadsheet;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7</span><span style="color:#66d9ef">using</span> System.Linq;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8</span><span style="color:#66d9ef">using</span> System.Collections.Generic;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10</span><span style="color:#75715e">/// &lt;summary&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11</span><span style="color:#75715e">/// This azure function converts an Exel file into a HTML file using a template file: see &#39;\\files\\template.html&#39;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12</span><span style="color:#75715e">/// If the output of the html file is basic, this is a fast method to do the conversion. Another
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13</span><span style="color:#75715e">/// nice option would be to use https://html-agility-pack.net/ for example.
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14</span><span style="color:#75715e">/// &lt;/summary&gt;
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15</span><span style="color:#75715e"></span><span style="color:#66d9ef">namespace</span> Function.Convert
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16</span>{
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17</span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Function</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18</span>    {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19</span><span style="color:#a6e22e">        [FunctionName(&#34;Function&#34;)]</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20</span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> System.Threading.Tasks.Task RunAsync(
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21</span><span style="color:#a6e22e">            [BlobTrigger(&#34;input/{name}&#34;, Connection = &#34;AzureWebJobsStorage&#34;)]</span> Stream myBlob,
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22</span>            <span style="color:#66d9ef">string</span> name,
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23</span>            ILogger log,
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24</span>            ExecutionContext executionContext,
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25</span>            IBinder binder)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26</span>        {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27</span>            log.LogInformation(<span style="color:#e6db74">$&#34;C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes&#34;</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29</span>            <span style="color:#75715e">// this is a method to get files loaded into the program, since resource-files cannot be loaded using reflection. 
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30</span><span style="color:#75715e"></span>            <span style="color:#75715e">// make sure the template.html is set to : &#39;copy Always&#39; in the file properties.
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">string</span> fileName = <span style="color:#e6db74">$&#34;{ Directory.GetParent(executionContext.FunctionDirectory).FullName}\\files\\template.html&#34;</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32</span>            <span style="color:#66d9ef">string</span> htmlTemplate = File.ReadAllText(fileName);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34</span>            <span style="color:#66d9ef">using</span> SpreadsheetDocument doc = SpreadsheetDocument.Open(myBlob, <span style="color:#66d9ef">false</span>);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35</span>            WorkbookPart workbookPart = doc.WorkbookPart;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36</span>            SharedStringTablePart sstpart = workbookPart.GetPartsOfType&lt;SharedStringTablePart&gt;().First();
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37</span>            SharedStringTable sst = sstpart.SharedStringTable;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39</span>            WorksheetPart worksheetPart = workbookPart.WorksheetParts.First();
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40</span>            Worksheet sheet = worksheetPart.Worksheet;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42</span>            <span style="color:#66d9ef">var</span> rows = sheet.Descendants&lt;Row&gt;();
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43</span>            <span style="color:#66d9ef">var</span> cells = sheet.Descendants&lt;Cell&gt;();
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44</span>            Console.WriteLine(<span style="color:#66d9ef">string</span>.Format(<span style="color:#e6db74">&#34;Row count = {0}&#34;</span>, rows.LongCount()));
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45</span>            Console.WriteLine(<span style="color:#66d9ef">string</span>.Format(<span style="color:#e6db74">&#34;Cell count = {0}&#34;</span>, cells.LongCount()));
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47</span>            <span style="color:#66d9ef">var</span> header = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;();
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48</span>            <span style="color:#66d9ef">var</span> body = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;();
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50</span>            <span style="color:#66d9ef">foreach</span> (Row row <span style="color:#66d9ef">in</span> rows)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51</span>            {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52</span>                <span style="color:#75715e">// first row contains header
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> (row.RowIndex == <span style="color:#ae81ff">1</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54</span>                {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55</span>                    header = ExcelRow(sst, row);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56</span>                }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57</span>                <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (row.RowIndex == <span style="color:#ae81ff">2</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58</span>                {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59</span>                    <span style="color:#75715e">// in this example we only process one row, there can me more ofcourse
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60</span><span style="color:#75715e"></span>                    body = ExcelRow(sst, row);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61</span>                }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62</span>            }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64</span>            <span style="color:#66d9ef">string</span> html = <span style="color:#e6db74">&#34;&#34;</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65</span>            <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> item <span style="color:#66d9ef">in</span> body)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66</span>            {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67</span>                html += <span style="color:#e6db74">@&#34;&lt;tr&gt;&#34;</span> +
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68</span>                        <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span> + header[item.Key] + <span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span> +
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69</span>                        <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span> + item.Value + <span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span> +
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70</span>                        <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72</span>            }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74</span>            htmlTemplate = htmlTemplate.Replace(<span style="color:#e6db74">&#34;{data}&#34;</span>, html);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75</span>            name = name.Split(<span style="color:#e6db74">&#34;.&#34;</span>)[<span style="color:#ae81ff">0</span>];
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76</span>            <span style="color:#66d9ef">var</span> outputBlob = <span style="color:#66d9ef">await</span> binder.BindAsync&lt;TextWriter&gt;(
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77</span>                                    <span style="color:#66d9ef">new</span> BlobAttribute(<span style="color:#e6db74">$&#34;output/{name}.html&#34;</span>)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78</span>                                    {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79</span>                                        Connection = <span style="color:#e6db74">&#34;AzureWebJobsStorage&#34;</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80</span>                                    }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81</span>                             );
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82</span>            outputBlob.WriteLine(htmlTemplate);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83</span>        }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84</span>
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85</span>        <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt; ExcelRow(SharedStringTable sst, Row row)
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86</span>        {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87</span>            <span style="color:#66d9ef">var</span> result = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">string</span>&gt;();
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88</span>            <span style="color:#66d9ef">foreach</span> (Cell cell <span style="color:#66d9ef">in</span> row.Descendants&lt;Cell&gt;())
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89</span>            {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90</span>                <span style="color:#66d9ef">if</span> ((cell.DataType != <span style="color:#66d9ef">null</span>) &amp;&amp; (cell.DataType == CellValues.SharedString))
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91</span>                {
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92</span>                    <span style="color:#66d9ef">int</span> ssid = <span style="color:#66d9ef">int</span>.Parse(cell.CellValue.Text);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93</span>                    <span style="color:#66d9ef">string</span> input = cell.CellReference.Value;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94</span>                    <span style="color:#66d9ef">string</span> cellRef = <span style="color:#66d9ef">new</span> String(input.Where(c =&gt; c != <span style="color:#e6db74">&#39;-&#39;</span> &amp;&amp; (c &lt; <span style="color:#e6db74">&#39;0&#39;</span> || c &gt; <span style="color:#e6db74">&#39;9&#39;</span>)).ToArray());
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95</span>                    <span style="color:#66d9ef">string</span> str = sst.ChildElements[ssid].InnerText;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96</span>                    result.Add(cellRef, str);
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97</span>                }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98</span>            }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99</span>            <span style="color:#66d9ef">return</span> result;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100</span>        }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101</span>    }
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102</span>}
-</code></pre></div>
-<p><a class="button" href="/files/powerplatform/function.cs">open raw file</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>﻿&lt;<span style="color:#f92672">html</span>&gt;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    &lt;<span style="color:#f92672">head</span>&gt;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>        &lt;<span style="color:#f92672">title</span>&gt;Creation of a PDF file using PowerAutomate and Azure Function&lt;/<span style="color:#f92672">title</span>&gt;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    &lt;/<span style="color:#f92672">head</span>&gt;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>    &lt;<span style="color:#f92672">body</span>&gt;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>        &lt;<span style="color:#f92672">table</span> <span style="color:#a6e22e">border</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1&#34;</span>&gt;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>            {data}
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>        &lt;/<span style="color:#f92672">table</span>&gt;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>    &lt;/<span style="color:#f92672">body</span>&gt;
-<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>&lt;/<span style="color:#f92672">html</span>&gt;
-</code></pre></div>
-<p><a class="button" href="/files/powerplatform/azurefunction/template.html">open raw file</a></p>
-<h3 id="step-3">Step 3</h3>
-<p>The last PowerAutomate flow is to copy the document from the blob storage to OneDrive where the conversion from HTML to PDF can be performed using a standard action. The last step is to copy the PDF document back to SharePoint and we&rsquo;re done!</p>
-<p><img src="/img/excel2pdf/excel2pdf_2020-09-24-14-18-29.png" alt="shadow border larger"></p>
-<p>I hope you enjoyed learning more about the PowerAutomate and Azure Functions combination and the benefits that come from it.</p>
-         
-      </div>
-    </div>
-  </div>
-</div>
-
-          </div>
-      </div>
-  </div>
-  <script src="https://jurjan.info/js/jquery.min.js"></script>
-<script src="https://jurjan.info/js/bootstrap.min.js"></script>
-<script src="https://jurjan.info/js/jquery.cookie.js"> </script>
-<script src="https://jurjan.info/js/ekko-lightbox.js"></script>
-<script src="https://jurjan.info/js/jquery.scrollTo.min.js"></script>
-<script src="https://jurjan.info/js/masonry.pkgd.min.js"></script>
-<script src="https://jurjan.info/js/imagesloaded.pkgd.min.js"></script>
-<script src="https://jurjan.info/js/owl.carousel.min.js"></script>
-<script src="https://jurjan.info/js/front.js"></script>
-
-
-
-</body>
-</html>
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><title>Jurjan Brust - Leverage the power of Azure</title><meta name=description content="jurjan.info"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="all,follow"><meta name=googlebot content="index,follow,snippet,archive"><meta property="og:title" content="Leverage the power of Azure"><meta property="og:image" content="https://jurjan.info/img/excel2pdf/excel2pdf_2020-09-24-14-59-45.png"><meta property="og:description" content="jurjan.info"><meta property="og:url" content="https://jurjan.info/posts/powerplatform/excel2pdf/"><link rel=stylesheet href=https://jurjan.info/css/bootstrap.min.css><link rel=stylesheet href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic"><link rel=stylesheet href="//fonts.googleapis.com/css?family=Montserrat:100"><link rel=stylesheet href=https://jurjan.info/css/font-awesome.min.css><link rel=stylesheet href=https://jurjan.info/css/owl.carousel.css><link rel=stylesheet href=https://jurjan.info/css/owl.theme.css><link href=https://jurjan.info/css/style.green.css rel=stylesheet id=theme-stylesheet><!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js></script><script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]--><link href=https://jurjan.info/css/custom.css rel=stylesheet><link rel="shortcut icon" href=https://jurjan.info/img/favicon.png></head><body><div id=all><div class=container-fluid><div class="row row-offcanvas row-offcanvas-left"><div id=sidebar class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas"><div class=sidebar-content><a href=/><img src=/img/jurjan.png class=avatar></a><h1 class=sidebar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1><p class=sidebar-p>SharePoint | M365 | Azure | IoT</p><ul class=sidebar-menu><li><a href=https://jurjan.info/posts/>HOME</a></li><li><a href=https://jurjan.info/categories/projects>PROJECTS</a></li><li><a href=https://jurjan.info/categories/azure>AZURE</a></li><li><a href=https://jurjan.info/categories/sharepoint>SHAREPOINT / M365</a></li><li><a href=https://jurjan.info/about/>ABOUT</a></li><li><a href=https://jurjan.info/contact/>CONTACT</a></li></ul><p class=social><a href=/index.xml data-animate-hover=pulse class=email><i class="fa fa-rss"></i></a><a href=https://www.linkedin.com/in/jurjanbrust/ data-animate-hover=pulse class=external><i class="fa fa-linkedin"></i></a><a href=https://twitter.com/jurjanbrust data-animate-hover=pulse class="external twitter"><i class="fa fa-twitter"></i></a><a href=https://www.instagram.com/jurjanbrust/ class="external instagram"><i class="fa fa-instagram"></i></a><a href=https://github.com/jurjanbrust data-animate-hover=pulse class=external><i class="fa fa-github"></i></a><a href=mailto:mail@jurjan.info data-animate-hover=pulse class=email><i class="fa fa-envelope"></i></a></p><div class=copyright><p class=credit>&copy;2020 Jurjan Brust</p></div></div></div><div class="col-xs-12 col-sm-8 col-md-9 content-column white-background"><div class="small-navbar visible-xs"><button type=button data-toggle=offcanvas class="btn btn-ghost pull-left"> <i class="fa fa-align-left"></i>Menu</button><h1 class=small-navbar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1></div><div class=row><div class=col-lg-8><div class=content-column-content><h1>Leverage the power of Azure</h1><p>Combine the power of azure functions within PowerAutomate for unprecedented possibilities.</p><h3 id=introduction>Introduction</h3><p>In my previous blog post I showed how you can <a href=/posts/powerplatform/listitem2pdf>generate a PDF from a SharePoint list item</a>, purely by using the PowerPlatform. Now I&rsquo;ll show you how to convert Excel files to PDF documents using the best of both worlds from Azure and the PowerPlatform.</p><h3 id=the-case>The case</h3><p>A user places Excel documents in a SharePoint document library. These documents must be converted to PDF files and placed in a second document library. The Excel documents contain a large number columns, some business logic has to be applied to each these columns.</p><h3 id=the-solution>The solution</h3><p>For the conversion from Excel to PDF, we still need the conversion to HTML as an intermediate step. Because we will be using Azure for this, the complexity of the steps in PowerAutomate will become a lot easier.
+The solution consists of the following three parts:</p><ol><li>Create a PowerAutomate flow that will be triggered when a new document is added to a document library. His main task will be to push this document to an Azure blob storage for further processing of the Azure Function.</li><li>The Azure function will do its job by converting the Excel file to an HTML file. This HTML file will be placed in the output folder of the BLOB storage.</li><li>Create a second Power Automate flow with the output folder of the BLOB storage as trigger. This flow reads the HTML file, places it in OneDrive for conversion to PDF. As a final step, this flow will return the PDF file to SharePoint.</li></ol><h3 id=step-1>Step 1</h3><p>The first flow consists of only two parts. The trigger when a document is created in the library and the blob action to copy the document to blob storage. PowerAutomate has made this step so simple using a standard connector. Awesome.</p><p><img src=/img/excel2pdf/excel2pdf_2020-09-24-14-15-40.png alt="shadow border larger"></p><h3 id=step-2>Step 2</h3><p>This is the Azure function implementation that will pick up any file places in the /input folder of the blob storage.</p><p>The processing of the Excel file to HTML is greatly simplified for this example and contains little more than the necessary. Just like in the previous example, I use a template.html file for the conversion to HTML. I can imagine that in scenarios in which the HTML takes on more complex forms you want to make other choices, such as the &lsquo;html agility pack&rsquo;</p><p>Something that is worth noticing is the way in which this <strong>template.html</strong> file is read in the Azure function. The classic method of loading Assembly files no longer works in Azure Functions. However, by using the ExecutionContext class it is possible to read embedded resource files. See line number <strong>24 and 31-32</strong>.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C# data-lang=C#><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1</span><span style=color:#66d9ef>using</span> System;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2</span><span style=color:#66d9ef>using</span> System.IO;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3</span><span style=color:#66d9ef>using</span> Microsoft.Azure.WebJobs;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4</span><span style=color:#66d9ef>using</span> Microsoft.Extensions.Logging;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5</span><span style=color:#66d9ef>using</span> DocumentFormat.OpenXml.Packaging;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6</span><span style=color:#66d9ef>using</span> DocumentFormat.OpenXml.Spreadsheet;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7</span><span style=color:#66d9ef>using</span> System.Linq;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8</span><span style=color:#66d9ef>using</span> System.Collections.Generic;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10</span><span style=color:#75715e>/// &lt;summary&gt;
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11</span><span style=color:#75715e>/// This azure function converts an Exel file into a HTML file using a template file: see &#39;\\files\\template.html&#39;
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12</span><span style=color:#75715e>/// If the output of the html file is basic, this is a fast method to do the conversion. Another
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13</span><span style=color:#75715e>/// nice option would be to use https://html-agility-pack.net/ for example.
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14</span><span style=color:#75715e>/// &lt;/summary&gt;
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15</span><span style=color:#75715e></span><span style=color:#66d9ef>namespace</span> Function.Convert
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16</span>{
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17</span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Function</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18</span>    {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19</span><span style=color:#a6e22e>        [FunctionName(&#34;Function&#34;)]</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20</span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>async</span> System.Threading.Tasks.Task RunAsync(
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21</span><span style=color:#a6e22e>            [BlobTrigger(&#34;input/{name}&#34;, Connection = &#34;AzureWebJobsStorage&#34;)]</span> Stream myBlob,
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22</span>            <span style=color:#66d9ef>string</span> name,
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23</span>            ILogger log,
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24</span>            ExecutionContext executionContext,
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25</span>            IBinder binder)
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26</span>        {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27</span>            log.LogInformation(<span style=color:#e6db74>$&#34;C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes&#34;</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29</span>            <span style=color:#75715e>// this is a method to get files loaded into the program, since resource-files cannot be loaded using reflection. 
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30</span><span style=color:#75715e></span>            <span style=color:#75715e>// make sure the template.html is set to : &#39;copy Always&#39; in the file properties.
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31</span><span style=color:#75715e></span>            <span style=color:#66d9ef>string</span> fileName = <span style=color:#e6db74>$&#34;{ Directory.GetParent(executionContext.FunctionDirectory).FullName}\\files\\template.html&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32</span>            <span style=color:#66d9ef>string</span> htmlTemplate = File.ReadAllText(fileName);
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34</span>            <span style=color:#66d9ef>using</span> SpreadsheetDocument doc = SpreadsheetDocument.Open(myBlob, <span style=color:#66d9ef>false</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35</span>            WorkbookPart workbookPart = doc.WorkbookPart;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36</span>            SharedStringTablePart sstpart = workbookPart.GetPartsOfType&lt;SharedStringTablePart&gt;().First();
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37</span>            SharedStringTable sst = sstpart.SharedStringTable;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39</span>            WorksheetPart worksheetPart = workbookPart.WorksheetParts.First();
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40</span>            Worksheet sheet = worksheetPart.Worksheet;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42</span>            <span style=color:#66d9ef>var</span> rows = sheet.Descendants&lt;Row&gt;();
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43</span>            <span style=color:#66d9ef>var</span> cells = sheet.Descendants&lt;Cell&gt;();
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44</span>            Console.WriteLine(<span style=color:#66d9ef>string</span>.Format(<span style=color:#e6db74>&#34;Row count = {0}&#34;</span>, rows.LongCount()));
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45</span>            Console.WriteLine(<span style=color:#66d9ef>string</span>.Format(<span style=color:#e6db74>&#34;Cell count = {0}&#34;</span>, cells.LongCount()));
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47</span>            <span style=color:#66d9ef>var</span> header = <span style=color:#66d9ef>new</span> Dictionary&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>string</span>&gt;();
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48</span>            <span style=color:#66d9ef>var</span> body = <span style=color:#66d9ef>new</span> Dictionary&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>string</span>&gt;();
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50</span>            <span style=color:#66d9ef>foreach</span> (Row row <span style=color:#66d9ef>in</span> rows)
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51</span>            {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52</span>                <span style=color:#75715e>// first row contains header
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53</span><span style=color:#75715e></span>                <span style=color:#66d9ef>if</span> (row.RowIndex == <span style=color:#ae81ff>1</span>)
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54</span>                {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55</span>                    header = ExcelRow(sst, row);
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56</span>                }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57</span>                <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (row.RowIndex == <span style=color:#ae81ff>2</span>)
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58</span>                {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59</span>                    <span style=color:#75715e>// in this example we only process one row, there can me more ofcourse
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60</span><span style=color:#75715e></span>                    body = ExcelRow(sst, row);
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61</span>                }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62</span>            }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64</span>            <span style=color:#66d9ef>string</span> html = <span style=color:#e6db74>&#34;&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65</span>            <span style=color:#66d9ef>foreach</span> (<span style=color:#66d9ef>var</span> item <span style=color:#66d9ef>in</span> body)
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66</span>            {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67</span>                html += <span style=color:#e6db74>@&#34;&lt;tr&gt;&#34;</span> +
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68</span>                        <span style=color:#e6db74>&#34;&lt;td&gt;&#34;</span> + header[item.Key] + <span style=color:#e6db74>&#34;&lt;/td&gt;&#34;</span> +
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69</span>                        <span style=color:#e6db74>&#34;&lt;td&gt;&#34;</span> + item.Value + <span style=color:#e6db74>&#34;&lt;/td&gt;&#34;</span> +
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70</span>                        <span style=color:#e6db74>&#34;&lt;/tr&gt;&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72</span>            }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74</span>            htmlTemplate = htmlTemplate.Replace(<span style=color:#e6db74>&#34;{data}&#34;</span>, html);
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75</span>            name = name.Split(<span style=color:#e6db74>&#34;.&#34;</span>)[<span style=color:#ae81ff>0</span>];
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76</span>            <span style=color:#66d9ef>var</span> outputBlob = <span style=color:#66d9ef>await</span> binder.BindAsync&lt;TextWriter&gt;(
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77</span>                                    <span style=color:#66d9ef>new</span> BlobAttribute(<span style=color:#e6db74>$&#34;output/{name}.html&#34;</span>)
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78</span>                                    {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79</span>                                        Connection = <span style=color:#e6db74>&#34;AzureWebJobsStorage&#34;</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80</span>                                    }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81</span>                             );
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82</span>            outputBlob.WriteLine(htmlTemplate);
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83</span>        }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85</span>        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> Dictionary&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>string</span>&gt; ExcelRow(SharedStringTable sst, Row row)
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86</span>        {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87</span>            <span style=color:#66d9ef>var</span> result = <span style=color:#66d9ef>new</span> Dictionary&lt;<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>string</span>&gt;();
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88</span>            <span style=color:#66d9ef>foreach</span> (Cell cell <span style=color:#66d9ef>in</span> row.Descendants&lt;Cell&gt;())
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89</span>            {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90</span>                <span style=color:#66d9ef>if</span> ((cell.DataType != <span style=color:#66d9ef>null</span>) &amp;&amp; (cell.DataType == CellValues.SharedString))
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91</span>                {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92</span>                    <span style=color:#66d9ef>int</span> ssid = <span style=color:#66d9ef>int</span>.Parse(cell.CellValue.Text);
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93</span>                    <span style=color:#66d9ef>string</span> input = cell.CellReference.Value;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94</span>                    <span style=color:#66d9ef>string</span> cellRef = <span style=color:#66d9ef>new</span> String(input.Where(c =&gt; c != <span style=color:#e6db74>&#39;-&#39;</span> &amp;&amp; (c &lt; <span style=color:#e6db74>&#39;0&#39;</span> || c &gt; <span style=color:#e6db74>&#39;9&#39;</span>)).ToArray());
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95</span>                    <span style=color:#66d9ef>string</span> str = sst.ChildElements[ssid].InnerText;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96</span>                    result.Add(cellRef, str);
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97</span>                }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98</span>            }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99</span>            <span style=color:#66d9ef>return</span> result;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100</span>        }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101</span>    }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102</span>}
+</code></pre></div><p><a class=button href=/files/powerplatform/function.cs>open raw file</a></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span>﻿&lt;<span style=color:#f92672>html</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>    &lt;<span style=color:#f92672>head</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span>        &lt;<span style=color:#f92672>title</span>&gt;Creation of a PDF file using PowerAutomate and Azure Function&lt;/<span style=color:#f92672>title</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>    &lt;/<span style=color:#f92672>head</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span>    &lt;<span style=color:#f92672>body</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>        &lt;<span style=color:#f92672>table</span> <span style=color:#a6e22e>border</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;1&#34;</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span>            {data}
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span>        &lt;/<span style=color:#f92672>table</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span>    &lt;/<span style=color:#f92672>body</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span>&lt;/<span style=color:#f92672>html</span>&gt;
+</code></pre></div><p><a class=button href=/files/powerplatform/azurefunction/template.html>open raw file</a></p><h3 id=step-3>Step 3</h3><p>The last PowerAutomate flow is to copy the document from the blob storage to OneDrive where the conversion from HTML to PDF can be performed using a standard action. The last step is to copy the PDF document back to SharePoint and we&rsquo;re done!</p><p><img src=/img/excel2pdf/excel2pdf_2020-09-24-14-18-29.png alt="shadow border larger"></p><p>I hope you enjoyed learning more about the PowerAutomate and Azure Functions combination and the benefits that come from it.</p></div></div></div></div></div></div></div><script src=https://jurjan.info/js/jquery.min.js></script><script src=https://jurjan.info/js/bootstrap.min.js></script><script src=https://jurjan.info/js/jquery.cookie.js></script><script src=https://jurjan.info/js/ekko-lightbox.js></script><script src=https://jurjan.info/js/jquery.scrollTo.min.js></script><script src=https://jurjan.info/js/masonry.pkgd.min.js></script><script src=https://jurjan.info/js/imagesloaded.pkgd.min.js></script><script src=https://jurjan.info/js/owl.carousel.min.js></script><script src=https://jurjan.info/js/front.js></script></body></html>

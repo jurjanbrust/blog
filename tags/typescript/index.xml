@@ -1,21 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>typescript on Jurjan Brust</title>
-    <link>https://jurjan.info/tags/typescript/</link>
-    <description>Recent content in typescript on Jurjan Brust</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 02 Apr 2020 19:34:20 +0200</lastBuildDate><atom:link href="https://jurjan.info/tags/typescript/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Superheroes</title>
-      <link>https://jurjan.info/posts/programming/angularjs/superheroes/</link>
-      <pubDate>Thu, 02 Apr 2020 19:34:20 +0200</pubDate>
-      
-      <guid>https://jurjan.info/posts/programming/angularjs/superheroes/</guid>
-      <description>&lt;p&gt;Want to get started developing AngularJS / TypeScript applications using Visual Studio Code?
-In this blogpost I will show you how to get started in less time than a coffee break.&lt;/p&gt;</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>typescript on Jurjan Brust</title><link>https://jurjan.info/tags/typescript/</link><description>Recent content in typescript on Jurjan Brust</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 02 Apr 2020 19:34:20 +0200</lastBuildDate><atom:link href="https://jurjan.info/tags/typescript/index.xml" rel="self" type="application/rss+xml"/><item><title>Superheroes</title><link>https://jurjan.info/posts/programming/angularjs/superheroes/</link><pubDate>Thu, 02 Apr 2020 19:34:20 +0200</pubDate><guid>https://jurjan.info/posts/programming/angularjs/superheroes/</guid><description>&lt;p>Want to get started developing AngularJS / TypeScript applications using Visual Studio Code?
+In this blogpost I will show you how to get started in less time than a coffee break.&lt;/p></description></item></channel></rss>
