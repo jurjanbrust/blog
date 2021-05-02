@@ -33,7 +33,7 @@ But I find that this simple PowerShell is also a great method to quickly inspect
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span>	<span style=color:#66d9ef>if</span>($null <span style=color:#f92672>-eq</span> $list)
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span>	{
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span>		Write-Host <span style=color:#e6db74>&#34;No list found, showing all available lists&#34;</span> -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>		$web.Lists | <span style=color:#66d9ef>ForEach</span>-Object {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>		$web.Lists | ForEach-Object {
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span>			Write-Host $_.Title
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span>		}
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span>	}
@@ -51,14 +51,14 @@ But I find that this simple PowerShell is also a great method to quickly inspect
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span>	
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span>	<span style=color:#66d9ef>if</span>(<span style=color:#f92672>-not</span> $filter)
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span>	{
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span>		$listItem.Fields | <span style=color:#66d9ef>ForEach</span>-Object {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span>		$listItem.Fields | ForEach-Object {
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span>	 		Write-Host $_.Title <span style=color:#e6db74>&#34;[&#34;</span> $_.InternalName <span style=color:#e6db74>&#34;]</span><span style=color:#ae81ff>`t`t</span><span style=color:#e6db74>&#34;</span> -NoNewline -ForegroundColor Yellow -BackgroundColor DarkRed
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span>	 		Write-Host $listItem[$_.InternalName] -ForegroundColor Yellow -BackgroundColor Red
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span>		}
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span>	}
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span>	<span style=color:#66d9ef>else</span>
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span>	{
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55</span>		$listItem.Fields | Where-Object {$_.InternalName <span style=color:#f92672>-match</span> $filter} | <span style=color:#66d9ef>ForEach</span>-Object {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55</span>		$listItem.Fields | Where-Object {$_.InternalName <span style=color:#f92672>-match</span> $filter} | ForEach-Object {
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56</span>	 		Write-Host $_.Title <span style=color:#e6db74>&#34;[&#34;</span> $_.InternalName <span style=color:#e6db74>&#34;]</span><span style=color:#ae81ff>`t`t</span><span style=color:#e6db74>&#34;</span> -NoNewline -ForegroundColor Yellow -BackgroundColor DarkRed
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57</span>			Write-Host $listItem[$_.InternalName] -ForegroundColor Yellow -BackgroundColor Red
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58</span>		}

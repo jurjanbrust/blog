@@ -86,7 +86,7 @@ To get better confidence about the quality of ShareGate (which is just fine in m
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80</span>$differences = Compare-Object $onPremFiles $onlineFiles
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81</span>Write-Host $differences.Count files are missing, starting export to csv file <span style=color:#e6db74>&#34;&#39;ListCompare_Export_$fileName.csv&#39;&#34;</span> -ForegroundColor Red
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83</span>$differences | <span style=color:#66d9ef>ForEach</span>-Object { 
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83</span>$differences | ForEach-Object { 
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84</span>	$completed = ($i*100)/$differences.Count
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85</span>    Write-Progress -Activity <span style=color:#e6db74>&#34;Export &#34;</span> -percentComplete $completed; 
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86</span>    Write-Host $_.SideIndicator $_.InputObject -ForegroundColor DarkYellow

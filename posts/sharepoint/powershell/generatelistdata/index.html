@@ -122,7 +122,7 @@ In this example I only use a field called &ldquo;<strong>QuestionType</strong>&r
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40</span>$contenttype = Get-PnPContentType -List $listName | Where-Object {$_.Name <span style=color:#f92672>-eq</span> $contentTypeName}
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41</span><span style=color:#66d9ef>if</span>($null <span style=color:#f92672>-eq</span> $contenttype) {
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42</span>    Write-Host <span style=color:#e6db74>&#34;No $contenttype ContentType available on the list&#34;</span> -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43</span>    Get-PnPContentType -List $listName | <span style=color:#66d9ef>ForEach</span>-Object { Write-Host <span style=color:#e6db74>&#34;Available contenttype: &#34;</span> $_.Name -ForegroundColor Green }
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43</span>    Get-PnPContentType -List $listName | ForEach-Object { Write-Host <span style=color:#e6db74>&#34;Available contenttype: &#34;</span> $_.Name -ForegroundColor Green }
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44</span>    <span style=color:#66d9ef>break</span>;
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45</span>}
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46</span>
@@ -130,7 +130,7 @@ In this example I only use a field called &ldquo;<strong>QuestionType</strong>&r
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48</span>
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49</span>Write-Host <span style=color:#e6db74>&#34;Using ContentType: </span>$($contenttype.Name)<span style=color:#e6db74>&#34;</span> -ForegroundColor Green
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50</span><span style=color:#66d9ef>if</span>($debug) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51</span>    $contenttype.Fields | <span style=color:#66d9ef>ForEach</span>-Object {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51</span>    $contenttype.Fields | ForEach-Object {
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52</span>        Write-Host $_.Title -ForegroundColor Green -NoNewline
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53</span>        Write-Host <span style=color:#e6db74>&#34; &#34;</span> $_.InternalName -ForegroundColor Yellow -NoNewline
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54</span>        Write-Host <span style=color:#e6db74>&#34; &#34;</span> $_.TypeAsString -ForegroundColor Red
@@ -147,7 +147,7 @@ In this example I only use a field called &ldquo;<strong>QuestionType</strong>&r
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65</span>    $spprops = @{}
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66</span>    $taxFields = @{}
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68</span>    $contenttype.Fields | Where-Object { <span style=color:#f92672>-Not</span> $_.InternalName.StartsWith(<span style=color:#e6db74>&#34;_&#34;</span>) } | <span style=color:#66d9ef>ForEach</span>-Object {
+<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68</span>    $contenttype.Fields | Where-Object { <span style=color:#f92672>-Not</span> $_.InternalName.StartsWith(<span style=color:#e6db74>&#34;_&#34;</span>) } | ForEach-Object {
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69</span>        <span style=color:#66d9ef>if</span>($_.InternalName <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Title&#34;</span>) {
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70</span>            
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71</span>            $spprops[$_.InternalName] = $titleText
