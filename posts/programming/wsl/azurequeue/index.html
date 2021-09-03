@@ -96,12 +96,12 @@ For more background information and installation instructions have a look at thi
 </ol>
 <h2 id=steps-to-follow-in-this-guide>Steps to follow in this guide</h2>
 <p>First clone the repository into some directory (mine is called D:\Example)</p>
-<pre><code>git clone https://github.com/jurjanbrust/wsl2_mysql_grafana.git
+<pre tabindex=0><code>git clone https://github.com/jurjanbrust/wsl2_mysql_grafana.git
 </code></pre><p><img src=/img/azurequeue/azurequeue_2020-10-16-16-21-53.png alt=shadow></p>
 <p>Next, change the directory into the .devcontainer folder</p>
-<pre><code>cd .\wsl2_mysql_grafana\.devcontainer\
+<pre tabindex=0><code>cd .\wsl2_mysql_grafana\.devcontainer\
 </code></pre><p>and start the containers using:</p>
-<pre><code>docker-compose up
+<pre tabindex=0><code>docker-compose up
 </code></pre><p><img src=/img/azurequeue/azurequeue_2020-10-16-16-22-50.png alt=shadow></p>
 <p>Next login on the &lsquo;development&rsquo; container so that we can create the database in the MySql container.
 First, we need to know the name of the container that we will login, so do a &lsquo;docker container list&rsquo; in the command prompt (I highly recommend Windows Terminal, see <a href=https://docs.microsoft.com/en-us/windows/terminal/get-started>this link</a> for installation instructions)

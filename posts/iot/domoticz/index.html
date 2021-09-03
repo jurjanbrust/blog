@@ -174,16 +174,16 @@ The parts I used are:</p>
 <li>Lookup the IP address of your connected Raspberry using your router and connect using the terminal program in step 6. Default password = &ldquo;raspberry&rdquo;</li>
 <li>Change the password of the pi user-account</li>
 </ol>
-<pre><code>sudo passwd pi
+<pre tabindex=0><code>sudo passwd pi
 </code></pre><ol start=9>
 <li>Install latest updates</li>
 </ol>
-<pre><code>sudo apt-get update
+<pre tabindex=0><code>sudo apt-get update
 sudo apt-get upgrade
 </code></pre><ol start=10>
 <li>Change settings</li>
 </ol>
-<pre><code>sudo raspi-config 
+<pre tabindex=0><code>sudo raspi-config 
 </code></pre><p>Navigate using the menus and change the following settings:</p>
 <pre><code>- 2 hostname) Change the hostename in 'domoticz' (or whatever you like)
 - 4 localization options, I2 change time zone) Change time zone to your time zone (mine is Europe + Amsterdam)
@@ -195,15 +195,15 @@ sudo apt-get upgrade
 <li>Reboot your raspberry</li>
 <li>Install Mosquitto (optional) MQTT message broker</li>
 </ol>
-<pre><code>sudo apt install mosquitto
+<pre tabindex=0><code>sudo apt install mosquitto
 </code></pre><ol start=11>
 <li>Install Domoticz</li>
 </ol>
-<pre><code>curl -L install.domoticz.com | sudo bash 
+<pre tabindex=0><code>curl -L install.domoticz.com | sudo bash 
 </code></pre><ol start=12>
 <li>Install software for 433 Mhz</li>
 </ol>
-<pre><code>git clone https://github.com/WiringPi/WiringPi.git
+<pre tabindex=0><code>git clone https://github.com/WiringPi/WiringPi.git
 cd WiringPi
 ./build
 cd ..
@@ -219,7 +219,7 @@ See <a href=https://dashticz.readthedocs.io/en/master/gettingstarted/installatio
 <p>Install PiHole (optional) > The raspberry is also a great add-blocker and since it is always running why not make use of this</p>
 </li>
 </ol>
-<pre><code>curl -sSL https://install.pi-hole.net | bash
+<pre tabindex=0><code>curl -sSL https://install.pi-hole.net | bash
 </code></pre><p>Software installation part is all DONE, Congratulations. lets go to the configuration of Domoticz.</p>
 <h3 id=backup>Backup</h3>
 <p>SD cards WILL fail after some period, so it is highly recommended to make backups of your Domoticz database. I use a USB stick for this that is permanently attached to one of the USB ports of the raspberry PI. For this only a small USB stick is needed, I used a 4 gig stick that I got for free somewhere.
@@ -227,38 +227,38 @@ We need to mount this USB stick automatically on every boot using the following 
 <ol>
 <li>Get the ID of the USB device, it will be named sda1</li>
 </ol>
-<pre><code>ls -l /dev/disk/by-uuid/
+<pre tabindex=0><code>ls -l /dev/disk/by-uuid/
 </code></pre><p>You should see something like the picture below, the ID of my USB stick is 44D4-0B4, write down your ID for step 3.</p>
 <p><img src=/img/domoticz/domoticz_2020-07-23-19-58-05.png alt></p>
 <ol start=2>
 <li>Edit /etc/fstab</li>
 </ol>
-<pre><code>sudo nano /etc/fstab
+<pre tabindex=0><code>sudo nano /etc/fstab
 </code></pre><ol start=3>
 <li>Then add the following line at the end (replace 44D4-0B4):</li>
 </ol>
-<pre><code>UUID=44D4-0B4 /media/usb vfat auto,nofail,noatime,users,rw,uid=pi,gid=pi 0 0
+<pre tabindex=0><code>UUID=44D4-0B4 /media/usb vfat auto,nofail,noatime,users,rw,uid=pi,gid=pi 0 0
 </code></pre><ol start=4>
 <li>create backup.sh</li>
 </ol>
-<pre><code>sudo nano ./backup.sh
+<pre tabindex=0><code>sudo nano ./backup.sh
 </code></pre><ol start=5>
 <li>copy the following into backup.sh and save the file (crtl+X and Y)</li>
 </ol>
-<pre><code>tar -vcf ./domoticz/domoticz-db.tar ./domoticz/domoticz.db ./domoticz/domoticz.db-wal ./domoticz/domoticz.db-shm
+<pre tabindex=0><code>tar -vcf ./domoticz/domoticz-db.tar ./domoticz/domoticz.db ./domoticz/domoticz.db-wal ./domoticz/domoticz.db-shm
 rsync -avzh ./domoticz/domoticz-db.tar /media/usb/daily/
 </code></pre><ol start=6>
 <li>make backup.sh executable</li>
 </ol>
-<pre><code>sudo chmod +x backup.sh
+<pre tabindex=0><code>sudo chmod +x backup.sh
 </code></pre><ol start=7>
 <li>edit crontab</li>
 </ol>
-<pre><code>crontab -e
+<pre tabindex=0><code>crontab -e
 </code></pre><ol start=8>
 <li>and add the following lines for a daily, weekly and monthly backup</li>
 </ol>
-<pre><code>0 5 * * * ./backup.sh                                                                                                                       
+<pre tabindex=0><code>0 5 * * * ./backup.sh                                                                                                                       
 0 5 * * 0 rsync -avzh ./domoticz/domoticz-db.tar /media/usb/weekly/                                                                          
 0 5 * 1-12 0 rsync -avzh ./domoticz/domoticz-db.tar /media/usb/monthly/                                                                      
 </code></pre><h3 id=domoticz-configuration>Domoticz configuration</h3>
@@ -283,7 +283,7 @@ Add a device with the following settings:
 <ol>
 <li>Login on your domoticz server using SSH</li>
 </ol>
-<pre><code>cd 433Utils/RPi_utils/
+<pre tabindex=0><code>cd 433Utils/RPi_utils/
 ./RFSniffer
 </code></pre><p>If all went well you should see the codes received by the 433 Mhz Superheterodyne RF Receiver.
 <img src=/img/domoticz/domoticz_2020-03-24-21-13-39.png alt=shadow></p>
