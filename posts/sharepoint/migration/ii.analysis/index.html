@@ -150,7 +150,7 @@ Know which site-templates have been used and how permissions have been set and f
 <p><a class=button href=/files/sharepoint/analyse_sources/allfilesinone.cmd>open raw file</a></p>
 <h4 id=analysesharepoint_startps1>analyseSharePoint_Start.ps1</h4>
 <p>This script is the script that is to be executed. It reads an comma separated file called &lsquo;sites.csv&rsquo; that is containing all the URLs to analyse. Note that it is possible to analyse all the subsites by using only one URL (recursion).</p>
-<p><code>Note: in order to allow the PowerShell to execute on your local machine you might need to change the execution policy (Set-ExecutionPolicy)</code></p>
+<p><code>Note: in order to allow the PowerShell to execute on your local machine you might need to change the execution policy (Set-ExecutionPolicy) </code></p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>
 <span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span>$input = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path <span style=color:#e6db74>&#34;sites.csv&#34;</span>)
