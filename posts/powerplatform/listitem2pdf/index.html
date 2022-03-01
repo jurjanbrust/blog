@@ -1,8 +1,7 @@
 <!doctype html><html lang=en-us>
 <head><meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
-<title>Jurjan Brust - Power Automate</title>
-<meta name=description content="jurjan.info">
+<title>Jurjan Brust - Power Automate</title><meta name=description content="jurjan.info">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="all,follow">
 <meta name=googlebot content="index,follow,snippet,archive">
@@ -20,25 +19,15 @@
 <script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
 <link href=https://jurjan.info/css/custom.css rel=stylesheet>
 <link rel="shortcut icon" href=https://jurjan.info/img/favicon.png>
-</head>
-<body>
+</head><body>
 <div id=all>
 <div class=container-fluid>
 <div class="row row-offcanvas row-offcanvas-left">
 <div id=sidebar class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
 <div class=sidebar-content>
 <a href=/> <img src=/img/jurjan.png class=avatar> </a>
-<h1 class=sidebar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1>
-<p class=sidebar-p>SharePoint | M365 | Azure | IoT</p>
-<ul class=sidebar-menu>
-<li><a href=https://jurjan.info/posts/>HOME</a></li>
-<li><a href=https://jurjan.info/categories/projects>PROJECTS</a></li>
-<li><a href=https://jurjan.info/categories/azure>AZURE</a></li>
-<li><a href=https://jurjan.info/categories/sharepoint>SHAREPOINT / M365</a></li>
-<li><a href=https://jurjan.info/about/>ABOUT</a></li>
-<li><a href=https://jurjan.info/contact/>CONTACT</a></li>
-</ul>
-<p class=social>
+<h1 class=sidebar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1><p class=sidebar-p>SharePoint | M365 | Azure | IoT</p><ul class=sidebar-menu>
+<li><a href=https://jurjan.info/posts/>HOME</a></li><li><a href=https://jurjan.info/categories/projects>PROJECTS</a></li><li><a href=https://jurjan.info/categories/azure>AZURE</a></li><li><a href=https://jurjan.info/categories/sharepoint>SHAREPOINT / M365</a></li><li><a href=https://jurjan.info/about/>ABOUT</a></li><li><a href=https://jurjan.info/contact/>CONTACT</a></li></ul><p class=social>
 <a href=/index.xml data-animate-hover=pulse class=email>
 <i class="fa fa-rss"></i>
 </a>
@@ -57,115 +46,41 @@
 <a href=mailto:mail@jurjan.info data-animate-hover=pulse class=email>
 <i class="fa fa-envelope"></i>
 </a>
-</p>
-<div class=copyright>
+</p><div class=copyright>
 <p class=credit>
 &copy;2020 Jurjan Brust
-</p>
-</div>
-</div>
-</div>
-<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+</p></div></div></div><div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
 <div class="small-navbar visible-xs">
 <button type=button data-toggle=offcanvas class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
-<h1 class=small-navbar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1>
-</div>
-<div class=row>
+<h1 class=small-navbar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1></div><div class=row>
 <div class=col-lg-8>
 <div class=content-column-content>
-<h1>Power Automate</h1>
-<p>Create a PDF file from a SharePoint list item using the no-code Microsoft Power Automate Platform.</p>
-<h3 id=introduction>Introduction</h3>
-<p>In March 2018, Microsoft announced the Microsoft Power Platform. According to Microsoft, the world of business applications is changing. It is a so-called no / low-code platform that anyone with knowledge of Excel and PowerPoint can use to create business applications.</p>
-<p>But is this really the whole story? Is the Microsoft Power Platform always adequate for every business solution or are there situations in which it is best to combine the Power Platform with a low-code solution?</p>
-<p>This video shows the result of the conversion we are going to create, so lets start some PowerAutomate!
-<img src=/img/listitem2pdf/createpdf.gif alt></p>
-<h3 id=the-process>The Process</h3>
-<p>In order to convert a SharePoint list item into a PDF document we first need to convert it into a HTML document.
+<h1>Power Automate</h1><p>Create a PDF file from a SharePoint list item using the no-code Microsoft Power Automate Platform.</p><h3 id=introduction>Introduction</h3><p>In March 2018, Microsoft announced the Microsoft Power Platform. According to Microsoft, the world of business applications is changing. It is a so-called no / low-code platform that anyone with knowledge of Excel and PowerPoint can use to create business applications.</p><p>But is this really the whole story? Is the Microsoft Power Platform always adequate for every business solution or are there situations in which it is best to combine the Power Platform with a low-code solution?</p><p>This video shows the result of the conversion we are going to create, so lets start some PowerAutomate!
+<img src=/img/listitem2pdf/createpdf.gif alt></p><h3 id=the-process>The Process</h3><p>In order to convert a SharePoint list item into a PDF document we first need to convert it into a HTML document.
 By using a HTML template we convert the SharePoint list-item into a HTML document that is then stored on OneDrive.
 This step is needed because we want to use an existing PowerAutomate action to convert the HTML document to PDF.
 Once we created the PDF we can store it back into a SharePoint document library.
-<img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-08-09.png alt></p>
-<h3 id=step-1>Step 1</h3>
-<p>First create a SharePoint custom list called &lsquo;ConvertToPDF&rsquo;. Add two &lsquo;single-line of text&rsquo; columns: &lsquo;ExampleColumnOne&rsquo; and &lsquo;ExampleColumnTwo&rsquo;.
-<img src=/img/listitem2pdf/listitem2pdf_2020-09-24-18-44-37.png alt></p>
-<h3 id=step-2>Step 2</h3>
-<p>Next create a text file called &lsquo;template.html&rsquo; with the following content and upload it to the &lsquo;Documents&rsquo; library in SharePoint.</p>
-<p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-14-02.png alt></p>
-<p>Content of the HTML template.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span>&lt;<span style=color:#f92672>html</span>&gt;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>    &lt;<span style=color:#f92672>head</span>&gt;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span>        &lt;<span style=color:#f92672>meta</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;generator&#34;</span> <span style=color:#a6e22e>content</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Microsoft Flow&#34;</span>&gt;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>        &lt;<span style=color:#f92672>title</span>&gt;Convert SharePoint List items to PDF files&lt;/<span style=color:#f92672>title</span>&gt;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span>    &lt;/<span style=color:#f92672>head</span>&gt;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>    &lt;<span style=color:#f92672>body</span>&gt;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span>        &lt;<span style=color:#f92672>p</span>&gt;{ExampleColumnOne}&lt;/<span style=color:#f92672>p</span>&gt;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span>        &lt;<span style=color:#f92672>p</span>&gt;{ExampleColumnTwo}&lt;/<span style=color:#f92672>p</span>&gt;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span>    &lt;/<span style=color:#f92672>body</span>&gt;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span>&lt;/<span style=color:#f92672>html</span>&gt;</code></pre></div>
-<p><a class=button href=/files/powerplatform/template.html>open raw file</a></p>
-<p>Please notice that the template contains two placeholders {ExampleColumnOne} and {ExampleColumnTwo}. Step 5 will replace these placeholders with real data.</p>
-<h3 id=step-3>Step 3</h3>
-<p>Open <a href=https://emea.flow.microsoft.com/>PowerAutomate</a> in your Office365 subscription and create a new Flow, select &lsquo;Instant-from blank&rsquo;.</p>
-<p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-23-15.png alt=shadow>
-<img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-25-02.png alt=shadow></p>
-<h3 id=step-4>Step 4</h3>
-<p>Configure the steps as listed below (of course your site address will be different)</p>
-<ol>
-<li>&lsquo;For a selected item&rsquo;: This is the starting point of the flow. It specifies from which SharePoint list the user is able to start the conversion.</li>
-<li>&lsquo;Get Item&rsquo;: gets the listitem data the user selected for conversion.</li>
-<li>&lsquo;Get the current time&rsquo;: We will use that for the filename of the PDF.</li>
-<li>&lsquo;Get the HTML template&rsquo; so that we can convert the list-item into a HTML document.</li>
-</ol>
-<p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-17-28.png alt=shadow></p>
-<h3 id=step-5>Step 5</h3>
-<p>This is the most tricky step, since we need to replace the contents of the HTML template with data from the list-item. For this we use a compose step and the &lsquo;replace()&rsquo; function.</p>
-<p>So first add two compose actions:
-<img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-33-15.png alt></p>
-<p>And type in the replace() function.
-The first argument &lsquo;text&rsquo; will be the HTML template.</p>
-<p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-47-41.png alt></p>
-<p>So switch back from &lsquo;Expression&rsquo; to &lsquo;Dynamic content&rsquo; and select the &lsquo;File Content&rsquo; of the HTML template.</p>
-<p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-47-11.png alt></p>
-<p>This will give you the following:</p>
-<blockquote>
-<p>replace(outputs(&lsquo;HTML_Template&rsquo;)?[&lsquo;body&rsquo;])</p>
-</blockquote>
-<p>Place a comma just before the closing &lsquo;)&rsquo; like this</p>
-<p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-55-54.png alt></p>
-<p>and add type: <strong>{ExampleColumnOne},</strong></p>
-<p>next select <strong>ExampleColumnOne</strong> from the row marked below</p>
-<p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-57-46.png alt></p>
-<p>The final first compose step should look like this:</p>
-<blockquote>
-<p>replace(outputs(&lsquo;HTML_Template&rsquo;)?[&lsquo;body&rsquo;], &lsquo;{ExampleColumnOne}&rsquo;, outputs(&lsquo;Get_item&rsquo;)?[&lsquo;body/ExampleColumnOne&rsquo;])</p>
-</blockquote>
-<p>For the second compose step will will not use the template as the &lsquo;text&rsquo; but the output of the first replace.
-So the second compose step should look like this:</p>
-<blockquote>
-<p>replace(outputs(&lsquo;Compose_-_Replace_ExampleColumnOne&rsquo;), &lsquo;{ExampleColumnTwo}',outputs(&lsquo;Get_item&rsquo;)?[&lsquo;body/ExampleColumnTwo&rsquo;])</p>
-</blockquote>
-<h3 id=step-6>Step 6</h3>
-<p>Lucky for us the remaining step is quite easy.
-It consists of the following:</p>
-<ol>
-<li>&lsquo;Compose-filename&rsquo;: construct a filename of the PDF file by using the list-item Title and the current-time created in step 3.</li>
-<li>&lsquo;Create file-HTML temp&rsquo;: create a temporary file on OneDrive (first field is the &lsquo;Compose-filename&rsquo; and the second field is the &lsquo;Compose - Replace ExampleColumnTwo&rsquo;)</li>
-<li>&lsquo;Convert file-to PDF&rsquo;: convert the temporary file into a PDF document</li>
-<li>&lsquo;Create file-Enquete PDF&rsquo;: copy back the PDF into the specified SharePoint document library</li>
-</ol>
-<p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-20-02-41.png alt></p>
-<h3 id=conclusion>Conclusion</h3>
-<p>In this demo, I have shown you how to implement a conversion of a SharePoint list-item to a PDF document using not a single line of code.</p>
-<p>I can imagine that this can be used to generate PDF documents that are then sent by email. Although making this flow is doable, it does show its limitations. Because what if we now want to not only use two- but twenty columns? In that case we will also need 20 compose steps. You understand that in that case this solution is difficult to expand. This is often the problem with no-code solutions. In my next blog post I will show you how to overcome this problem by using Azure functions. <a href=/posts/powerplatform/excel2pdf>Click here to read all about it</a>.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<script src=https://jurjan.info/js/jquery.min.js></script>
+<img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-08-09.png alt></p><h3 id=step-1>Step 1</h3><p>First create a SharePoint custom list called &lsquo;ConvertToPDF&rsquo;. Add two &lsquo;single-line of text&rsquo; columns: &lsquo;ExampleColumnOne&rsquo; and &lsquo;ExampleColumnTwo&rsquo;.
+<img src=/img/listitem2pdf/listitem2pdf_2020-09-24-18-44-37.png alt></p><h3 id=step-2>Step 2</h3><p>Next create a text file called &rsquo;template.html&rsquo; with the following content and upload it to the &lsquo;Documents&rsquo; library in SharePoint.</p><p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-14-02.png alt></p><p>Content of the HTML template.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span>&lt;<span style=color:#f92672>html</span>&gt;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span>    &lt;<span style=color:#f92672>head</span>&gt;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span>        &lt;<span style=color:#f92672>meta</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;generator&#34;</span> <span style=color:#a6e22e>content</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Microsoft Flow&#34;</span>&gt;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span><span>        &lt;<span style=color:#f92672>title</span>&gt;Convert SharePoint List items to PDF files&lt;/<span style=color:#f92672>title</span>&gt;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span>    &lt;/<span style=color:#f92672>head</span>&gt;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span><span>    &lt;<span style=color:#f92672>body</span>&gt;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span>        &lt;<span style=color:#f92672>p</span>&gt;{ExampleColumnOne}&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span>        &lt;<span style=color:#f92672>p</span>&gt;{ExampleColumnTwo}&lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span>    &lt;/<span style=color:#f92672>body</span>&gt;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span>&lt;/<span style=color:#f92672>html</span>&gt;</span></span></code></pre></div><p><a class=button href=/files/powerplatform/template.html>open raw file</a></p><p>Please notice that the template contains two placeholders {ExampleColumnOne} and {ExampleColumnTwo}. Step 5 will replace these placeholders with real data.</p><h3 id=step-3>Step 3</h3><p>Open <a href=https://emea.flow.microsoft.com/>PowerAutomate</a> in your Office365 subscription and create a new Flow, select &lsquo;Instant-from blank&rsquo;.</p><p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-23-15.png alt=shadow>
+<img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-25-02.png alt=shadow></p><h3 id=step-4>Step 4</h3><p>Configure the steps as listed below (of course your site address will be different)</p><ol>
+<li>&lsquo;For a selected item&rsquo;: This is the starting point of the flow. It specifies from which SharePoint list the user is able to start the conversion.</li><li>&lsquo;Get Item&rsquo;: gets the listitem data the user selected for conversion.</li><li>&lsquo;Get the current time&rsquo;: We will use that for the filename of the PDF.</li><li>&lsquo;Get the HTML template&rsquo; so that we can convert the list-item into a HTML document.</li></ol><p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-17-28.png alt=shadow></p><h3 id=step-5>Step 5</h3><p>This is the most tricky step, since we need to replace the contents of the HTML template with data from the list-item. For this we use a compose step and the &lsquo;replace()&rsquo; function.</p><p>So first add two compose actions:
+<img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-33-15.png alt></p><p>And type in the replace() function.
+The first argument &rsquo;text&rsquo; will be the HTML template.</p><p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-47-41.png alt></p><p>So switch back from &lsquo;Expression&rsquo; to &lsquo;Dynamic content&rsquo; and select the &lsquo;File Content&rsquo; of the HTML template.</p><p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-47-11.png alt></p><p>This will give you the following:</p><blockquote>
+<p>replace(outputs(&lsquo;HTML_Template&rsquo;)?[&lsquo;body&rsquo;])</p></blockquote><p>Place a comma just before the closing &lsquo;)&rsquo; like this</p><p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-55-54.png alt></p><p>and add type: <strong>{ExampleColumnOne},</strong></p><p>next select <strong>ExampleColumnOne</strong> from the row marked below</p><p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-19-57-46.png alt></p><p>The final first compose step should look like this:</p><blockquote>
+<p>replace(outputs(&lsquo;HTML_Template&rsquo;)?[&lsquo;body&rsquo;], &lsquo;{ExampleColumnOne}&rsquo;, outputs(&lsquo;Get_item&rsquo;)?[&lsquo;body/ExampleColumnOne&rsquo;])</p></blockquote><p>For the second compose step will will not use the template as the &rsquo;text&rsquo; but the output of the first replace.
+So the second compose step should look like this:</p><blockquote>
+<p>replace(outputs(&lsquo;Compose_-_Replace_ExampleColumnOne&rsquo;), &lsquo;{ExampleColumnTwo}&rsquo;,outputs(&lsquo;Get_item&rsquo;)?[&lsquo;body/ExampleColumnTwo&rsquo;])</p></blockquote><h3 id=step-6>Step 6</h3><p>Lucky for us the remaining step is quite easy.
+It consists of the following:</p><ol>
+<li>&lsquo;Compose-filename&rsquo;: construct a filename of the PDF file by using the list-item Title and the current-time created in step 3.</li><li>&lsquo;Create file-HTML temp&rsquo;: create a temporary file on OneDrive (first field is the &lsquo;Compose-filename&rsquo; and the second field is the &lsquo;Compose - Replace ExampleColumnTwo&rsquo;)</li><li>&lsquo;Convert file-to PDF&rsquo;: convert the temporary file into a PDF document</li><li>&lsquo;Create file-Enquete PDF&rsquo;: copy back the PDF into the specified SharePoint document library</li></ol><p><img src=/img/listitem2pdf/listitem2pdf_2020-09-24-20-02-41.png alt></p><h3 id=conclusion>Conclusion</h3><p>In this demo, I have shown you how to implement a conversion of a SharePoint list-item to a PDF document using not a single line of code.</p><p>I can imagine that this can be used to generate PDF documents that are then sent by email. Although making this flow is doable, it does show its limitations. Because what if we now want to not only use two- but twenty columns? In that case we will also need 20 compose steps. You understand that in that case this solution is difficult to expand. This is often the problem with no-code solutions. In my next blog post I will show you how to overcome this problem by using Azure functions. <a href=/posts/powerplatform/excel2pdf>Click here to read all about it</a>.</p></div></div></div></div></div></div></div><script src=https://jurjan.info/js/jquery.min.js></script>
 <script src=https://jurjan.info/js/bootstrap.min.js></script>
 <script src=https://jurjan.info/js/jquery.cookie.js></script>
 <script src=https://jurjan.info/js/ekko-lightbox.js></script>
@@ -174,5 +89,4 @@ It consists of the following:</p>
 <script src=https://jurjan.info/js/imagesloaded.pkgd.min.js></script>
 <script src=https://jurjan.info/js/owl.carousel.min.js></script>
 <script src=https://jurjan.info/js/front.js></script>
-</body>
-</html>
+</body></html>

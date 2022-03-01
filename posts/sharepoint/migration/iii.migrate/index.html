@@ -1,8 +1,7 @@
 <!doctype html><html lang=en-us>
 <head><meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
-<title>Jurjan Brust - Migrating large corporate SharePoint intranets</title>
-<meta name=description content="jurjan.info">
+<title>Jurjan Brust - Migrating large corporate SharePoint intranets</title><meta name=description content="jurjan.info">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="all,follow">
 <meta name=googlebot content="index,follow,snippet,archive">
@@ -20,25 +19,15 @@
 <script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
 <link href=https://jurjan.info/css/custom.css rel=stylesheet>
 <link rel="shortcut icon" href=https://jurjan.info/img/favicon.png>
-</head>
-<body>
+</head><body>
 <div id=all>
 <div class=container-fluid>
 <div class="row row-offcanvas row-offcanvas-left">
 <div id=sidebar class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
 <div class=sidebar-content>
 <a href=/> <img src=/img/jurjan.png class=avatar> </a>
-<h1 class=sidebar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1>
-<p class=sidebar-p>SharePoint | M365 | Azure | IoT</p>
-<ul class=sidebar-menu>
-<li><a href=https://jurjan.info/posts/>HOME</a></li>
-<li><a href=https://jurjan.info/categories/projects>PROJECTS</a></li>
-<li><a href=https://jurjan.info/categories/azure>AZURE</a></li>
-<li><a href=https://jurjan.info/categories/sharepoint>SHAREPOINT / M365</a></li>
-<li><a href=https://jurjan.info/about/>ABOUT</a></li>
-<li><a href=https://jurjan.info/contact/>CONTACT</a></li>
-</ul>
-<p class=social>
+<h1 class=sidebar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1><p class=sidebar-p>SharePoint | M365 | Azure | IoT</p><ul class=sidebar-menu>
+<li><a href=https://jurjan.info/posts/>HOME</a></li><li><a href=https://jurjan.info/categories/projects>PROJECTS</a></li><li><a href=https://jurjan.info/categories/azure>AZURE</a></li><li><a href=https://jurjan.info/categories/sharepoint>SHAREPOINT / M365</a></li><li><a href=https://jurjan.info/about/>ABOUT</a></li><li><a href=https://jurjan.info/contact/>CONTACT</a></li></ul><p class=social>
 <a href=/index.xml data-animate-hover=pulse class=email>
 <i class="fa fa-rss"></i>
 </a>
@@ -57,445 +46,324 @@
 <a href=mailto:mail@jurjan.info data-animate-hover=pulse class=email>
 <i class="fa fa-envelope"></i>
 </a>
-</p>
-<div class=copyright>
+</p><div class=copyright>
 <p class=credit>
 &copy;2020 Jurjan Brust
-</p>
-</div>
-</div>
-</div>
-<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+</p></div></div></div><div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
 <div class="small-navbar visible-xs">
 <button type=button data-toggle=offcanvas class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
-<h1 class=small-navbar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1>
-</div>
-<div class=row>
+<h1 class=small-navbar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1></div><div class=row>
 <div class=col-lg-8>
 <div class=content-column-content>
-<h1>Migrating large corporate SharePoint intranets</h1>
-<ul>
-<li><input checked disabled type=checkbox> <a href=/posts/sharepoint/migration/i.approach/>Approach</a> (part I of IV)</li>
-<li><input checked disabled type=checkbox> <a href=/posts/sharepoint/migration/ii.analysis>Analysis</a> (part II of IV)</li>
-<li><input checked disabled type=checkbox> <a href=/posts/sharepoint/migration/iii.migrate>Migration</a> (part III of IV)</li>
-<li><input disabled type=checkbox> <a href=/posts/sharepoint/migration/iv.verification>Verification</a> (part IV of IV)</li>
-</ul>
-<h2 id=migration>Migration</h2>
-<p>In this third part of the series I will discuss the actual migration itself. If all previous steps were done right, the migration should be the easy part of the complete project.</p>
-<h4 id=tool-selection>Tool selection</h4>
-<p>I have found that for migrations to work almost autonomous only three tools are needed:</p>
-<p><img src=/img/III.Migrate/III.Migrate_2019-10-23-16-32-15.png alt="medium shadow rotate"></p>
-<ol>
-<li>Excel, and to be more specific a comma separated file (.csv) that is being used as an input file for the migration</li>
-<li>PowerShell to script and automate the migration. Basically this consists of the following tasks:</li>
-<li>Read input from .csv</li>
-<li>[optional] do mutations / transformations on the input.csv (needed for a more specialised migration-scenario)</li>
-<li>Use ShareGate PowerShell cmdlets</li>
-<li>Process ShareGate logging</li>
-<li>ShareGate, the migration tool that does the actual migration</li>
-</ol>
-<blockquote>
-<p>In addition of using PowerShell to automate the migration, we have seen that PowerShell is also a great to to analyse your environment. When combining these, the output .csv of the analysis phase can serve as the input for the migration phase.</p>
-</blockquote>
-<h4 id=space-allocation>Space allocation</h4>
-<p>Migrating to a new SharePoint environment (SharePoint online or SharePoint on-premise) will require storage and most likely lots it it. Make sure that the destination SharePoint farm is prepared to handle the amount of data. You can save some storage for on-premise migrations by turning down the SQL transaction logging. Also temporary disable SQL database mirroring can safe you from lots of unnecessary logging.</p>
-<h4 id=migration-actions>Migration actions</h4>
-<p><img src=/img/III.Migrate/III.Migrate_2019-10-28-11-06-21.png alt=shadow></p>
-<p>Your migration process will look something like the image displayed above. See this as your base-migration plan that can be altered depending on your situation.
-In general you do not want the users to be able to modify the source- site while the migration is in process. That means it is needed to remove these permissions before the migration starts. But since, most likely user permissions needs to be migrated too, the first step in this migration-plan is to export the user permissions.</p>
-<p>Next step is the migration itself. The migration is done using PowerShell that processes a input.csv, uses ShareGate to migrate and handles the logging generated by ShareGate.
-One rule I found to be very helpful is to log everything to file but only show critical events on the screen. The code-samples below contain such filtering mechanisms to display only the critical messages.</p>
-<p>Finally when the migration has completed it is time to check the log and do some basic validations. Once this is done, permissions can be imported so that the environment becomes accessible for the users. Next communicate the migration results to the site owner and inform them about anything noticeable information or issues.</p>
-<h4 id=migration-scenarios>Migration scenarios</h4>
-<p>To describe the details of the migration itself we have to distinguish different scenarios. Each will be described in detail below.
-As described before the migration is done using the ShareGate PowerShell cmdlets. The cmdlets to use depend on the type of migration that is needed.</p>
-<p>I use the following table as a general guideline:</p>
-<table>
+<h1>Migrating large corporate SharePoint intranets</h1><ul>
+<li><input checked disabled type=checkbox> <a href=/posts/sharepoint/migration/i.approach/>Approach</a> (part I of IV)</li><li><input checked disabled type=checkbox> <a href=/posts/sharepoint/migration/ii.analysis>Analysis</a> (part II of IV)</li><li><input checked disabled type=checkbox> <a href=/posts/sharepoint/migration/iii.migrate>Migration</a> (part III of IV)</li><li><input disabled type=checkbox> <a href=/posts/sharepoint/migration/iv.verification>Verification</a> (part IV of IV)</li></ul><h2 id=migration>Migration</h2><p>In this third part of the series I will discuss the actual migration itself. If all previous steps were done right, the migration should be the easy part of the complete project.</p><h4 id=tool-selection>Tool selection</h4><p>I have found that for migrations to work almost autonomous only three tools are needed:</p><p><img src=/img/III.Migrate/III.Migrate_2019-10-23-16-32-15.png alt="medium shadow rotate"></p><ol>
+<li>Excel, and to be more specific a comma separated file (.csv) that is being used as an input file for the migration</li><li>PowerShell to script and automate the migration. Basically this consists of the following tasks:</li><li>Read input from .csv</li><li>[optional] do mutations / transformations on the input.csv (needed for a more specialised migration-scenario)</li><li>Use ShareGate PowerShell cmdlets</li><li>Process ShareGate logging</li><li>ShareGate, the migration tool that does the actual migration</li></ol><blockquote>
+<p>In addition of using PowerShell to automate the migration, we have seen that PowerShell is also a great to to analyse your environment. When combining these, the output .csv of the analysis phase can serve as the input for the migration phase.</p></blockquote><h4 id=space-allocation>Space allocation</h4><p>Migrating to a new SharePoint environment (SharePoint online or SharePoint on-premise) will require storage and most likely lots it it. Make sure that the destination SharePoint farm is prepared to handle the amount of data. You can save some storage for on-premise migrations by turning down the SQL transaction logging. Also temporary disable SQL database mirroring can safe you from lots of unnecessary logging.</p><h4 id=migration-actions>Migration actions</h4><p><img src=/img/III.Migrate/III.Migrate_2019-10-28-11-06-21.png alt=shadow></p><p>Your migration process will look something like the image displayed above. See this as your base-migration plan that can be altered depending on your situation.
+In general you do not want the users to be able to modify the source- site while the migration is in process. That means it is needed to remove these permissions before the migration starts. But since, most likely user permissions needs to be migrated too, the first step in this migration-plan is to export the user permissions.</p><p>Next step is the migration itself. The migration is done using PowerShell that processes a input.csv, uses ShareGate to migrate and handles the logging generated by ShareGate.
+One rule I found to be very helpful is to log everything to file but only show critical events on the screen. The code-samples below contain such filtering mechanisms to display only the critical messages.</p><p>Finally when the migration has completed it is time to check the log and do some basic validations. Once this is done, permissions can be imported so that the environment becomes accessible for the users. Next communicate the migration results to the site owner and inform them about anything noticeable information or issues.</p><h4 id=migration-scenarios>Migration scenarios</h4><p>To describe the details of the migration itself we have to distinguish different scenarios. Each will be described in detail below.
+As described before the migration is done using the ShareGate PowerShell cmdlets. The cmdlets to use depend on the type of migration that is needed.</p><p>I use the following table as a general guideline:</p><table>
 <thead>
 <tr>
-<th>Migration type</th>
-<th>ShareGate cmdlet</th>
-</tr>
-</thead>
-<tbody>
+<th>Migration type</th><th>ShareGate cmdlet</th></tr></thead><tbody>
 <tr>
-<td>site migration</td>
-<td>Copy-Site</td>
-</tr>
-<tr>
-<td>list migration</td>
-<td>Copy-List</td>
-</tr>
-<tr>
-<td>item migration</td>
-<td>Copy-Content (not the list definition itself)</td>
-</tr>
-</tbody>
-</table>
-<h4 id=first-scenario-as-is-migration>First scenario: as-is migration</h4>
-<p>In this scenario no change is needed to the data and everything should be preserved as-is. One case I have used this is to &lsquo;archive&rsquo; project that are no longer in use on an on-premise environment and to store them in SharePoint Online for archive. Of course this scenario can also be used to migrate to SharePoint Online for projects that are still in use.</p>
-<p><img src=/img/III.Migrate/III.Migrate_2019-10-31-13-26-34.png alt=shadow></p>
-<blockquote>
-<p>Input</p>
-</blockquote>
-<p><img src=/img/III.Migrate/III.Migrate_2019-10-30-16-09-00.png alt=shadow></p>
-<p>The input consists of a simple .csv file that contains all of the source site URLs. Creating this input.csv can either be done manually or by using the analyse-script described in the: <a href=/posts/sharepoint/migration/ii.analysis>Analysis</a> (part II of IV) using recursion.</p>
-<p>At the present time it has become a more common rule to use site collections instead of sites. When migrating from sites to site collections the Input csv can simply be extended to include a destination URL instead of using a single destination site URL as described below. Also notice that Sharegate can now also promote subsites to top-level sites as described in this article <a href=https://o365.tips/2019/promote-subsites-to-top-level-sites-with-sharegate-desktop-11-0/>O365.tips</a></p>
-<blockquote>
-<p>environment.ps1</p>
-<p>These variables are used in the scripts below, it contains the name of the input file, a start index, end index and a destination site URL.
-Making use of a start and end index it is possible to migrate only a segment of the complete input file. Migrating in smaller batches gives the opportunity to do some in-between migration validations. Another reason could be that sometimes the migration cannot continue in the evening because of security patches e.g.</p>
-</blockquote>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1</span>$inputFile = <span style=color:#e6db74>&#34;.\input.csv&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2</span>$startIndex = 5
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3</span>$endIndex = 10
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4</span>$dstSiteUrl = <span style=color:#e6db74>&#34;https://your.sharepoint.com/sites/20190101/targetsite&#34;</span>
-</code></pre></div>
-<p><a class=button href=/files/sharepoint/migrate_sources/as-is/environment.ps1>open raw file</a></p>
-<blockquote>
-<p>0-show.ps1</p>
-<p>Useful script to simply display the lines of the input file that will be migrated using the given $startIndex = 5 and $endIndex = 10.</p>
-</blockquote>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span>. <span style=color:#e6db74>&#34;.\environment.ps1&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $endIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing endIndex&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span>    <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $dstSiteUrl) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing dstSiteUrl&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span>    <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span>$input = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path $inputFile)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span>$i = 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span style=color:#66d9ef>foreach</span> ($line <span style=color:#66d9ef>in</span> $input) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span>    <span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>-lt</span> $startIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span>        $i++
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span>        <span style=color:#66d9ef>continue</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span>    $url = $line.SiteUrl
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span>    Write-Host <span style=color:#e6db74>&#34;$i-$endIndex [$url] -&gt; [$dstSiteUrl]&#34;</span> -ForegroundColor DarkGray
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span>    <span style=color:#66d9ef>if</span> ($i++ <span style=color:#f92672>-ge</span> $endIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span>        Write-Host <span style=color:#e6db74>&#34;break because of endIndex limit&#34;</span> -ForegroundColor DarkYellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span>        <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span>}
-</code></pre></div>
-<p><a class=button href=/files/sharepoint/migrate_sources/as-is/0-show.ps1>open raw file</a></p>
-<blockquote>
-<p>1-migrate.ps1</p>
-<p>The actual migration script. Basically just a plain PowerShell script, but makes use of the cmdlets provided by ShareGate such as: Connect-Site, New-MappingSettings, New-CopySettings and the Copy-Site. One rule I use is to log everything, but only display error and warning messages to the screen output. This way you do not get flooded by an information overload.</p>
-</blockquote>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span>. <span style=color:#e6db74>&#34;.\environment.ps1&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $endIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing endIndex&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span>    <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $dstSiteUrl) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing dstSiteUrl&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span>    <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span>$input = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path $inputFile)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span>$dstSite = Connect-Site -Url $dstSiteUrl -Browser
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span>$i = 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span><span style=color:#66d9ef>foreach</span> ($line <span style=color:#66d9ef>in</span> $input) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span>    <span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>-lt</span> $startIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span>        $i++
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span>        <span style=color:#66d9ef>continue</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span>    
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span>    $url = $line.SiteUrl
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span>    $projectNr = $url.split(<span style=color:#e6db74>&#34;/&#34;</span>)[-1]
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span>    Write-Host <span style=color:#e6db74>&#34;$i-$endIndex [$url] -&gt; [$dstSiteUrl/$projectNr]&#34;</span> -ForegroundColor DarkGray
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span>    
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span>    $srcSite = Connect-Site -Url $url
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span>    $mappings = New-MappingSettings	
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span>    Import-UserAndGroupMapping -MappingSettings $mappings -Path <span style=color:#e6db74>&#34;</span>$(Get-Location)<span style=color:#e6db74>\UserAndGroupMappings.sgum&#34;</span> | Out-Null
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span>    Import-SiteTemplateMapping -MappingSettings $mappings -Path <span style=color:#e6db74>&#34;</span>$(Get-Location)<span style=color:#e6db74>\SiteTemplateMappings.sgwtm&#34;</span> | Out-Null
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span>    Import-PermissionLevelMapping -MappingSettings $mappings -Path <span style=color:#e6db74>&#34;</span>$(Get-Location)<span style=color:#e6db74>\PermissionLevelMappings.sgrm&#34;</span> | Out-Null
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span>    Write-Host $(Get-Date -Format <span style=color:#e6db74>&#34;dddd MM/dd/yyyy HH:mm&#34;</span>) -ForegroundColor White
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span>    $copysettings = New-CopySettings -OnContentItemExists Skip -OnSiteObjectExists Skip
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span>    $result = Copy-Site -MappingSettings $mappings -CopySettings $copysettings -Site $srcSite -DestinationSite $dstSite -NoCustomPermissions -NoWorkflows -NoSiteFeatures <span style=color:#75715e>#-NoContent #-NoCustomizedFormsAndViews -NoNavigation</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span>    Write-Host <span style=color:#e6db74>&#34; Errors:&#34;</span> $result.Errors <span style=color:#e6db74>&#34;Warnings:&#34;</span> $result.Warnings <span style=color:#e6db74>&#34;Copied:&#34;</span> $result.ItemsCopied
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43</span>    Write-Host $(Get-Date -Format <span style=color:#e6db74>&#34;dddd MM/dd/yyyy HH:mm&#34;</span>) -ForegroundColor White
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span>    $statusMessage = <span style=color:#e6db74>&#34;OK&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span>    <span style=color:#66d9ef>if</span> ($result.Warnings <span style=color:#f92672>-gt</span> 0) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span>        $statusMessage = <span style=color:#e6db74>&#34;Warning&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span>        Write-Host <span style=color:#e6db74>&#34;Warning during copy&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span>    <span style=color:#66d9ef>if</span> ($result.Errors <span style=color:#f92672>-gt</span> 0) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span>        $statusMessage = <span style=color:#e6db74>&#34;ERROR&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span>        Write-Host <span style=color:#e6db74>&#34;Error during copy&#34;</span> -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55</span>    $filename = <span style=color:#e6db74>&#34;</span>$($i)<span style=color:#e6db74>-</span>$($statusMessage)<span style=color:#e6db74>.csv&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56</span>    Export-Report $result -Path <span style=color:#e6db74>&#34;./log/$filename&#34;</span> -Overwrite | Out-Null
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58</span>    Write-Host <span style=color:#e6db74>&#34;Showing logfile errors and warnings ./log/$filename&#34;</span> -ForegroundColor Green
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59</span>    $input = Import-Csv <span style=color:#e6db74>&#34;./log/$filename&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61</span>    $input | ForEach-Object {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62</span>        <span style=color:#66d9ef>if</span> ($_.Status <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Error&#34;</span>) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63</span>            Write-Host <span style=color:#e6db74>&#34;Error [</span>$($_.Title)<span style=color:#e6db74>]&#34;</span> -NoNewline -ForegroundColor Magenta
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64</span>            Write-Host $_.Details -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67</span>        <span style=color:#66d9ef>if</span> ($_.Status <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Warning&#34;</span>) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68</span>            Write-Host <span style=color:#e6db74>&#34;Warning [</span>$($_.Title)<span style=color:#e6db74>]&#34;</span> -NoNewline -ForegroundColor Magenta
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">69</span>            Write-Host $_.Details -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">70</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">71</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">72</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">73</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">74</span>    Write-Host
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">75</span>    <span style=color:#66d9ef>if</span> ($i++ <span style=color:#f92672>-ge</span> $endIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">76</span>        Write-Host <span style=color:#e6db74>&#34;break because of endIndex limit&#34;</span> -ForegroundColor DarkYellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">77</span>        <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">78</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">79</span>}
-</code></pre></div>
-<p><a class=button href=/files/sharepoint/migrate_sources/as-is/1-migrate.ps1>open raw file</a></p>
-<p>Download the complete solution <a href=/files/sharepoint/migrate_sources/as-is/as-is.zip>here</a></p>
-<h4 id=second-scenario-list-migrations-into-sites-based-on-custom-template>Second scenario: list migrations into sites based on custom template</h4>
-<p>The second scenario I like to show is one where the destination site(s) are based on a custom developed / configured template. As described in the customizations part, there are situations in which it is better to develop a custom tailored template to fully suite the business case.
-One method of developing such templates is by making use of the <a href=https://github.com/SharePoint/PnP>OfficeDev PnP</a>.</p>
-<p>So when the site itself should not be copied but the content does you can choose to copy lists and list items only. In this example I will show you how to migrate lists, and I mean a lots of them.</p>
-<p><img src=/img/III.Migrate/III.Migrate_2019-10-31-15-08-44.png alt></p>
-<p>In this migration we split-up the input files into two separate. One .csv that contains the relation between the source-sites an destination-sites. And a second file that contains the lists that need to be migrated. Note that once again this lists.csv is generated by the same PowerShell we used for analysis.</p>
-<p>By opening this generated file that contains all the lists in all the website in Excel we can easily filter out the lists that should not be migrated.
-Examples of lists that you may wish to exclude are:</p>
-<ol>
-<li>Web part gallery</li>
-<li>Pages libraries</li>
-<li>Tasks libraries</li>
-<li>Libraries with no list items</li>
-<li>Libraries based on a specific base-template</li>
-<li>Libraries that have not been modified in the last year</li>
-</ol>
-<blockquote>
-<p>environment.ps1</p>
-<p>An updated environment, see the description above in previous scenario</p>
-</blockquote>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1</span>$sitesFile = <span style=color:#e6db74>&#34;.\sites.csv&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2</span>$listsFile = <span style=color:#e6db74>&#34;.\lists.csv&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3</span>$startIndex = 5
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4</span>$endIndex = 10
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5</span>$dstSiteUrl = <span style=color:#e6db74>&#34;https://your.sharepoint.com/sites/20190101/targetsite&#34;</span>
-</code></pre></div>
-<p><a class=button href=/files/sharepoint/migrate_sources/lists-only/environment.ps1>open raw file</a></p>
-<blockquote>
-<p>Input (sites) Note I do not display lists.csv because it is generated.</p>
-</blockquote>
-<p><img src=/img/III.Migrate/III.Migrate_2019-10-31-15-29-05.png alt=shadow></p>
-<blockquote>
-<p>0-show.ps1</p>
-</blockquote>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span>. <span style=color:#e6db74>&#34;.\environment.ps1&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $endIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing endIndex&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span>    <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $dstSiteUrl) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing dstSiteUrl&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span>    <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span>$input = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path $listsFile)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span>$i = 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span style=color:#66d9ef>foreach</span> ($line <span style=color:#66d9ef>in</span> $input) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span>    <span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>-lt</span> $startIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span>        $i++
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span>        <span style=color:#66d9ef>continue</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span>    $url = $line.Url
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span>    $url2 = $line.ListName
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span>    Write-Host <span style=color:#e6db74>&#34;$i-$endIndex [$url] -&gt; [$url2]&#34;</span> -ForegroundColor DarkGray
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span>    <span style=color:#66d9ef>if</span> ($i++ <span style=color:#f92672>-ge</span> $endIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span>        Write-Host <span style=color:#e6db74>&#34;break because of endIndex limit&#34;</span> -ForegroundColor DarkYellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>        <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span>}
-</code></pre></div>
-<p><a class=button href=/files/sharepoint/migrate_sources/lists-only/0-show.ps1>open raw file</a></p>
-<blockquote>
-<p>0-validate.ps1</p>
-<p>The validation script has been updated to also check if the source list still exists.</p>
-</blockquote>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span>. <span style=color:#e6db74>&#34;.\environment.ps1&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span>Add-Type -Path <span style=color:#e6db74>&#34;$PSScriptRoot\Microsoft.SharePoint.Client.dll&#34;</span> 
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>Add-Type -Path <span style=color:#e6db74>&#34;$PSScriptRoot\Microsoft.SharePoint.Client.Runtime.dll&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $endIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing endIndex&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span>    <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span style=color:#66d9ef>function</span> checkIfWebExists($url, $listName) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span>    $clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($url);
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span>    $clientContext.RequestTimeout = 5000
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span>    $currentWeb = $clientContext.Web;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span>    $lists = $currentWeb.Lists
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span>    $clientContext.Load($lists)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span>    $clientContext.Load($currentWeb)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span>    
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span>    <span style=color:#66d9ef>try</span> {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span>        $clientContext.ExecuteQuery();
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span>        Write-Host <span style=color:#e6db74>&#34; OK&#34;</span> -ForegroundColor Green 
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span>        $listExists = $lists | Where-Object { $_.Title <span style=color:#f92672>-eq</span> $listName }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>-Not</span> $listExists) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span>            Write-Host $listName <span style=color:#e6db74>&#34;not found&#34;</span> -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span>    } 
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span>    <span style=color:#66d9ef>catch</span> {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>        Write-Host <span style=color:#e6db74>&#34; $url does not exist&#34;</span> -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span>Write-Host <span style=color:#e6db74>&#34;Processing ($startIndex-$endIndex)&#34;</span> -ForegroundColor Green
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span>$input = Import-Csv -Path $listsFile
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span>$i = 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span><span style=color:#66d9ef>foreach</span> ($line <span style=color:#66d9ef>in</span> $input) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span>    <span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>-lt</span> $startIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span>        $i++
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span>        <span style=color:#66d9ef>continue</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44</span>    $url = $line.Url
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span>    Write-Host <span style=color:#e6db74>&#34;[$i / $endIndex] $url       </span>$($line.ListName)<span style=color:#e6db74>&#34;</span> -NoNewline -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span>    checkIfWebExists $url $line.ListName
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span>    <span style=color:#66d9ef>if</span> ($i++ <span style=color:#f92672>-ge</span> $endIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span>        Write-Host <span style=color:#e6db74>&#34;break because of endIndex limit&#34;</span> -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span>        <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span>
-</code></pre></div>
-<p><a class=button href=/files/sharepoint/migrate_sources/lists-only/0-validate.ps1>open raw file</a></p>
-<blockquote>
-<p>1-migrate-lists.ps1</p>
-<p>And finally the migration script I use for list migrations</p>
-</blockquote>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span>. <span style=color:#e6db74>&#34;.\environment.ps1&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $endIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing endIndex&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span>    <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span>$input = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path $listsFile)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span>$sites = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path $sitesFile)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span>$i = 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span><span style=color:#66d9ef>foreach</span> ($line <span style=color:#66d9ef>in</span> $input) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span>    <span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>-lt</span> $startIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span>        $i++
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span>        <span style=color:#66d9ef>continue</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span>    
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span>    $url = $line.Url
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span>    $dstSiteUrl = $sites | Where-Object { $_.SourceUrl <span style=color:#f92672>-eq</span> $url }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span>    <span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $dstSiteUrl) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span>        Write-Host <span style=color:#e6db74>&#34;Destination URL not found&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span>        <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span>    $dstSiteUrl = $dstSiteUrl.DestURL
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span>    Write-Host <span style=color:#e6db74>&#34;$i-$endIndex[&#34;</span>$url/$($line.ListName)<span style=color:#e6db74>&#34;] -&gt; [&#34;</span>$dstSiteUrl<span style=color:#e6db74>&#34;]&#34;</span> -ForegroundColor DarkGray -NoNewline
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>    $srcSite = Connect-Site -Url $url
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span>    $dstSite = Connect-Site -Url $dstSiteUrl
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span>    $srcList = Get-List -Site $srcSite -name $line.ListName
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span>    <span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $srcList) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span>        Write-Host <span style=color:#e6db74>&#34;Source list not found&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span>        <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span>    $mappings = New-MappingSettings	
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span>    Import-UserAndGroupMapping -MappingSettings $mappings -Path <span style=color:#e6db74>&#34;</span>$(Get-Location)<span style=color:#e6db74>\UserAndGroupMappings.sgum&#34;</span> | Out-Null
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span>    $copysettings = New-CopySettings -OnContentItemExists Skip
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42</span>    $result = Copy-List -List $srcList -DestinationSite $dstSite -CopySettings $copysettings -MappingSettings $mappings
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43</span>    Write-Host <span style=color:#e6db74>&#34; Errors:&#34;</span> $result.Errors <span style=color:#e6db74>&#34;Warnings:&#34;</span> $result.Warnings <span style=color:#e6db74>&#34;Copied:&#34;</span> $result.ItemsCopied
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span>    $statusMessage = <span style=color:#e6db74>&#34;OK&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span>    <span style=color:#66d9ef>if</span> ($result.Warnings <span style=color:#f92672>-gt</span> 0) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span>        $statusMessage = <span style=color:#e6db74>&#34;Warning&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span>        Write-Host <span style=color:#e6db74>&#34;Warning during copy&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span>    <span style=color:#66d9ef>if</span> ($result.Errors <span style=color:#f92672>-gt</span> 0) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span>        $statusMessage = <span style=color:#e6db74>&#34;ERROR&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span>        Write-Host <span style=color:#e6db74>&#34;Error during copy&#34;</span> -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55</span>    $filename = <span style=color:#e6db74>&#34;$i-</span>$($statusMessage)<span style=color:#e6db74>.csv&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56</span>    Export-Report $result -Path <span style=color:#e6db74>&#34;./log/$filename&#34;</span> -Overwrite | Out-Null
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57</span>   
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58</span>    Write-Host <span style=color:#e6db74>&#34;Showing logfile errors and warnings ./log/$filename&#34;</span> -ForegroundColor Green
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59</span>    $input = Import-Csv <span style=color:#e6db74>&#34;./log/$filename&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61</span>    $input | ForEach-Object {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62</span>        <span style=color:#66d9ef>if</span> ($_.Status <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Error&#34;</span>) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63</span>            Write-Host <span style=color:#e6db74>&#34;Error [</span>$($_.Title)<span style=color:#e6db74>]&#34;</span> -NoNewline -ForegroundColor Magenta
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64</span>            Write-Host $_.Details -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67</span>        <span style=color:#66d9ef>if</span> ($_.Status <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Warning&#34;</span>) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68</span>            Write-Host <span style=color:#e6db74>&#34;Warning [</span>$($_.Title)<span style=color:#e6db74>]&#34;</span> -NoNewline -ForegroundColor Magenta
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">69</span>            Write-Host $_.Details -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">70</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">71</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">72</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">73</span>    <span style=color:#66d9ef>if</span> ($i++ <span style=color:#f92672>-ge</span> $endIndex) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">74</span>        Write-Host <span style=color:#e6db74>&#34;break because of endIndex limit&#34;</span> -ForegroundColor DarkYellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">75</span>        <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">76</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">77</span>}
-</code></pre></div>
-<p><a class=button href=/files/sharepoint/migrate_sources/lists-only/1-migrate-lists.ps1>open raw file</a></p>
-<p>Download the complete solution <a href=/files/sharepoint/migrate_sources/lists-only/lists-only.zip>here</a></p>
-<h6 id=continue-reading-this-series-herepostssharepointmigrationivverification>Continue reading this series <a href=/posts/sharepoint/migration/iv.verification/>here</a></h6>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<script src=https://jurjan.info/js/jquery.min.js></script>
+<td>site migration</td><td>Copy-Site</td></tr><tr>
+<td>list migration</td><td>Copy-List</td></tr><tr>
+<td>item migration</td><td>Copy-Content (not the list definition itself)</td></tr></tbody></table><h4 id=first-scenario-as-is-migration>First scenario: as-is migration</h4><p>In this scenario no change is needed to the data and everything should be preserved as-is. One case I have used this is to &lsquo;archive&rsquo; project that are no longer in use on an on-premise environment and to store them in SharePoint Online for archive. Of course this scenario can also be used to migrate to SharePoint Online for projects that are still in use.</p><p><img src=/img/III.Migrate/III.Migrate_2019-10-31-13-26-34.png alt=shadow></p><blockquote>
+<p>Input</p></blockquote><p><img src=/img/III.Migrate/III.Migrate_2019-10-30-16-09-00.png alt=shadow></p><p>The input consists of a simple .csv file that contains all of the source site URLs. Creating this input.csv can either be done manually or by using the analyse-script described in the: <a href=/posts/sharepoint/migration/ii.analysis>Analysis</a> (part II of IV) using recursion.</p><p>At the present time it has become a more common rule to use site collections instead of sites. When migrating from sites to site collections the Input csv can simply be extended to include a destination URL instead of using a single destination site URL as described below. Also notice that Sharegate can now also promote subsites to top-level sites as described in this article <a href=https://o365.tips/2019/promote-subsites-to-top-level-sites-with-sharegate-desktop-11-0/>O365.tips</a></p><blockquote>
+<p>environment.ps1</p><p>These variables are used in the scripts below, it contains the name of the input file, a start index, end index and a destination site URL.
+Making use of a start and end index it is possible to migrate only a segment of the complete input file. Migrating in smaller batches gives the opportunity to do some in-between migration validations. Another reason could be that sometimes the migration cannot continue in the evening because of security patches e.g.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1</span><span>$inputFile = <span style=color:#e6db74>&#34;.\input.csv&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2</span><span>$startIndex = 5
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3</span><span>$endIndex = 10
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4</span><span>$dstSiteUrl = <span style=color:#e6db74>&#34;https://your.sharepoint.com/sites/20190101/targetsite&#34;</span>
+</span></span></code></pre></div><p><a class=button href=/files/sharepoint/migrate_sources/as-is/environment.ps1>open raw file</a></p><blockquote>
+<p>0-show.ps1</p><p>Useful script to simply display the lines of the input file that will be migrated using the given $startIndex = 5 and $endIndex = 10.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span>. <span style=color:#e6db74>&#34;.\environment.ps1&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $endIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span><span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing endIndex&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span>    <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $dstSiteUrl) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span><span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing dstSiteUrl&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span><span>    <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span><span>$input = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path $inputFile)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span>$i = 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span><span style=color:#66d9ef>foreach</span> ($line <span style=color:#66d9ef>in</span> $input) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span><span>    <span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>-lt</span> $startIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span><span>        $i++
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span><span>        <span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span><span>    $url = $line.SiteUrl
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span><span>    Write-Host <span style=color:#e6db74>&#34;$i-$endIndex [$url] -&gt; [$dstSiteUrl]&#34;</span> -ForegroundColor DarkGray
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span><span>    <span style=color:#66d9ef>if</span> ($i++ <span style=color:#f92672>-ge</span> $endIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span>        Write-Host <span style=color:#e6db74>&#34;break because of endIndex limit&#34;</span> -ForegroundColor DarkYellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span><span>        <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span><span>}
+</span></span></code></pre></div><p><a class=button href=/files/sharepoint/migrate_sources/as-is/0-show.ps1>open raw file</a></p><blockquote>
+<p>1-migrate.ps1</p><p>The actual migration script. Basically just a plain PowerShell script, but makes use of the cmdlets provided by ShareGate such as: Connect-Site, New-MappingSettings, New-CopySettings and the Copy-Site. One rule I use is to log everything, but only display error and warning messages to the screen output. This way you do not get flooded by an information overload.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span>. <span style=color:#e6db74>&#34;.\environment.ps1&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $endIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span><span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing endIndex&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span>    <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $dstSiteUrl) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span><span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing dstSiteUrl&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span><span>    <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span><span>$input = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path $inputFile)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span><span>$dstSite = Connect-Site -Url $dstSiteUrl -Browser
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span>$i = 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span><span><span style=color:#66d9ef>foreach</span> ($line <span style=color:#66d9ef>in</span> $input) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span><span>    <span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>-lt</span> $startIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span><span>        $i++
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span><span>        <span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span><span>    
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span><span>    $url = $line.SiteUrl
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span><span>    $projectNr = $url.split(<span style=color:#e6db74>&#34;/&#34;</span>)[-1]
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span><span>    Write-Host <span style=color:#e6db74>&#34;$i-$endIndex [$url] -&gt; [$dstSiteUrl/$projectNr]&#34;</span> -ForegroundColor DarkGray
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span>    
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span><span>    $srcSite = Connect-Site -Url $url
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span><span>    $mappings = New-MappingSettings	
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span><span>    Import-UserAndGroupMapping -MappingSettings $mappings -Path <span style=color:#e6db74>&#34;</span>$(Get-Location)<span style=color:#e6db74>\UserAndGroupMappings.sgum&#34;</span> | Out-Null
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span><span>    Import-SiteTemplateMapping -MappingSettings $mappings -Path <span style=color:#e6db74>&#34;</span>$(Get-Location)<span style=color:#e6db74>\SiteTemplateMappings.sgwtm&#34;</span> | Out-Null
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span><span>    Import-PermissionLevelMapping -MappingSettings $mappings -Path <span style=color:#e6db74>&#34;</span>$(Get-Location)<span style=color:#e6db74>\PermissionLevelMappings.sgrm&#34;</span> | Out-Null
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span><span>    Write-Host $(Get-Date -Format <span style=color:#e6db74>&#34;dddd MM/dd/yyyy HH:mm&#34;</span>) -ForegroundColor White
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span><span>    $copysettings = New-CopySettings -OnContentItemExists Skip -OnSiteObjectExists Skip
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span><span>    $result = Copy-Site -MappingSettings $mappings -CopySettings $copysettings -Site $srcSite -DestinationSite $dstSite -NoCustomPermissions -NoWorkflows -NoSiteFeatures <span style=color:#75715e>#-NoContent #-NoCustomizedFormsAndViews -NoNavigation</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span><span>    Write-Host <span style=color:#e6db74>&#34; Errors:&#34;</span> $result.Errors <span style=color:#e6db74>&#34;Warnings:&#34;</span> $result.Warnings <span style=color:#e6db74>&#34;Copied:&#34;</span> $result.ItemsCopied
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43</span><span>    Write-Host $(Get-Date -Format <span style=color:#e6db74>&#34;dddd MM/dd/yyyy HH:mm&#34;</span>) -ForegroundColor White
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span><span>    $statusMessage = <span style=color:#e6db74>&#34;OK&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span><span>    <span style=color:#66d9ef>if</span> ($result.Warnings <span style=color:#f92672>-gt</span> 0) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span><span>        $statusMessage = <span style=color:#e6db74>&#34;Warning&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span><span>        Write-Host <span style=color:#e6db74>&#34;Warning during copy&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span><span>    <span style=color:#66d9ef>if</span> ($result.Errors <span style=color:#f92672>-gt</span> 0) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span><span>        $statusMessage = <span style=color:#e6db74>&#34;ERROR&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span><span>        Write-Host <span style=color:#e6db74>&#34;Error during copy&#34;</span> -ForegroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55</span><span>    $filename = <span style=color:#e6db74>&#34;</span>$($i)<span style=color:#e6db74>-</span>$($statusMessage)<span style=color:#e6db74>.csv&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56</span><span>    Export-Report $result -Path <span style=color:#e6db74>&#34;./log/$filename&#34;</span> -Overwrite | Out-Null
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58</span><span>    Write-Host <span style=color:#e6db74>&#34;Showing logfile errors and warnings ./log/$filename&#34;</span> -ForegroundColor Green
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59</span><span>    $input = Import-Csv <span style=color:#e6db74>&#34;./log/$filename&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61</span><span>    $input | ForEach-Object {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62</span><span>        <span style=color:#66d9ef>if</span> ($_.Status <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Error&#34;</span>) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63</span><span>            Write-Host <span style=color:#e6db74>&#34;Error [</span>$($_.Title)<span style=color:#e6db74>]&#34;</span> -NoNewline -ForegroundColor Magenta
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64</span><span>            Write-Host $_.Details -ForegroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">67</span><span>        <span style=color:#66d9ef>if</span> ($_.Status <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Warning&#34;</span>) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">68</span><span>            Write-Host <span style=color:#e6db74>&#34;Warning [</span>$($_.Title)<span style=color:#e6db74>]&#34;</span> -NoNewline -ForegroundColor Magenta
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">69</span><span>            Write-Host $_.Details -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">70</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">71</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">72</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">73</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">74</span><span>    Write-Host
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">75</span><span>    <span style=color:#66d9ef>if</span> ($i++ <span style=color:#f92672>-ge</span> $endIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">76</span><span>        Write-Host <span style=color:#e6db74>&#34;break because of endIndex limit&#34;</span> -ForegroundColor DarkYellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">77</span><span>        <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">78</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">79</span><span>}
+</span></span></code></pre></div><p><a class=button href=/files/sharepoint/migrate_sources/as-is/1-migrate.ps1>open raw file</a></p><p>Download the complete solution <a href=/files/sharepoint/migrate_sources/as-is/as-is.zip>here</a></p><h4 id=second-scenario-list-migrations-into-sites-based-on-custom-template>Second scenario: list migrations into sites based on custom template</h4><p>The second scenario I like to show is one where the destination site(s) are based on a custom developed / configured template. As described in the customizations part, there are situations in which it is better to develop a custom tailored template to fully suite the business case.
+One method of developing such templates is by making use of the <a href=https://github.com/SharePoint/PnP>OfficeDev PnP</a>.</p><p>So when the site itself should not be copied but the content does you can choose to copy lists and list items only. In this example I will show you how to migrate lists, and I mean a lots of them.</p><p><img src=/img/III.Migrate/III.Migrate_2019-10-31-15-08-44.png alt></p><p>In this migration we split-up the input files into two separate. One .csv that contains the relation between the source-sites an destination-sites. And a second file that contains the lists that need to be migrated. Note that once again this lists.csv is generated by the same PowerShell we used for analysis.</p><p>By opening this generated file that contains all the lists in all the website in Excel we can easily filter out the lists that should not be migrated.
+Examples of lists that you may wish to exclude are:</p><ol>
+<li>Web part gallery</li><li>Pages libraries</li><li>Tasks libraries</li><li>Libraries with no list items</li><li>Libraries based on a specific base-template</li><li>Libraries that have not been modified in the last year</li></ol><blockquote>
+<p>environment.ps1</p><p>An updated environment, see the description above in previous scenario</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1</span><span>$sitesFile = <span style=color:#e6db74>&#34;.\sites.csv&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2</span><span>$listsFile = <span style=color:#e6db74>&#34;.\lists.csv&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3</span><span>$startIndex = 5
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4</span><span>$endIndex = 10
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5</span><span>$dstSiteUrl = <span style=color:#e6db74>&#34;https://your.sharepoint.com/sites/20190101/targetsite&#34;</span>
+</span></span></code></pre></div><p><a class=button href=/files/sharepoint/migrate_sources/lists-only/environment.ps1>open raw file</a></p><blockquote>
+<p>Input (sites) Note I do not display lists.csv because it is generated.</p></blockquote><p><img src=/img/III.Migrate/III.Migrate_2019-10-31-15-29-05.png alt=shadow></p><blockquote>
+<p>0-show.ps1</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span>. <span style=color:#e6db74>&#34;.\environment.ps1&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $endIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span><span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing endIndex&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span>    <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $dstSiteUrl) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span><span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing dstSiteUrl&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span><span>    <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span><span>$input = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path $listsFile)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span>$i = 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span><span style=color:#66d9ef>foreach</span> ($line <span style=color:#66d9ef>in</span> $input) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span><span>    <span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>-lt</span> $startIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span><span>        $i++
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span><span>        <span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span><span>    $url = $line.Url
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span><span>    $url2 = $line.ListName
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span><span>    Write-Host <span style=color:#e6db74>&#34;$i-$endIndex [$url] -&gt; [$url2]&#34;</span> -ForegroundColor DarkGray
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span>    <span style=color:#66d9ef>if</span> ($i++ <span style=color:#f92672>-ge</span> $endIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span><span>        Write-Host <span style=color:#e6db74>&#34;break because of endIndex limit&#34;</span> -ForegroundColor DarkYellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span><span>        <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span><span>}
+</span></span></code></pre></div><p><a class=button href=/files/sharepoint/migrate_sources/lists-only/0-show.ps1>open raw file</a></p><blockquote>
+<p>0-validate.ps1</p><p>The validation script has been updated to also check if the source list still exists.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span>. <span style=color:#e6db74>&#34;.\environment.ps1&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span>Add-Type -Path <span style=color:#e6db74>&#34;$PSScriptRoot\Microsoft.SharePoint.Client.dll&#34;</span> 
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span><span>Add-Type -Path <span style=color:#e6db74>&#34;$PSScriptRoot\Microsoft.SharePoint.Client.Runtime.dll&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $endIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing endIndex&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span>    <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span><span style=color:#66d9ef>function</span> checkIfWebExists($url, $listName) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span><span>    $clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($url);
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span><span>    $clientContext.RequestTimeout = 5000
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span><span>    $currentWeb = $clientContext.Web;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span>    $lists = $currentWeb.Lists
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span>    $clientContext.Load($lists)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span><span>    $clientContext.Load($currentWeb)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span><span>    
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span><span>    <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span><span>        $clientContext.ExecuteQuery();
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span><span>        Write-Host <span style=color:#e6db74>&#34; OK&#34;</span> -ForegroundColor Green 
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span><span>        $listExists = $lists | Where-Object { $_.Title <span style=color:#f92672>-eq</span> $listName }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span><span>        <span style=color:#66d9ef>if</span> (<span style=color:#f92672>-Not</span> $listExists) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span><span>            Write-Host $listName <span style=color:#e6db74>&#34;not found&#34;</span> -ForegroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span>    } 
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span><span>    <span style=color:#66d9ef>catch</span> {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span><span>        Write-Host <span style=color:#e6db74>&#34; $url does not exist&#34;</span> -ForegroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span><span>Write-Host <span style=color:#e6db74>&#34;Processing ($startIndex-$endIndex)&#34;</span> -ForegroundColor Green
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span><span>$input = Import-Csv -Path $listsFile
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span><span>$i = 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span><span><span style=color:#66d9ef>foreach</span> ($line <span style=color:#66d9ef>in</span> $input) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span><span>    <span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>-lt</span> $startIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span><span>        $i++
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span><span>        <span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44</span><span>    $url = $line.Url
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span><span>    Write-Host <span style=color:#e6db74>&#34;[$i / $endIndex] $url       </span>$($line.ListName)<span style=color:#e6db74>&#34;</span> -NoNewline -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span><span>    checkIfWebExists $url $line.ListName
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span><span>    <span style=color:#66d9ef>if</span> ($i++ <span style=color:#f92672>-ge</span> $endIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span><span>        Write-Host <span style=color:#e6db74>&#34;break because of endIndex limit&#34;</span> -ForegroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span><span>        <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span><span>
+</span></span></code></pre></div><p><a class=button href=/files/sharepoint/migrate_sources/lists-only/0-validate.ps1>open raw file</a></p><blockquote>
+<p>1-migrate-lists.ps1</p><p>And finally the migration script I use for list migrations</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span>. <span style=color:#e6db74>&#34;.\environment.ps1&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span><span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $endIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span><span>    Write-Host <span style=color:#e6db74>&#34;check environment.ps1, missing endIndex&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span>    <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span>$input = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path $listsFile)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span><span>$sites = <span style=color:#66d9ef>[Array]</span>(Import-Csv -Path $sitesFile)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span>$i = 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span><span><span style=color:#66d9ef>foreach</span> ($line <span style=color:#66d9ef>in</span> $input) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span><span>    <span style=color:#66d9ef>if</span> ($i <span style=color:#f92672>-lt</span> $startIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span><span>        $i++
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span>        <span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span><span>    
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span><span>    $url = $line.Url
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span><span>    $dstSiteUrl = $sites | Where-Object { $_.SourceUrl <span style=color:#f92672>-eq</span> $url }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span><span>    <span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $dstSiteUrl) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span><span>        Write-Host <span style=color:#e6db74>&#34;Destination URL not found&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span><span>        <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span><span>    $dstSiteUrl = $dstSiteUrl.DestURL
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span>    Write-Host <span style=color:#e6db74>&#34;$i-$endIndex[&#34;</span>$url/$($line.ListName)<span style=color:#e6db74>&#34;] -&gt; [&#34;</span>$dstSiteUrl<span style=color:#e6db74>&#34;]&#34;</span> -ForegroundColor DarkGray -NoNewline
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span><span>    $srcSite = Connect-Site -Url $url
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span><span>    $dstSite = Connect-Site -Url $dstSiteUrl
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span><span>    $srcList = Get-List -Site $srcSite -name $line.ListName
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span><span>    <span style=color:#66d9ef>if</span> ($null <span style=color:#f92672>-eq</span> $srcList) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span><span>        Write-Host <span style=color:#e6db74>&#34;Source list not found&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span><span>        <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span><span>    $mappings = New-MappingSettings	
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span><span>    Import-UserAndGroupMapping -MappingSettings $mappings -Path <span style=color:#e6db74>&#34;</span>$(Get-Location)<span style=color:#e6db74>\UserAndGroupMappings.sgum&#34;</span> | Out-Null
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span><span>    $copysettings = New-CopySettings -OnContentItemExists Skip
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42</span><span>    $result = Copy-List -List $srcList -DestinationSite $dstSite -CopySettings $copysettings -MappingSettings $mappings
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43</span><span>    Write-Host <span style=color:#e6db74>&#34; Errors:&#34;</span> $result.Errors <span style=color:#e6db74>&#34;Warnings:&#34;</span> $result.Warnings <span style=color:#e6db74>&#34;Copied:&#34;</span> $result.ItemsCopied
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span><span>    $statusMessage = <span style=color:#e6db74>&#34;OK&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span><span>    <span style=color:#66d9ef>if</span> ($result.Warnings <span style=color:#f92672>-gt</span> 0) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span><span>        $statusMessage = <span style=color:#e6db74>&#34;Warning&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span><span>        Write-Host <span style=color:#e6db74>&#34;Warning during copy&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span><span>    <span style=color:#66d9ef>if</span> ($result.Errors <span style=color:#f92672>-gt</span> 0) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span><span>        $statusMessage = <span style=color:#e6db74>&#34;ERROR&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span><span>        Write-Host <span style=color:#e6db74>&#34;Error during copy&#34;</span> -ForegroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55</span><span>    $filename = <span style=color:#e6db74>&#34;$i-</span>$($statusMessage)<span style=color:#e6db74>.csv&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56</span><span>    Export-Report $result -Path <span style=color:#e6db74>&#34;./log/$filename&#34;</span> -Overwrite | Out-Null
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57</span><span>   
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58</span><span>    Write-Host <span style=color:#e6db74>&#34;Showing logfile errors and warnings ./log/$filename&#34;</span> -ForegroundColor Green
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59</span><span>    $input = Import-Csv <span style=color:#e6db74>&#34;./log/$filename&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61</span><span>    $input | ForEach-Object {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62</span><span>        <span style=color:#66d9ef>if</span> ($_.Status <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Error&#34;</span>) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63</span><span>            Write-Host <span style=color:#e6db74>&#34;Error [</span>$($_.Title)<span style=color:#e6db74>]&#34;</span> -NoNewline -ForegroundColor Magenta
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64</span><span>            Write-Host $_.Details -ForegroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">67</span><span>        <span style=color:#66d9ef>if</span> ($_.Status <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Warning&#34;</span>) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">68</span><span>            Write-Host <span style=color:#e6db74>&#34;Warning [</span>$($_.Title)<span style=color:#e6db74>]&#34;</span> -NoNewline -ForegroundColor Magenta
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">69</span><span>            Write-Host $_.Details -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">70</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">71</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">72</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">73</span><span>    <span style=color:#66d9ef>if</span> ($i++ <span style=color:#f92672>-ge</span> $endIndex) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">74</span><span>        Write-Host <span style=color:#e6db74>&#34;break because of endIndex limit&#34;</span> -ForegroundColor DarkYellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">75</span><span>        <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">76</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">77</span><span>}
+</span></span></code></pre></div><p><a class=button href=/files/sharepoint/migrate_sources/lists-only/1-migrate-lists.ps1>open raw file</a></p><p>Download the complete solution <a href=/files/sharepoint/migrate_sources/lists-only/lists-only.zip>here</a></p><h6 id=continue-reading-this-series-herepostssharepointmigrationivverification>Continue reading this series <a href=/posts/sharepoint/migration/iv.verification/>here</a></h6></div></div></div></div></div></div></div><script src=https://jurjan.info/js/jquery.min.js></script>
 <script src=https://jurjan.info/js/bootstrap.min.js></script>
 <script src=https://jurjan.info/js/jquery.cookie.js></script>
 <script src=https://jurjan.info/js/ekko-lightbox.js></script>
@@ -504,5 +372,4 @@ Examples of lists that you may wish to exclude are:</p>
 <script src=https://jurjan.info/js/imagesloaded.pkgd.min.js></script>
 <script src=https://jurjan.info/js/owl.carousel.min.js></script>
 <script src=https://jurjan.info/js/front.js></script>
-</body>
-</html>
+</body></html>

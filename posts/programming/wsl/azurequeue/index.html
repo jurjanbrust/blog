@@ -1,8 +1,7 @@
 <!doctype html><html lang=en-us>
 <head><meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
-<title>Jurjan Brust - WSL 2 and docker compose</title>
-<meta name=description content="jurjan.info">
+<title>Jurjan Brust - WSL 2 and docker compose</title><meta name=description content="jurjan.info">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="all,follow">
 <meta name=googlebot content="index,follow,snippet,archive">
@@ -20,25 +19,15 @@
 <script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
 <link href=https://jurjan.info/css/custom.css rel=stylesheet>
 <link rel="shortcut icon" href=https://jurjan.info/img/favicon.png>
-</head>
-<body>
+</head><body>
 <div id=all>
 <div class=container-fluid>
 <div class="row row-offcanvas row-offcanvas-left">
 <div id=sidebar class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
 <div class=sidebar-content>
 <a href=/> <img src=/img/jurjan.png class=avatar> </a>
-<h1 class=sidebar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1>
-<p class=sidebar-p>SharePoint | M365 | Azure | IoT</p>
-<ul class=sidebar-menu>
-<li><a href=https://jurjan.info/posts/>HOME</a></li>
-<li><a href=https://jurjan.info/categories/projects>PROJECTS</a></li>
-<li><a href=https://jurjan.info/categories/azure>AZURE</a></li>
-<li><a href=https://jurjan.info/categories/sharepoint>SHAREPOINT / M365</a></li>
-<li><a href=https://jurjan.info/about/>ABOUT</a></li>
-<li><a href=https://jurjan.info/contact/>CONTACT</a></li>
-</ul>
-<p class=social>
+<h1 class=sidebar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1><p class=sidebar-p>SharePoint | M365 | Azure | IoT</p><ul class=sidebar-menu>
+<li><a href=https://jurjan.info/posts/>HOME</a></li><li><a href=https://jurjan.info/categories/projects>PROJECTS</a></li><li><a href=https://jurjan.info/categories/azure>AZURE</a></li><li><a href=https://jurjan.info/categories/sharepoint>SHAREPOINT / M365</a></li><li><a href=https://jurjan.info/about/>ABOUT</a></li><li><a href=https://jurjan.info/contact/>CONTACT</a></li></ul><p class=social>
 <a href=/index.xml data-animate-hover=pulse class=email>
 <i class="fa fa-rss"></i>
 </a>
@@ -57,232 +46,170 @@
 <a href=mailto:mail@jurjan.info data-animate-hover=pulse class=email>
 <i class="fa fa-envelope"></i>
 </a>
-</p>
-<div class=copyright>
+</p><div class=copyright>
 <p class=credit>
 &copy;2020 Jurjan Brust
-</p>
-</div>
-</div>
-</div>
-<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+</p></div></div></div><div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
 <div class="small-navbar visible-xs">
 <button type=button data-toggle=offcanvas class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
-<h1 class=small-navbar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1>
-</div>
-<div class=row>
+<h1 class=small-navbar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1></div><div class=row>
 <div class=col-lg-8>
 <div class=content-column-content>
-<h1>WSL 2 and docker compose</h1>
-<p>With the arrival of WSL 2 (Windows Subsystem for Linux), I thought it was a good time to learn more about this technology. I am surprised at the possibilities this offers. So let&rsquo;s dive into this and use WSL 2 and Docker-Compose to fire up some containers to present sensor data in a Grafana dashboard.</p>
-<p><img src=/img/azurequeue/azurequeue_2020-10-15-14-36-22.png alt="shadow rotate"></p>
-<p>The Windows Subsystem for Linux lets developers run a GNU/Linux environment &ndash; including most command-line tools, utilities, and applications &ndash; directly on Windows, unmodified, without the overhead of a traditional virtual machine or dualboot setup.
-For more background information and installation instructions have a look at this Microsoft Docs <a href=https://docs.microsoft.com/en-us/windows/wsl/about>page</a>.</p>
-<blockquote>
-<p>A big advantage of WSL 2 is that it uses little system resources and is super fast.</p>
-</blockquote>
-<p>This makes it a perfect solution for a microservices architecture, since there is almost no penalty for using multiple containers. By using Docker-Compose we can easily separate the components that an application needs into multiple docker containers. In this example MySql, Grafana and a development container. You no longer have to go through an installation procedure of MySql or Grafana yourself. You literally take (compose) what others have created for you.</p>
-<blockquote>
-<p>But why do we use docker compose you might ask.</p>
-</blockquote>
-<p>Docker compose provide connectivity between the containers. It allows network traffic. In this example we need network traffic between Grafana and MySql because Grafana itself does not store any data. A next step would be to use Kubernetes instead of docker compose but that&rsquo;s for another blog.</p>
-<p>All of the code is in my <a href=https://github.com/jurjanbrust/wsl2_mysql_grafana>Github repro</a> so make a clone and follow along.</p>
-<h2 id=prerequisites>Prerequisites</h2>
-<ol>
-<li>WSL2: <a href=https://docs.microsoft.com/en-us/windows/wsl/install-win10>see link</a></li>
-<li>Docker Desktop <a href=https://www.docker.com/get-started>see link</a></li>
-<li>Docker compose (This will be installed by default in step 2)</li>
-<li>Git, for example <a href=https://gitforwindows.org/>git for Windows</a></li>
-</ol>
-<h2 id=steps-to-follow-in-this-guide>Steps to follow in this guide</h2>
-<p>First clone the repository into some directory (mine is called D:\Example)</p>
-<pre tabindex=0><code>git clone https://github.com/jurjanbrust/wsl2_mysql_grafana.git
-</code></pre><p><img src=/img/azurequeue/azurequeue_2020-10-16-16-21-53.png alt=shadow></p>
-<p>Next, change the directory into the .devcontainer folder</p>
-<pre tabindex=0><code>cd .\wsl2_mysql_grafana\.devcontainer\
-</code></pre><p>and start the containers using:</p>
-<pre tabindex=0><code>docker-compose up
-</code></pre><p><img src=/img/azurequeue/azurequeue_2020-10-16-16-22-50.png alt=shadow></p>
-<p>Next login on the &lsquo;development&rsquo; container so that we can create the database in the MySql container.
+<h1>WSL 2 and docker compose</h1><p>With the arrival of WSL 2 (Windows Subsystem for Linux), I thought it was a good time to learn more about this technology. I am surprised at the possibilities this offers. So let&rsquo;s dive into this and use WSL 2 and Docker-Compose to fire up some containers to present sensor data in a Grafana dashboard.</p><p><img src=/img/azurequeue/azurequeue_2020-10-15-14-36-22.png alt="shadow rotate"></p><p>The Windows Subsystem for Linux lets developers run a GNU/Linux environment &ndash; including most command-line tools, utilities, and applications &ndash; directly on Windows, unmodified, without the overhead of a traditional virtual machine or dualboot setup.
+For more background information and installation instructions have a look at this Microsoft Docs <a href=https://docs.microsoft.com/en-us/windows/wsl/about>page</a>.</p><blockquote>
+<p>A big advantage of WSL 2 is that it uses little system resources and is super fast.</p></blockquote><p>This makes it a perfect solution for a microservices architecture, since there is almost no penalty for using multiple containers. By using Docker-Compose we can easily separate the components that an application needs into multiple docker containers. In this example MySql, Grafana and a development container. You no longer have to go through an installation procedure of MySql or Grafana yourself. You literally take (compose) what others have created for you.</p><blockquote>
+<p>But why do we use docker compose you might ask.</p></blockquote><p>Docker compose provide connectivity between the containers. It allows network traffic. In this example we need network traffic between Grafana and MySql because Grafana itself does not store any data. A next step would be to use Kubernetes instead of docker compose but that&rsquo;s for another blog.</p><p>All of the code is in my <a href=https://github.com/jurjanbrust/wsl2_mysql_grafana>Github repro</a> so make a clone and follow along.</p><h2 id=prerequisites>Prerequisites</h2><ol>
+<li>WSL2: <a href=https://docs.microsoft.com/en-us/windows/wsl/install-win10>see link</a></li><li>Docker Desktop <a href=https://www.docker.com/get-started>see link</a></li><li>Docker compose (This will be installed by default in step 2)</li><li>Git, for example <a href=https://gitforwindows.org/>git for Windows</a></li></ol><h2 id=steps-to-follow-in-this-guide>Steps to follow in this guide</h2><p>First clone the repository into some directory (mine is called D:\Example)</p><pre tabindex=0><code>git clone https://github.com/jurjanbrust/wsl2_mysql_grafana.git
+</code></pre><p><img src=/img/azurequeue/azurequeue_2020-10-16-16-21-53.png alt=shadow></p><p>Next, change the directory into the .devcontainer folder</p><pre tabindex=0><code>cd .\wsl2_mysql_grafana\.devcontainer\
+</code></pre><p>and start the containers using:</p><pre tabindex=0><code>docker-compose up
+</code></pre><p><img src=/img/azurequeue/azurequeue_2020-10-16-16-22-50.png alt=shadow></p><p>Next login on the &lsquo;development&rsquo; container so that we can create the database in the MySql container.
 First, we need to know the name of the container that we will login, so do a &lsquo;docker container list&rsquo; in the command prompt (I highly recommend Windows Terminal, see <a href=https://docs.microsoft.com/en-us/windows/terminal/get-started>this link</a> for installation instructions)
 <img src=/img/azurequeue/azurequeue_2020-10-16-18-00-22.png alt=shadow>
 On my laptop the container name is called &lsquo;devcontainer_dev_1&rsquo;. (yours may be different!)
 Use &lsquo;docker exec -it yourcontainername bash&rsquo; to login in the container using bash.
 <img src=/img/azurequeue/azurequeue_2020-10-16-18-02-27.png alt=shadow>
 Then &lsquo;cd workspace&rsquo; and &lsquo;python setup_database.py&rsquo; to create the database.
-Now you can also add some sample data using &lsquo;python insert_fake_sensordata.py&rsquo; as displayed below.</p>
-<p><img src=/img/azurequeue/azurequeue_2020-10-16-18-05-26.png alt></p>
-<p>Next open the browser and navigate to the Grafana website located on your <a href=http://localhost:3000/login>localhost port 3000</a>
-<img src=/img/azurequeue/azurequeue_2020-10-16-16-19-45.png alt=shadow></p>
-<p>The default password/username is admin/admin. You can skip the step to change the password.</p>
-<p>Next we need to add a data connection to the MySql database that is running in another container.
+Now you can also add some sample data using &lsquo;python insert_fake_sensordata.py&rsquo; as displayed below.</p><p><img src=/img/azurequeue/azurequeue_2020-10-16-18-05-26.png alt></p><p>Next open the browser and navigate to the Grafana website located on your <a href=http://localhost:3000/login>localhost port 3000</a>
+<img src=/img/azurequeue/azurequeue_2020-10-16-16-19-45.png alt=shadow></p><p>The default password/username is admin/admin. You can skip the step to change the password.</p><p>Next we need to add a data connection to the MySql database that is running in another container.
 So use the left navigation menu and select &lsquo;Data Sources&rsquo;.
-Click Add data source and filter and select MySql.</p>
-<p><img src=/img/azurequeue/azurequeue_2020-10-16-16-33-08.png alt=shadow></p>
-<p>Enter the following information as displayed in the image below. The username = &lsquo;root&rsquo; and password = &lsquo;example&rsquo;</p>
-<p>Notice that for the MySQL Host we can use &lsquo;db&rsquo; instead of an IP address. This is done by docker-compose. You can see this in the &lsquo;docker-compose.yml&rsquo; file (line # 16).</p>
-<p><img src=/img/azurequeue/azurequeue_2020-10-16-15-04-59.png alt=shadow></p>
-<p>Finally go back to Grafana and add a new dashboard + panel like the one displayed below and you are done!</p>
-<p><img src=/img/azurequeue/azurequeue_2020-10-16-15-42-49.png alt=shadow></p>
-<p>If you want, you can also use the browser to login to on Adminer (port 8080). Adminer is a GUI to manage MySQL. <a href=http://localhost:8080/>Click here</a> to do so.
-As you might have noticed Adminer is also running in a seperate container. Can you see how loosely coupled all these services are? Containers open up a new world in the field of application architecture. Like a menu card where you pick the technologies you need.</p>
-<h2 id=sources>Sources</h2>
-<p>For a change I didn&rsquo;t use C # but Python this time and I really like this language so I will definitely use it more often from now on.</p>
-<p>First the code to create the database and SQL table. As soon as I finished this Python script I realized there must be more efficient ways to preload a SQL database. By including a .sql file in the docker-compose.yml file, this should also be possible. However, I have not yet studied this. So something for my to-do list.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span style=color:#f92672>import</span> mysql.connector
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span>mySql_dbName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;sensordata&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>mySql_tableName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;temperature&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span>mySql_password <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;example&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>mySql_droptable <span style=color:#f92672>=</span> <span style=color:#66d9ef>False</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span>db <span style=color:#f92672>=</span> mysql<span style=color:#f92672>.</span>connector<span style=color:#f92672>.</span>connect(
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span>  host<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;db&#34;</span>,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span>  user<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root&#34;</span>,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span>  passwd<span style=color:#f92672>=</span>mySql_password,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span>cursor <span style=color:#f92672>=</span> db<span style=color:#f92672>.</span>cursor()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span><span style=color:#66d9ef>try</span>:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span>    cursor<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#34;CREATE DATABASE IF NOT EXISTS &#34;</span> <span style=color:#f92672>+</span> mySql_dbName)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> ex:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span>    print(ex)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span>db <span style=color:#f92672>=</span> mysql<span style=color:#f92672>.</span>connector<span style=color:#f92672>.</span>connect(
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span>  host<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;db&#34;</span>,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span>  user<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root&#34;</span>,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span>  passwd<span style=color:#f92672>=</span>mySql_password,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span>  database<span style=color:#f92672>=</span>mySql_dbName
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span>cursor <span style=color:#f92672>=</span> db<span style=color:#f92672>.</span>cursor()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span style=color:#66d9ef>if</span>(mySql_droptable):
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span>    <span style=color:#66d9ef>try</span>:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>        cursor<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#34;DROP TABLE &#34;</span> <span style=color:#f92672>+</span> mySql_tableName)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span>        print(<span style=color:#e6db74>&#34;Deleted table&#34;</span> <span style=color:#f92672>+</span> mySql_tableName)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> ex:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span>        print(ex)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span><span style=color:#66d9ef>try</span>:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span>    cursor<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#34;CREATE TABLE &#34;</span><span style=color:#f92672>+</span> mySql_tableName <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; (id INT AUTO_INCREMENT PRIMARY KEY, counter INT, temperature INT, time TIMESTAMP, latitude FLOAT, longitude FLOAT, rssi FLOAT, dev_id VARCHAR(20), app_id VARCHAR(20), hardware_serial VARCHAR(20) )&#34;</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span>    print(<span style=color:#e6db74>&#34;Created table&#34;</span> <span style=color:#f92672>+</span> mySql_tableName)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span><span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> ex:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span>    print(ex)
-</code></pre></div>
-<p><a class=button href=/files/programming/wsl/setup_database.py>open raw file</a></p>
-<p>Then second a script to fill the temperature table with fake data.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span style=color:#f92672>import</span> os<span style=color:#f92672>,</span> uuid<span style=color:#f92672>,</span> time<span style=color:#f92672>,</span> json<span style=color:#f92672>,</span> random
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span style=color:#f92672>import</span> mysql.connector
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span>mySql_dbName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;sensordata&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>mySql_tableName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;temperature&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span>nrOfMessages <span style=color:#f92672>=</span> <span style=color:#ae81ff>100</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span>db <span style=color:#f92672>=</span> mysql<span style=color:#f92672>.</span>connector<span style=color:#f92672>.</span>connect(
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span>  host<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;db&#34;</span>,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span>  user<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root&#34;</span>,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span>  passwd<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;example&#34;</span>,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span>  database<span style=color:#f92672>=</span>mySql_dbName
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span>cursor <span style=color:#f92672>=</span> db<span style=color:#f92672>.</span>cursor()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>processMessage</span>():
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span>    sensor_counter <span style=color:#f92672>=</span> random<span style=color:#f92672>.</span>randrange(<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>4000</span>,<span style=color:#ae81ff>1</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span>    sensor_temperature <span style=color:#f92672>=</span> random<span style=color:#f92672>.</span>randrange(<span style=color:#ae81ff>30</span>,<span style=color:#ae81ff>40</span>,<span style=color:#ae81ff>1</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span>    sensor_time <span style=color:#f92672>=</span> datetime<span style=color:#f92672>.</span>today()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span>    sensor_latitude <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;123.22&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span>    sensor_longitude <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;334.22&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span>    sensor_rssi <span style=color:#f92672>=</span> random<span style=color:#f92672>.</span>randrange(<span style=color:#f92672>-</span><span style=color:#ae81ff>100</span>,<span style=color:#f92672>-</span><span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>1</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span>    sensor_dev_id <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;223423434&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span>    sensor_app_id <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;3322334&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span>    sensor_hardware_serial <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;sensor1&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span>    print(<span style=color:#e6db74>&#34;counter: &#34;</span> <span style=color:#f92672>+</span> str(sensor_counter) <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; temp: &#34;</span> <span style=color:#f92672>+</span> str(sensor_temperature))
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span>    sql <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;INSERT INTO &#34;</span> <span style=color:#f92672>+</span> mySql_tableName <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; (counter, temperature, time, latitude, longitude, rssi, dev_id, app_id, hardware_serial) VALUES (</span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>)&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>    val <span style=color:#f92672>=</span> (sensor_counter, sensor_temperature, sensor_time, sensor_latitude, sensor_longitude, sensor_rssi, sensor_dev_id, sensor_app_id, sensor_hardware_serial)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span>    <span style=color:#66d9ef>try</span>:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span>      cursor<span style=color:#f92672>.</span>execute(sql, val)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span>      db<span style=color:#f92672>.</span>commit()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> ex:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span>      print(ex)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span><span style=color:#66d9ef>for</span> item <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>0</span>, nrOfMessages, <span style=color:#ae81ff>1</span>):
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span>    processMessage()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span>    time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>1</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span>print(<span style=color:#e6db74>&#34;All Done&#34;</span>)</code></pre></div>
-<p><a class=button href=/files/programming/wsl/insert_fake_sensordata.py>open raw file</a></p>
-<p>Third, and this is actually the script as I use it myself, to read out an azure queue. I needed this scenario for a project that I completed in the past <a href=/posts/iot/lorawan/>See my LoRaWan post</a></p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span style=color:#f92672>from</span> azure.storage.queue <span style=color:#f92672>import</span> (
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>        QueueClient,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span>        TextBase64EncodePolicy,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>        TextBase64DecodePolicy
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span style=color:#f92672>import</span> os<span style=color:#f92672>,</span> uuid<span style=color:#f92672>,</span> time<span style=color:#f92672>,</span> json
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span style=color:#f92672>import</span> mysql.connector
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span>connect_str <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;DefaultEndpointsProtocol=https;AccountName=replace;AccountKey=replacewithyours;EndpointSuffix=core.windows.net&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span>queue_name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;name of queue&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span>mySql_dbName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;sensordata&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span>mySql_tableName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;temperature&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span>queue_client <span style=color:#f92672>=</span> QueueClient<span style=color:#f92672>.</span>from_connection_string(conn_str<span style=color:#f92672>=</span>connect_str, queue_name<span style=color:#f92672>=</span>queue_name, message_decode_policy<span style=color:#f92672>=</span>TextBase64DecodePolicy())
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span>messages <span style=color:#f92672>=</span> queue_client<span style=color:#f92672>.</span>receive_messages(messages_per_page<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span>db <span style=color:#f92672>=</span> mysql<span style=color:#f92672>.</span>connector<span style=color:#f92672>.</span>connect(
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span>  host<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;db&#34;</span>,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span>  user<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root&#34;</span>,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span>  passwd<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;example&#34;</span>,
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span>  database<span style=color:#f92672>=</span>mySql_dbName
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span>cursor <span style=color:#f92672>=</span> db<span style=color:#f92672>.</span>cursor()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>processMessage</span>():
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span>    message_json <span style=color:#f92672>=</span> json<span style=color:#f92672>.</span>loads(message<span style=color:#f92672>.</span>content)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>    payload_raw <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;payload_raw&#34;</span>]
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span>    payload_bytes <span style=color:#f92672>=</span> bytes(payload_raw, <span style=color:#e6db74>&#39;ascii&#39;</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span>    sensor_counter <span style=color:#f92672>=</span> payload_bytes[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>+</span> <span style=color:#ae81ff>256</span> <span style=color:#f92672>*</span> payload_bytes[<span style=color:#ae81ff>1</span>]
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span>    sensor_temperature <span style=color:#f92672>=</span> payload_bytes[<span style=color:#ae81ff>2</span>] <span style=color:#f92672>+</span> (payload_bytes[<span style=color:#ae81ff>3</span>] <span style=color:#f92672>/</span> <span style=color:#ae81ff>100</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span>    sensor_time <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;metadata&#34;</span>][<span style=color:#e6db74>&#34;time&#34;</span>][<span style=color:#ae81ff>0</span>: <span style=color:#ae81ff>19</span>]
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span>    sensor_latitude <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;metadata&#34;</span>][<span style=color:#e6db74>&#34;latitude&#34;</span>]
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span>    sensor_longitude <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;metadata&#34;</span>][<span style=color:#e6db74>&#34;longitude&#34;</span>]
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span>    sensor_rssi <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;metadata&#34;</span>][<span style=color:#e6db74>&#34;gateways&#34;</span>][<span style=color:#ae81ff>0</span>][<span style=color:#e6db74>&#34;rssi&#34;</span>]
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span>    sensor_dev_id <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;dev_id&#34;</span>]
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span>    sensor_app_id <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;app_id&#34;</span>]
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span>    sensor_hardware_serial <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;hardware_serial&#34;</span>]
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42</span>    print(<span style=color:#e6db74>&#34;counter: &#34;</span> <span style=color:#f92672>+</span> str(sensor_counter) <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; temp: &#34;</span> <span style=color:#f92672>+</span> str(sensor_temperature))
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43</span>    sql <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;INSERT INTO &#34;</span> <span style=color:#f92672>+</span> mySql_tableName <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; (counter, temperature, time, latitude, longitude, rssi, dev_id, app_id, hardware_serial) VALUES (</span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>)&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44</span>    val <span style=color:#f92672>=</span> (sensor_counter, sensor_temperature, sensor_time, sensor_latitude, sensor_longitude, sensor_rssi, sensor_dev_id, sensor_app_id, sensor_hardware_serial)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span>    <span style=color:#66d9ef>try</span>:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span>      cursor<span style=color:#f92672>.</span>execute(sql, val)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span>      db<span style=color:#f92672>.</span>commit()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> ex:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span>      print(ex)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span><span style=color:#66d9ef>for</span> message <span style=color:#f92672>in</span> messages:
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span>    processMessage()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span>    queue_client<span style=color:#f92672>.</span>delete_message(message<span style=color:#f92672>.</span>id, message<span style=color:#f92672>.</span>pop_receipt)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span>    time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>0.1</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56</span>print(<span style=color:#e6db74>&#34;All Done&#34;</span>)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57</span>
-</code></pre></div>
-<p><a class=button href=/files/programming/wsl/insert_sensordata_from_azure_queue.py>open raw file</a></p>
-<p>See details of connecting to a storage queue from python on this Microsoft Docs <a href="https://docs.microsoft.com/en-us/azure/storage/queues/storage-python-how-to-use-queue-storage?tabs=python">page</a></p>
-<p>This brings this blog post to an end. I hope you found it fun and educational to read. With the arrival of WSL2 it becomes very nice and easy to develop on a Linux-based operating system.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<script src=https://jurjan.info/js/jquery.min.js></script>
+Click Add data source and filter and select MySql.</p><p><img src=/img/azurequeue/azurequeue_2020-10-16-16-33-08.png alt=shadow></p><p>Enter the following information as displayed in the image below. The username = &lsquo;root&rsquo; and password = &rsquo;example&rsquo;</p><p>Notice that for the MySQL Host we can use &lsquo;db&rsquo; instead of an IP address. This is done by docker-compose. You can see this in the &lsquo;docker-compose.yml&rsquo; file (line # 16).</p><p><img src=/img/azurequeue/azurequeue_2020-10-16-15-04-59.png alt=shadow></p><p>Finally go back to Grafana and add a new dashboard + panel like the one displayed below and you are done!</p><p><img src=/img/azurequeue/azurequeue_2020-10-16-15-42-49.png alt=shadow></p><p>If you want, you can also use the browser to login to on Adminer (port 8080). Adminer is a GUI to manage MySQL. <a href=http://localhost:8080/>Click here</a> to do so.
+As you might have noticed Adminer is also running in a seperate container. Can you see how loosely coupled all these services are? Containers open up a new world in the field of application architecture. Like a menu card where you pick the technologies you need.</p><h2 id=sources>Sources</h2><p>For a change I didn&rsquo;t use C # but Python this time and I really like this language so I will definitely use it more often from now on.</p><p>First the code to create the database and SQL table. As soon as I finished this Python script I realized there must be more efficient ways to preload a SQL database. By including a .sql file in the docker-compose.yml file, this should also be possible. However, I have not yet studied this. So something for my to-do list.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span><span style=color:#f92672>import</span> mysql.connector
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span>mySql_dbName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;sensordata&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span><span>mySql_tableName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;temperature&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span>mySql_password <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;example&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span><span>mySql_droptable <span style=color:#f92672>=</span> <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span>db <span style=color:#f92672>=</span> mysql<span style=color:#f92672>.</span>connector<span style=color:#f92672>.</span>connect(
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span>  host<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;db&#34;</span>,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span>  user<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root&#34;</span>,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span><span>  passwd<span style=color:#f92672>=</span>mySql_password,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span><span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span><span>cursor <span style=color:#f92672>=</span> db<span style=color:#f92672>.</span>cursor()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span><span><span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span><span>    cursor<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#34;CREATE DATABASE IF NOT EXISTS &#34;</span> <span style=color:#f92672>+</span> mySql_dbName)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span><span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> ex:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span>    print(ex)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span><span>db <span style=color:#f92672>=</span> mysql<span style=color:#f92672>.</span>connector<span style=color:#f92672>.</span>connect(
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span><span>  host<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;db&#34;</span>,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span><span>  user<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root&#34;</span>,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span><span>  passwd<span style=color:#f92672>=</span>mySql_password,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span><span>  database<span style=color:#f92672>=</span>mySql_dbName
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span><span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span><span>cursor <span style=color:#f92672>=</span> db<span style=color:#f92672>.</span>cursor()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span><span style=color:#66d9ef>if</span>(mySql_droptable):
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span><span>        cursor<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#34;DROP TABLE &#34;</span> <span style=color:#f92672>+</span> mySql_tableName)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span><span>        print(<span style=color:#e6db74>&#34;Deleted table&#34;</span> <span style=color:#f92672>+</span> mySql_tableName)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> ex:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span><span>        print(ex)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span><span><span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span><span>    cursor<span style=color:#f92672>.</span>execute(<span style=color:#e6db74>&#34;CREATE TABLE &#34;</span><span style=color:#f92672>+</span> mySql_tableName <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; (id INT AUTO_INCREMENT PRIMARY KEY, counter INT, temperature INT, time TIMESTAMP, latitude FLOAT, longitude FLOAT, rssi FLOAT, dev_id VARCHAR(20), app_id VARCHAR(20), hardware_serial VARCHAR(20) )&#34;</span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span><span>    print(<span style=color:#e6db74>&#34;Created table&#34;</span> <span style=color:#f92672>+</span> mySql_tableName)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span><span><span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> ex:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span><span>    print(ex)
+</span></span></code></pre></div><p><a class=button href=/files/programming/wsl/setup_database.py>open raw file</a></p><p>Then second a script to fill the temperature table with fake data.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span><span style=color:#f92672>import</span> os<span style=color:#f92672>,</span> uuid<span style=color:#f92672>,</span> time<span style=color:#f92672>,</span> json<span style=color:#f92672>,</span> random
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span><span style=color:#f92672>import</span> mysql.connector
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span>mySql_dbName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;sensordata&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span><span>mySql_tableName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;temperature&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span>nrOfMessages <span style=color:#f92672>=</span> <span style=color:#ae81ff>100</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span>db <span style=color:#f92672>=</span> mysql<span style=color:#f92672>.</span>connector<span style=color:#f92672>.</span>connect(
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span>  host<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;db&#34;</span>,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span><span>  user<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root&#34;</span>,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span><span>  passwd<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;example&#34;</span>,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span>  database<span style=color:#f92672>=</span>mySql_dbName
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span><span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span><span>cursor <span style=color:#f92672>=</span> db<span style=color:#f92672>.</span>cursor()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>processMessage</span>():
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span>    sensor_counter <span style=color:#f92672>=</span> random<span style=color:#f92672>.</span>randrange(<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>4000</span>,<span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span><span>    sensor_temperature <span style=color:#f92672>=</span> random<span style=color:#f92672>.</span>randrange(<span style=color:#ae81ff>30</span>,<span style=color:#ae81ff>40</span>,<span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span><span>    sensor_time <span style=color:#f92672>=</span> datetime<span style=color:#f92672>.</span>today()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span><span>    sensor_latitude <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;123.22&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span><span>    sensor_longitude <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;334.22&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span><span>    sensor_rssi <span style=color:#f92672>=</span> random<span style=color:#f92672>.</span>randrange(<span style=color:#f92672>-</span><span style=color:#ae81ff>100</span>,<span style=color:#f92672>-</span><span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span><span>    sensor_dev_id <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;223423434&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span><span>    sensor_app_id <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;3322334&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span><span>    sensor_hardware_serial <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;sensor1&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span>    print(<span style=color:#e6db74>&#34;counter: &#34;</span> <span style=color:#f92672>+</span> str(sensor_counter) <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; temp: &#34;</span> <span style=color:#f92672>+</span> str(sensor_temperature))
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span><span>    sql <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;INSERT INTO &#34;</span> <span style=color:#f92672>+</span> mySql_tableName <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; (counter, temperature, time, latitude, longitude, rssi, dev_id, app_id, hardware_serial) VALUES (</span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>)&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span><span>    val <span style=color:#f92672>=</span> (sensor_counter, sensor_temperature, sensor_time, sensor_latitude, sensor_longitude, sensor_rssi, sensor_dev_id, sensor_app_id, sensor_hardware_serial)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span><span>      cursor<span style=color:#f92672>.</span>execute(sql, val)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span><span>      db<span style=color:#f92672>.</span>commit()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> ex:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span><span>      print(ex)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span><span><span style=color:#66d9ef>for</span> item <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>0</span>, nrOfMessages, <span style=color:#ae81ff>1</span>):
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span><span>    processMessage()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span><span>    time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span><span>print(<span style=color:#e6db74>&#34;All Done&#34;</span>)</span></span></code></pre></div><p><a class=button href=/files/programming/wsl/insert_fake_sensordata.py>open raw file</a></p><p>Third, and this is actually the script as I use it myself, to read out an azure queue. I needed this scenario for a project that I completed in the past <a href=/posts/iot/lorawan/>See my LoRaWan post</a></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span><span style=color:#f92672>from</span> azure.storage.queue <span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span>        QueueClient,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span>        TextBase64EncodePolicy,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span><span>        TextBase64DecodePolicy
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span><span style=color:#f92672>import</span> os<span style=color:#f92672>,</span> uuid<span style=color:#f92672>,</span> time<span style=color:#f92672>,</span> json
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span><span style=color:#f92672>import</span> mysql.connector
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span><span style=color:#f92672>from</span> datetime <span style=color:#f92672>import</span> datetime
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span><span>connect_str <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;DefaultEndpointsProtocol=https;AccountName=replace;AccountKey=replacewithyours;EndpointSuffix=core.windows.net&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span><span>queue_name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;name of queue&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span><span>mySql_dbName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;sensordata&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span><span>mySql_tableName <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;temperature&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span>queue_client <span style=color:#f92672>=</span> QueueClient<span style=color:#f92672>.</span>from_connection_string(conn_str<span style=color:#f92672>=</span>connect_str, queue_name<span style=color:#f92672>=</span>queue_name, message_decode_policy<span style=color:#f92672>=</span>TextBase64DecodePolicy())
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span>messages <span style=color:#f92672>=</span> queue_client<span style=color:#f92672>.</span>receive_messages(messages_per_page<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span><span>db <span style=color:#f92672>=</span> mysql<span style=color:#f92672>.</span>connector<span style=color:#f92672>.</span>connect(
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span><span>  host<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;db&#34;</span>,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span><span>  user<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;root&#34;</span>,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span><span>  passwd<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;example&#34;</span>,
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span><span>  database<span style=color:#f92672>=</span>mySql_dbName
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span><span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span><span>cursor <span style=color:#f92672>=</span> db<span style=color:#f92672>.</span>cursor()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>processMessage</span>():
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span><span>    message_json <span style=color:#f92672>=</span> json<span style=color:#f92672>.</span>loads(message<span style=color:#f92672>.</span>content)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span><span>    payload_raw <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;payload_raw&#34;</span>]
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span><span>    payload_bytes <span style=color:#f92672>=</span> bytes(payload_raw, <span style=color:#e6db74>&#39;ascii&#39;</span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span><span>    sensor_counter <span style=color:#f92672>=</span> payload_bytes[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>+</span> <span style=color:#ae81ff>256</span> <span style=color:#f92672>*</span> payload_bytes[<span style=color:#ae81ff>1</span>]
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span><span>    sensor_temperature <span style=color:#f92672>=</span> payload_bytes[<span style=color:#ae81ff>2</span>] <span style=color:#f92672>+</span> (payload_bytes[<span style=color:#ae81ff>3</span>] <span style=color:#f92672>/</span> <span style=color:#ae81ff>100</span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span><span>    sensor_time <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;metadata&#34;</span>][<span style=color:#e6db74>&#34;time&#34;</span>][<span style=color:#ae81ff>0</span>: <span style=color:#ae81ff>19</span>]
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span><span>    sensor_latitude <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;metadata&#34;</span>][<span style=color:#e6db74>&#34;latitude&#34;</span>]
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span><span>    sensor_longitude <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;metadata&#34;</span>][<span style=color:#e6db74>&#34;longitude&#34;</span>]
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span><span>    sensor_rssi <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;metadata&#34;</span>][<span style=color:#e6db74>&#34;gateways&#34;</span>][<span style=color:#ae81ff>0</span>][<span style=color:#e6db74>&#34;rssi&#34;</span>]
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span><span>    sensor_dev_id <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;dev_id&#34;</span>]
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span><span>    sensor_app_id <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;app_id&#34;</span>]
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span><span>    sensor_hardware_serial <span style=color:#f92672>=</span> message_json[<span style=color:#e6db74>&#34;hardware_serial&#34;</span>]
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42</span><span>    print(<span style=color:#e6db74>&#34;counter: &#34;</span> <span style=color:#f92672>+</span> str(sensor_counter) <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; temp: &#34;</span> <span style=color:#f92672>+</span> str(sensor_temperature))
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43</span><span>    sql <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;INSERT INTO &#34;</span> <span style=color:#f92672>+</span> mySql_tableName <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; (counter, temperature, time, latitude, longitude, rssi, dev_id, app_id, hardware_serial) VALUES (</span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>, </span><span style=color:#e6db74>%s</span><span style=color:#e6db74>)&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44</span><span>    val <span style=color:#f92672>=</span> (sensor_counter, sensor_temperature, sensor_time, sensor_latitude, sensor_longitude, sensor_rssi, sensor_dev_id, sensor_app_id, sensor_hardware_serial)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span><span>    <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span><span>      cursor<span style=color:#f92672>.</span>execute(sql, val)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span><span>      db<span style=color:#f92672>.</span>commit()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span><span>    <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> ex:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span><span>      print(ex)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span><span><span style=color:#66d9ef>for</span> message <span style=color:#f92672>in</span> messages:
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span><span>    processMessage()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span><span>    queue_client<span style=color:#f92672>.</span>delete_message(message<span style=color:#f92672>.</span>id, message<span style=color:#f92672>.</span>pop_receipt)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span><span>    time<span style=color:#f92672>.</span>sleep(<span style=color:#ae81ff>0.1</span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56</span><span>print(<span style=color:#e6db74>&#34;All Done&#34;</span>)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57</span><span>
+</span></span></code></pre></div><p><a class=button href=/files/programming/wsl/insert_sensordata_from_azure_queue.py>open raw file</a></p><p>See details of connecting to a storage queue from python on this Microsoft Docs <a href="https://docs.microsoft.com/en-us/azure/storage/queues/storage-python-how-to-use-queue-storage?tabs=python">page</a></p><p>This brings this blog post to an end. I hope you found it fun and educational to read. With the arrival of WSL2 it becomes very nice and easy to develop on a Linux-based operating system.</p></div></div></div></div></div></div></div><script src=https://jurjan.info/js/jquery.min.js></script>
 <script src=https://jurjan.info/js/bootstrap.min.js></script>
 <script src=https://jurjan.info/js/jquery.cookie.js></script>
 <script src=https://jurjan.info/js/ekko-lightbox.js></script>
@@ -291,5 +218,4 @@ As you might have noticed Adminer is also running in a seperate container. Can y
 <script src=https://jurjan.info/js/imagesloaded.pkgd.min.js></script>
 <script src=https://jurjan.info/js/owl.carousel.min.js></script>
 <script src=https://jurjan.info/js/front.js></script>
-</body>
-</html>
+</body></html>

@@ -1,8 +1,7 @@
 <!doctype html><html lang=en-us>
 <head><meta charset=utf-8>
 <meta http-equiv=x-ua-compatible content="IE=edge">
-<title>Jurjan Brust - SharePoint listdata generator</title>
-<meta name=description content="jurjan.info">
+<title>Jurjan Brust - SharePoint listdata generator</title><meta name=description content="jurjan.info">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=robots content="all,follow">
 <meta name=googlebot content="index,follow,snippet,archive">
@@ -20,25 +19,15 @@
 <script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
 <link href=https://jurjan.info/css/custom.css rel=stylesheet>
 <link rel="shortcut icon" href=https://jurjan.info/img/favicon.png>
-</head>
-<body>
+</head><body>
 <div id=all>
 <div class=container-fluid>
 <div class="row row-offcanvas row-offcanvas-left">
 <div id=sidebar class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
 <div class=sidebar-content>
 <a href=/> <img src=/img/jurjan.png class=avatar> </a>
-<h1 class=sidebar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1>
-<p class=sidebar-p>SharePoint | M365 | Azure | IoT</p>
-<ul class=sidebar-menu>
-<li><a href=https://jurjan.info/posts/>HOME</a></li>
-<li><a href=https://jurjan.info/categories/projects>PROJECTS</a></li>
-<li><a href=https://jurjan.info/categories/azure>AZURE</a></li>
-<li><a href=https://jurjan.info/categories/sharepoint>SHAREPOINT / M365</a></li>
-<li><a href=https://jurjan.info/about/>ABOUT</a></li>
-<li><a href=https://jurjan.info/contact/>CONTACT</a></li>
-</ul>
-<p class=social>
+<h1 class=sidebar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1><p class=sidebar-p>SharePoint | M365 | Azure | IoT</p><ul class=sidebar-menu>
+<li><a href=https://jurjan.info/posts/>HOME</a></li><li><a href=https://jurjan.info/categories/projects>PROJECTS</a></li><li><a href=https://jurjan.info/categories/azure>AZURE</a></li><li><a href=https://jurjan.info/categories/sharepoint>SHAREPOINT / M365</a></li><li><a href=https://jurjan.info/about/>ABOUT</a></li><li><a href=https://jurjan.info/contact/>CONTACT</a></li></ul><p class=social>
 <a href=/index.xml data-animate-hover=pulse class=email>
 <i class="fa fa-rss"></i>
 </a>
@@ -57,250 +46,213 @@
 <a href=mailto:mail@jurjan.info data-animate-hover=pulse class=email>
 <i class="fa fa-envelope"></i>
 </a>
-</p>
-<div class=copyright>
+</p><div class=copyright>
 <p class=credit>
 &copy;2020 Jurjan Brust
-</p>
-</div>
-</div>
-</div>
-<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+</p></div></div></div><div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
 <div class="small-navbar visible-xs">
 <button type=button data-toggle=offcanvas class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
-<h1 class=small-navbar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1>
-</div>
-<div class=row>
+<h1 class=small-navbar-heading><a href=https://jurjan.info/>Jurjan Brust</a></h1></div><div class=row>
 <div class=col-lg-8>
 <div class=content-column-content>
-<h1>SharePoint listdata generator</h1>
-<p>Testing your application with large numbers of data is important but sadly often forgotten.
-SharePoint is no exception to this rule.</p>
-<h2 id=the-problem>The problem</h2>
-<p>Not having tested your application for large volume of data almost always has big consequences. Problems more often than not arise only after a certain period of time.
-Your application can run flawless for months or even years. Suddenly a limit is reached and your applications starts to fail.</p>
-<p>If you have worked with large lists in SharePoint, you have probably received errors due to the threshold limit. SharePoint is configured with a default threshold limit of 5000 items in a list or library. This means that if the items in a list or library exceed that number, any views, grouping and queries will will no longer work.</p>
-<h2 id=time-to-hunt-for-this-hidden-timebomb>Time to hunt for this hidden timebomb</h2>
-<p>Fill it up! Yes, although another valid approach to simulate this SharePoint limit would be to lower the listview-treshhold to a low number like 50 it will not always reveal all the problems having large lists.</p>
-<p>So we need to fill the list manually. But wait&mldr; filling SharePoint lists with more than 5000 items is laborious and repetitive work, even when using Excel.
+<h1>SharePoint listdata generator</h1><p>Testing your application with large numbers of data is important but sadly often forgotten.
+SharePoint is no exception to this rule.</p><h2 id=the-problem>The problem</h2><p>Not having tested your application for large volume of data almost always has big consequences. Problems more often than not arise only after a certain period of time.
+Your application can run flawless for months or even years. Suddenly a limit is reached and your applications starts to fail.</p><p>If you have worked with large lists in SharePoint, you have probably received errors due to the threshold limit. SharePoint is configured with a default threshold limit of 5000 items in a list or library. This means that if the items in a list or library exceed that number, any views, grouping and queries will will no longer work.</p><h2 id=time-to-hunt-for-this-hidden-timebomb>Time to hunt for this hidden timebomb</h2><p>Fill it up! Yes, although another valid approach to simulate this SharePoint limit would be to lower the listview-treshhold to a low number like 50 it will not always reveal all the problems having large lists.</p><p>So we need to fill the list manually. But wait&mldr; filling SharePoint lists with more than 5000 items is laborious and repetitive work, even when using Excel.
 PowerShell is a perfect tool for this.
-Like most of my SharePoint PowerShell scripts, I like to use the CSOM (Client-side object model) Using CSOM allows me to use this script without being on the SharePoint server itself.</p>
-<h3 id=preview>Preview</h3>
-<p>The PowerShell listed below creates a list and generates the specified number of list items. The number of list items to be created can be configured and is really fast. Generating 5000 list items generally only takes a number of seconds.</p>
-<p><img src=/img/generateListData/generateListData_2019-09-25-14-42-28.png alt="shadow small"></p>
-<h3 id=usage>Usage</h3>
-<p>Output of the PowerShell should look like this.</p>
-<p><img src=/img/generateListData/generateListData_2019-09-25-14-42-40.png alt="shadow medium"></p>
-<h3 id=code-example-1---custom-lists>Code Example 1 - Custom lists</h3>
-<p>In order to get this to work, you will first need to copy the &lsquo;<strong>Microsoft.SharePoint.Client.dll</strong>&rsquo; and &lsquo;<strong>Microsoft.SharePoint.Client.Runtime.dll</strong>&rsquo; to the same folder of this script.
+Like most of my SharePoint PowerShell scripts, I like to use the CSOM (Client-side object model) Using CSOM allows me to use this script without being on the SharePoint server itself.</p><h3 id=preview>Preview</h3><p>The PowerShell listed below creates a list and generates the specified number of list items. The number of list items to be created can be configured and is really fast. Generating 5000 list items generally only takes a number of seconds.</p><p><img src=/img/generateListData/generateListData_2019-09-25-14-42-28.png alt="shadow small"></p><h3 id=usage>Usage</h3><p>Output of the PowerShell should look like this.</p><p><img src=/img/generateListData/generateListData_2019-09-25-14-42-40.png alt="shadow medium"></p><h3 id=code-example-1---custom-lists>Code Example 1 - Custom lists</h3><p>In order to get this to work, you will first need to copy the &lsquo;<strong>Microsoft.SharePoint.Client.dll</strong>&rsquo; and &lsquo;<strong>Microsoft.SharePoint.Client.Runtime.dll</strong>&rsquo; to the same folder of this script.
 The script listed here should be seen as a starting point for your own specific SharePoint list.
 If no <strong>$listName</strong> list is found it will create a list for you to fiddle around with.
 In your situation you will probably already have a SharePoint list with some content-types or list fields added to it.
-In this example I only use a field called &ldquo;<strong>QuestionType</strong>&rdquo;. Of course you can- and probably will add fields to this to suit your situation.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span style=color:#75715e># change the following three lines to your likings</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span>$url = <span style=color:#e6db74>&#34;http://yourdevelopmentsitecollection/&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span>$listName = <span style=color:#e6db74>&#34;sometestlist&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span>$itemsToCreate = 5010
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span>$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span>Add-PSSnapin Microsoft.SharePoint.PowerShell -EA SilentlyContinue
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span>Add-Type -Path <span style=color:#e6db74>&#34;$ScriptDir\Microsoft.SharePoint.Client.dll&#34;</span> 
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span>Add-Type -Path <span style=color:#e6db74>&#34;$ScriptDir\Microsoft.SharePoint.Client.Runtime.dll&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span style=color:#75715e># open the site</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span>$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($url);
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span>$web = $clientContext.Web;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span>$clientContext.Load($web)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span>$clientContext.ExecuteQuery()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span>Write-Host $web.Title $web.ServerRelativeUrl -ForegroundColor Red -BackgroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span><span style=color:#75715e># open the list, if no list is found it will create one</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span>$list = $web.Lists.GetByTitle($listName);
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span>$clientContext.Load($list)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span><span style=color:#66d9ef>try</span> {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span>    $clientContext.ExecuteQuery()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span>    Write-Host <span style=color:#e6db74>&#34;Opened list&#34;</span> $list.Title -ForegroundColor Red -BackgroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span>} <span style=color:#66d9ef>catch</span> {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span>    Write-Host <span style=color:#e6db74>&#34;No list found, creating a new one&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span>    $listCreateInfo = New-Object Microsoft.SharePoint.Client.ListCreationInformation;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span>    $listCreateInfo.Title = $listName; 
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span>    $listCreateInfo.TemplateType = <span style=color:#66d9ef>[Microsoft.SharePoint.Client.ListTemplateType]</span>::GenericList
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span>    $list = $web.Lists.Add($listCreateInfo)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span>    $list.Update(); 
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span>    $clientContext.ExecuteQuery(); 
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span>	<span style=color:#75715e># add some listfields for example purposes</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span>	$a = $list.Fields.AddFieldAsXml(<span style=color:#e6db74>&#34;&lt;Field Type=&#39;Choice&#39; DisplayName=&#39;QuestionType&#39;&gt;
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span><span style=color:#e6db74>                            &lt;CHOICES&gt;
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span><span style=color:#e6db74>                                &lt;CHOICE&gt;Office 365&lt;/CHOICE&gt;
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span><span style=color:#e6db74>                                &lt;CHOICE&gt;General&lt;/CHOICE&gt;
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span><span style=color:#e6db74>                                &lt;CHOICE&gt;Email&lt;/CHOICE&gt;
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span><span style=color:#e6db74>                                &lt;CHOICE&gt;OneDrive&lt;/CHOICE&gt;
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42</span><span style=color:#e6db74>                                &lt;CHOICE&gt;SharePoint&lt;/CHOICE&gt;
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43</span><span style=color:#e6db74>                                &lt;CHOICE&gt;Office Apps&lt;/CHOICE&gt;
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44</span><span style=color:#e6db74>                                &lt;CHOICE&gt;Office Online&lt;/CHOICE&gt;
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span><span style=color:#e6db74>                                &lt;CHOICE&gt;Other&lt;/CHOICE&gt;
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span><span style=color:#e6db74>                            &lt;/CHOICES&gt;&lt;/Field&gt;&#34;</span>,$true,<span style=color:#66d9ef>[Microsoft.SharePoint.Client.AddFieldOptions]</span>::AddFieldToDefaultView)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span><span style=color:#75715e># random words used to create listitems</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span>$words = <span style=color:#e6db74>&#34;Lorem&#34;</span>,<span style=color:#e6db74>&#34;Ipsum&#34;</span>,<span style=color:#e6db74>&#34;Donald&#34;</span>,<span style=color:#e6db74>&#34;Duck&#34;</span>,<span style=color:#e6db74>&#34;Wine&#34;</span>,<span style=color:#e6db74>&#34;Chees&#34;</span>,<span style=color:#e6db74>&#34;Fruit&#34;</span>,<span style=color:#e6db74>&#34;Garlic&#34;</span>,<span style=color:#e6db74>&#34;Weather&#34;</span>,<span style=color:#e6db74>&#34;Together&#34;</span>,<span style=color:#e6db74>&#34;Car&#34;</span>,<span style=color:#e6db74>&#34;Pizza&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span>$choices = <span style=color:#e6db74>&#34;Office 365&#34;</span>, <span style=color:#e6db74>&#34;General&#34;</span>, <span style=color:#e6db74>&#34;Email&#34;</span>, <span style=color:#e6db74>&#34;SharePoint&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span><span style=color:#66d9ef>for</span>($index = 1; $index <span style=color:#f92672>-lt</span> $itemsToCreate+1; $index++) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span>    $randomText = $words | Get-Random -count 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55</span>    $titleText = <span style=color:#e6db74>&#34;$index $randomText&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56</span>    Write-Host <span style=color:#e6db74>&#34;[$index/$itemsToCreate] Creating &#39;$titleText&#39;&#34;</span> -ForegroundColor Green -BackgroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58</span>    $newListItem = $list.AddItem($itemCreateInfo)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59</span>    $newListItem[<span style=color:#e6db74>&#34;Title&#34;</span>] =  $titleText
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60</span>    $newListItem[<span style=color:#e6db74>&#34;QuestionType&#34;</span>] = $choices | Get-Random -count 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61</span>    $newListItem.Update()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62</span>	<span style=color:#66d9ef>if</span>($index % 100 <span style=color:#f92672>-eq</span> 0)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63</span>	{
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64</span>		Write-Host $index
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65</span>		$clientContext.ExecuteQuery()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66</span>	}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68</span>$clientContext.ExecuteQuery()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">69</span>Write-Host <span style=color:#e6db74>&#34;Done!&#34;</span> -ForegroundColor Green
-</code></pre></div>
-<p><a class=button href=/files/sharepoint/lists/CustomList/GenerateListTestData.ps1>open raw file</a></p>
-<h3 id=code-example-2---document-libraries>Code Example 2 - Document libraries</h3>
-<p>The second example makes use of the PnP PowerShell library and can be used for document-libraries</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2</span><span style=color:#75715e># This powerhell script will fill a SharePoint document library with random documents and random properties</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3</span><span style=color:#75715e># You need to install https://github.com/pnp/PnP-PowerShell first to make it work.</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5</span><span style=color:#75715e># Change these variables to your own needs</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6</span>$itemsToCreate = 10
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7</span>$credentials = <span style=color:#e6db74>&#34;Name of your credential in the windows credentialstore&#34;</span> <span style=color:#75715e># credentials are stored in the windows credentialstore</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8</span>$words = <span style=color:#e6db74>&#34;Airplay&#34;</span>,<span style=color:#e6db74>&#34;Cyanide&#34;</span>,<span style=color:#e6db74>&#34;Cyborgs&#34;</span>,<span style=color:#e6db74>&#34;Cycloon&#34;</span>,<span style=color:#e6db74>&#34;Dynamos&#34;</span>,<span style=color:#e6db74>&#34;Gameboy&#34;</span>,<span style=color:#e6db74>&#34;Hyacint&#34;</span>,<span style=color:#e6db74>&#34;Hydraat&#34;</span>,<span style=color:#e6db74>&#34;Hydrant&#34;</span>,<span style=color:#e6db74>&#34;Moyenne&#34;</span>,<span style=color:#e6db74>&#34;Penalty&#34;</span>,<span style=color:#e6db74>&#34;Symbool&#34;</span>,<span style=color:#e6db74>&#34;Typeren&#34;</span>,<span style=color:#e6db74>&#34;Yoghurt&#34;</span>,<span style=color:#e6db74>&#34;Cylinder&#34;</span>,<span style=color:#e6db74>&#34;Cytosine&#34;</span>,<span style=color:#e6db74>&#34;Monotype&#34;</span>,<span style=color:#e6db74>&#34;Mysterie&#34;</span>,<span style=color:#e6db74>&#34;Royement&#34;</span>,<span style=color:#e6db74>&#34;Typenaam&#34;</span>,<span style=color:#e6db74>&#34;Typering&#34;</span>,<span style=color:#e6db74>&#34;Baxters&#34;</span>,<span style=color:#e6db74>&#34;Complex&#34;</span>,<span style=color:#e6db74>&#34;Excerpt&#34;</span>,<span style=color:#e6db74>&#34;Exogeen&#34;</span>,<span style=color:#e6db74>&#34;Exogene&#34;</span>,<span style=color:#e6db74>&#34;Experts&#34;</span>,<span style=color:#e6db74>&#34;Laxeren&#34;</span>,<span style=color:#e6db74>&#34;Lexicon&#34;</span>,<span style=color:#e6db74>&#34;Mailbox&#34;</span>,<span style=color:#e6db74>&#34;Mentrix&#34;</span>,<span style=color:#e6db74>&#34;Mixture&#34;</span>,<span style=color:#e6db74>&#34;Sextant&#34;</span>,<span style=color:#e6db74>&#34;Textiel&#34;</span>,<span style=color:#e6db74>&#34;Xylitol&#34;</span>,<span style=color:#e6db74>&#34;Xanthoom&#34;</span>,<span style=color:#e6db74>&#34;Xenofiel&#34;</span>,<span style=color:#e6db74>&#34;Xenofobe&#34;</span>,<span style=color:#e6db74>&#34;Xenofoob&#34;</span>,<span style=color:#e6db74>&#34;Xenomani&#34;</span>,<span style=color:#e6db74>&#34;Cabaret&#34;</span>,<span style=color:#e6db74>&#34;Centers&#34;</span>,<span style=color:#e6db74>&#34;Cesuren&#34;</span>,<span style=color:#e6db74>&#34;Chianti&#34;</span>,<span style=color:#e6db74>&#34;Chinees&#34;</span>,<span style=color:#e6db74>&#34;Clement&#34;</span>,<span style=color:#e6db74>&#34;Collage&#34;</span>,<span style=color:#e6db74>&#34;Collega&#34;</span>,<span style=color:#e6db74>&#34;Curator&#34;</span>,<span style=color:#e6db74>&#34;Decente&#34;</span>,<span style=color:#e6db74>&#34;Lactose&#34;</span>,<span style=color:#e6db74>&#34;Lichter&#34;</span>,<span style=color:#e6db74>&#34;Locatie&#34;</span>,<span style=color:#e6db74>&#34;Narcose&#34;</span>,<span style=color:#e6db74>&#34;Scanner&#34;</span>,<span style=color:#e6db74>&#34;Sociale&#34;</span>,<span style=color:#e6db74>&#34;Calvados&#34;</span>,<span style=color:#e6db74>&#34;Cassette&#34;</span>,<span style=color:#e6db74>&#34;Ceintuur&#34;</span>,<span style=color:#e6db74>&#34;Checkbox&#34;</span>,<span style=color:#e6db74>&#34;Cynische&#34;</span>,<span style=color:#e6db74>&#34;Delicaat&#34;</span>,<span style=color:#e6db74>&#34;Scenario&#34;</span>,<span style=color:#e6db74>&#34;Antiqua&#34;</span>,<span style=color:#e6db74>&#34;Aquarel&#34;</span>,<span style=color:#e6db74>&#34;Aquaria&#34;</span>,<span style=color:#e6db74>&#34;Aquavit&#34;</span>,<span style=color:#e6db74>&#34;Attaque&#34;</span>,<span style=color:#e6db74>&#34;Cliques&#34;</span>,<span style=color:#e6db74>&#34;Croquet&#34;</span>,<span style=color:#e6db74>&#34;Enquete&#34;</span>,<span style=color:#e6db74>&#34;Equator&#34;</span>,<span style=color:#e6db74>&#34;Exquise&#34;</span>,<span style=color:#e6db74>&#34;Jacquet&#34;</span>,<span style=color:#e6db74>&#34;Kumquat&#34;</span>,<span style=color:#e6db74>&#34;Liquide&#34;</span>,<span style=color:#e6db74>&#34;Quanten&#34;</span>,<span style=color:#e6db74>&#34;Queeste&#34;</span>,<span style=color:#e6db74>&#34;Queueen&#34;</span>,<span style=color:#e6db74>&#34;Quotums&#34;</span>,<span style=color:#e6db74>&#34;Requiem&#34;</span>,<span style=color:#e6db74>&#34;Tequila&#34;</span>,<span style=color:#e6db74>&#34;Adequaat&#34;</span>,<span style=color:#e6db74>&#34;Aquaduct&#34;</span>,<span style=color:#e6db74>&#34;Aquanaut&#34;</span>,<span style=color:#e6db74>&#34;Aquarium&#34;</span>,<span style=color:#e6db74>&#34;Aquastop&#34;</span>,<span style=color:#e6db74>&#34;Aquavion&#34;</span>,<span style=color:#e6db74>&#34;Attaques&#34;</span>,<span style=color:#e6db74>&#34;Calqueer&#34;</span>,<span style=color:#e6db74>&#34;Choquant&#34;</span>,<span style=color:#e6db74>&#34;Claqueur&#34;</span>,<span style=color:#e6db74>&#34;Craquele&#34;</span>,<span style=color:#e6db74>&#34;Frequent&#34;</span>,<span style=color:#e6db74>&#34;Quartole&#34;</span>,<span style=color:#e6db74>&#34;Quotejes&#34;</span>,<span style=color:#e6db74>&#34;Quoteert&#34;</span>,<span style=color:#e6db74>&#34;Quoteren&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9</span>$user = <span style=color:#e6db74>&#34;set your user user@domain.nl&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10</span>$url = <span style=color:#e6db74>&#34;url of the web&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11</span>$listName = <span style=color:#e6db74>&#34;name of the list&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12</span>$contentTypeName = <span style=color:#e6db74>&#34;name of the contenttype&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13</span>$debug = $false
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15</span><span style=color:#66d9ef>function</span> GetAllTermsRecursive($terms)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16</span>{
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17</span>    $termIdList = @()
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18</span>    <span style=color:#66d9ef>ForEach</span>($item <span style=color:#66d9ef>in</span> $terms)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19</span>    {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20</span>        <span style=color:#66d9ef>if</span>($item.TermsCount <span style=color:#f92672>-gt</span> 0) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21</span>            GetAllTermsRecursive $item.Terms
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22</span>        } <span style=color:#66d9ef>else</span> {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23</span>            $termIdList += $item.Id
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24</span>            <span style=color:#66d9ef>if</span>($debug) { Write-Host <span style=color:#e6db74>&#34;</span>$($item.Id)<span style=color:#e6db74>-</span>$($item.Name)<span style=color:#e6db74>&#34;</span> }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27</span>    <span style=color:#66d9ef>return</span> $termIdList
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30</span>Connect-PnPOnline $url -Credentials $credentials -UseAdfs -NoTelemetry -ErrorAction Stop
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32</span>$list = Get-PnPList -Identity $listName
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33</span><span style=color:#66d9ef>if</span>($null <span style=color:#f92672>-ne</span> $list) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34</span>    Write-Host <span style=color:#e6db74>&#34;Opened list&#34;</span> $list.Title -ForegroundColor Red -BackgroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35</span>} <span style=color:#66d9ef>else</span> {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36</span>    Write-Host <span style=color:#e6db74>&#34;No list found&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37</span>    <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40</span>$contenttype = Get-PnPContentType -List $listName | Where-Object {$_.Name <span style=color:#f92672>-eq</span> $contentTypeName}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41</span><span style=color:#66d9ef>if</span>($null <span style=color:#f92672>-eq</span> $contenttype) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42</span>    Write-Host <span style=color:#e6db74>&#34;No $contenttype ContentType available on the list&#34;</span> -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43</span>    Get-PnPContentType -List $listName | ForEach-Object { Write-Host <span style=color:#e6db74>&#34;Available contenttype: &#34;</span> $_.Name -ForegroundColor Green }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44</span>    <span style=color:#66d9ef>break</span>;
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47</span>Get-PnPproperty -clientobject $contenttype -property <span style=color:#e6db74>&#34;Fields&#34;</span> | Out-Null
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49</span>Write-Host <span style=color:#e6db74>&#34;Using ContentType: </span>$($contenttype.Name)<span style=color:#e6db74>&#34;</span> -ForegroundColor Green
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50</span><span style=color:#66d9ef>if</span>($debug) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51</span>    $contenttype.Fields | ForEach-Object {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52</span>        Write-Host $_.Title -ForegroundColor Green -NoNewline
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53</span>        Write-Host <span style=color:#e6db74>&#34; &#34;</span> $_.InternalName -ForegroundColor Yellow -NoNewline
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54</span>        Write-Host <span style=color:#e6db74>&#34; &#34;</span> $_.TypeAsString -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56</span>    <span style=color:#66d9ef>break</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59</span><span style=color:#66d9ef>for</span>($index = 1; $index <span style=color:#f92672>-lt</span> $itemsToCreate+1; $index++) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60</span>    $randomText = $words | Get-Random -count 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61</span>    $randomNr = Get-Random -Minimum 10000 -Maximum 99999
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62</span>    $titleText = <span style=color:#e6db74>&#34;$randomNr-$randomText&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63</span>    $fileName = <span style=color:#e6db74>&#34;</span>$($titleText)<span style=color:#e6db74>.</span>$($fileExtension)<span style=color:#e6db74>&#34;</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65</span>    $spprops = @{}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66</span>    $taxFields = @{}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68</span>    $contenttype.Fields | Where-Object { <span style=color:#f92672>-Not</span> $_.InternalName.StartsWith(<span style=color:#e6db74>&#34;_&#34;</span>) } | ForEach-Object {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69</span>        <span style=color:#66d9ef>if</span>($_.InternalName <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Title&#34;</span>) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70</span>            
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71</span>            $spprops[$_.InternalName] = $titleText
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73</span>        <span style=color:#66d9ef>if</span>($_.InternalName <span style=color:#f92672>-ne</span> <span style=color:#e6db74>&#34;Title&#34;</span> <span style=color:#f92672>-and</span> $_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Text&#34;</span> <span style=color:#f92672>-or</span> ($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Note&#34;</span> <span style=color:#f92672>-and</span> $_.Hidden <span style=color:#f92672>-eq</span> $false)) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74</span>            <span style=color:#75715e># hidden - false -&gt; make sure we do not set hidden taxfields</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75</span>            $spprops[$_.InternalName] = $randomText
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77</span>        <span style=color:#66d9ef>if</span>($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;User&#34;</span>) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78</span>            $spprops[$_.InternalName] = $user
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80</span>        <span style=color:#66d9ef>if</span>($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Choice&#34;</span>) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81</span>            $spprops[$_.InternalName] = $_.Choices | Get-Random -Count 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83</span>        <span style=color:#66d9ef>if</span>($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;DateTime&#34;</span>) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84</span>            $days = Get-Random -Minimum -100 -Maximum 100
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85</span>            $spprops[$_.InternalName] = <span style=color:#66d9ef>[System.DateTime]</span>::Now.AddDays($days)
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87</span>        <span style=color:#66d9ef>if</span>($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;TaxonomyFieldType&#34;</span>) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88</span>            $terms = Get-PnPTerm -TermSet $_.TermSetId -TermGroup $_.Group -IncludeChildTerms -Recursive 
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89</span>            $results = GetAllTermsRecursive $terms
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90</span>            $randomTerm =  $results | Get-Random -Count 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91</span>            $taxFields[$_.InternalName] = $randomTerm
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93</span>        <span style=color:#66d9ef>if</span>($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;TaxonomyFieldTypeMulti&#34;</span> <span style=color:#f92672>-and</span> $_.InternalName <span style=color:#f92672>-ne</span> <span style=color:#e6db74>&#34;TaxKeyword&#34;</span>) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94</span>            $terms = Get-PnPTerm -TermSet $_.TermSetId -TermGroup $_.Group -IncludeChildTerms -Recursive -ErrorAction <span style=color:#66d9ef>Continue</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95</span>            $results = GetAllTermsRecursive $terms
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96</span>            $randomTerm =  $results | Get-Random -Count 1
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97</span>            <span style=color:#66d9ef>if</span>($randomTerm <span style=color:#f92672>-ne</span> $null) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98</span>                $taxFields[$_.InternalName] = $randomTerm
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99</span>            }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102</span>        <span style=color:#66d9ef>if</span>($($spprops[$_.InternalName]) <span style=color:#f92672>-ne</span> $null) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103</span>            Write-Host <span style=color:#e6db74>&#34;</span>$($_.InternalName)<span style=color:#e6db74>:&#34;</span> -NoNewline -ForegroundColor Red
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104</span>            Write-Host <span style=color:#e6db74>&#34;</span>$($spprops[$_.InternalName])<span style=color:#e6db74>&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107</span>    $file = Add-PnPFile -Path $filePath -Folder $list.EntityTypeName -NewFileName $fileName -Values $spprops 
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108</span>    <span style=color:#66d9ef>if</span>($null <span style=color:#f92672>-ne</span> $file) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109</span>        Write-Host <span style=color:#e6db74>&#34;Added List item: </span>$($file.ListItemAllFields.Id)<span style=color:#e6db74> - </span>$($file.Title)<span style=color:#e6db74>&#34;</span> -ForegroundColor Green
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111</span>        <span style=color:#75715e># I was unable to set the taxonomy fields directly, so I do it here by using Set-PnpTaxonomyFieldValue</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112</span>        <span style=color:#66d9ef>foreach</span> ($h <span style=color:#66d9ef>in</span> $taxFields.GetEnumerator()) {
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113</span>            Write-Host <span style=color:#e6db74>&#34;Setting Taxfield: &#34;</span>  -ForegroundColor Green -NoNewline
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114</span>            Write-Host <span style=color:#e6db74>&#34;</span>$($h.Name)<span style=color:#e6db74> - </span>$($h.Value)<span style=color:#e6db74>&#34;</span> -ForegroundColor Yellow
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115</span>            Set-PnPTaxonomyFieldValue -ListItem $file.ListItemAllFields -InternalFieldName $h.Name -TermId  $h.Value
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116</span>        }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117</span>    }
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118</span>}
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119</span>
-<span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120</span>Write-Host <span style=color:#e6db74>&#34;Done!&#34;</span> -ForegroundColor Green
-</code></pre></div>
-<p><a class=button href=/files/sharepoint/lists/DocumentLibrary/generateDocumentLibraryItems.ps1>open raw file</a></p>
-<p>Make sure you have a dummy text-file in the same directory named &lsquo;testfile1.txt&rsquo;</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<script src=https://jurjan.info/js/jquery.min.js></script>
+In this example I only use a field called &ldquo;<strong>QuestionType</strong>&rdquo;. Of course you can- and probably will add fields to this to suit your situation.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1</span><span><span style=color:#960050;background-color:#1e0010>﻿</span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3</span><span><span style=color:#75715e># change the following three lines to your likings</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4</span><span>$url = <span style=color:#e6db74>&#34;http://yourdevelopmentsitecollection/&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5</span><span>$listName = <span style=color:#e6db74>&#34;sometestlist&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6</span><span>$itemsToCreate = 5010
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8</span><span>$ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9</span><span>Add-PSSnapin Microsoft.SharePoint.PowerShell -EA SilentlyContinue
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10</span><span>Add-Type -Path <span style=color:#e6db74>&#34;$ScriptDir\Microsoft.SharePoint.Client.dll&#34;</span> 
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11</span><span>Add-Type -Path <span style=color:#e6db74>&#34;$ScriptDir\Microsoft.SharePoint.Client.Runtime.dll&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13</span><span><span style=color:#75715e># open the site</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14</span><span>$clientContext = New-Object Microsoft.SharePoint.Client.ClientContext($url);
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15</span><span>$web = $clientContext.Web;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16</span><span>$clientContext.Load($web)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17</span><span>$clientContext.ExecuteQuery()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18</span><span>Write-Host $web.Title $web.ServerRelativeUrl -ForegroundColor Red -BackgroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20</span><span><span style=color:#75715e># open the list, if no list is found it will create one</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21</span><span>$list = $web.Lists.GetByTitle($listName);
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22</span><span>$clientContext.Load($list)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23</span><span><span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24</span><span>    $clientContext.ExecuteQuery()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25</span><span>    Write-Host <span style=color:#e6db74>&#34;Opened list&#34;</span> $list.Title -ForegroundColor Red -BackgroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26</span><span>} <span style=color:#66d9ef>catch</span> {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27</span><span>    Write-Host <span style=color:#e6db74>&#34;No list found, creating a new one&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28</span><span>    $listCreateInfo = New-Object Microsoft.SharePoint.Client.ListCreationInformation;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29</span><span>    $listCreateInfo.Title = $listName; 
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30</span><span>    $listCreateInfo.TemplateType = <span style=color:#66d9ef>[Microsoft.SharePoint.Client.ListTemplateType]</span>::GenericList
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31</span><span>    $list = $web.Lists.Add($listCreateInfo)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32</span><span>    $list.Update(); 
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33</span><span>    $clientContext.ExecuteQuery(); 
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35</span><span>	<span style=color:#75715e># add some listfields for example purposes</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36</span><span>	$a = $list.Fields.AddFieldAsXml(<span style=color:#e6db74>&#34;&lt;Field Type=&#39;Choice&#39; DisplayName=&#39;QuestionType&#39;&gt;
+</span></span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37</span><span><span style=color:#e6db74>                            &lt;CHOICES&gt;
+</span></span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38</span><span><span style=color:#e6db74>                                &lt;CHOICE&gt;Office 365&lt;/CHOICE&gt;
+</span></span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39</span><span><span style=color:#e6db74>                                &lt;CHOICE&gt;General&lt;/CHOICE&gt;
+</span></span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40</span><span><span style=color:#e6db74>                                &lt;CHOICE&gt;Email&lt;/CHOICE&gt;
+</span></span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41</span><span><span style=color:#e6db74>                                &lt;CHOICE&gt;OneDrive&lt;/CHOICE&gt;
+</span></span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42</span><span><span style=color:#e6db74>                                &lt;CHOICE&gt;SharePoint&lt;/CHOICE&gt;
+</span></span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43</span><span><span style=color:#e6db74>                                &lt;CHOICE&gt;Office Apps&lt;/CHOICE&gt;
+</span></span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44</span><span><span style=color:#e6db74>                                &lt;CHOICE&gt;Office Online&lt;/CHOICE&gt;
+</span></span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45</span><span><span style=color:#e6db74>                                &lt;CHOICE&gt;Other&lt;/CHOICE&gt;
+</span></span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46</span><span><span style=color:#e6db74>                            &lt;/CHOICES&gt;&lt;/Field&gt;&#34;</span>,$true,<span style=color:#66d9ef>[Microsoft.SharePoint.Client.AddFieldOptions]</span>::AddFieldToDefaultView)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49</span><span><span style=color:#75715e># random words used to create listitems</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50</span><span>$words = <span style=color:#e6db74>&#34;Lorem&#34;</span>,<span style=color:#e6db74>&#34;Ipsum&#34;</span>,<span style=color:#e6db74>&#34;Donald&#34;</span>,<span style=color:#e6db74>&#34;Duck&#34;</span>,<span style=color:#e6db74>&#34;Wine&#34;</span>,<span style=color:#e6db74>&#34;Chees&#34;</span>,<span style=color:#e6db74>&#34;Fruit&#34;</span>,<span style=color:#e6db74>&#34;Garlic&#34;</span>,<span style=color:#e6db74>&#34;Weather&#34;</span>,<span style=color:#e6db74>&#34;Together&#34;</span>,<span style=color:#e6db74>&#34;Car&#34;</span>,<span style=color:#e6db74>&#34;Pizza&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51</span><span>$choices = <span style=color:#e6db74>&#34;Office 365&#34;</span>, <span style=color:#e6db74>&#34;General&#34;</span>, <span style=color:#e6db74>&#34;Email&#34;</span>, <span style=color:#e6db74>&#34;SharePoint&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53</span><span><span style=color:#66d9ef>for</span>($index = 1; $index <span style=color:#f92672>-lt</span> $itemsToCreate+1; $index++) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54</span><span>    $randomText = $words | Get-Random -count 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55</span><span>    $titleText = <span style=color:#e6db74>&#34;$index $randomText&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56</span><span>    Write-Host <span style=color:#e6db74>&#34;[$index/$itemsToCreate] Creating &#39;$titleText&#39;&#34;</span> -ForegroundColor Green -BackgroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58</span><span>    $newListItem = $list.AddItem($itemCreateInfo)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59</span><span>    $newListItem[<span style=color:#e6db74>&#34;Title&#34;</span>] =  $titleText
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60</span><span>    $newListItem[<span style=color:#e6db74>&#34;QuestionType&#34;</span>] = $choices | Get-Random -count 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61</span><span>    $newListItem.Update()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62</span><span>	<span style=color:#66d9ef>if</span>($index % 100 <span style=color:#f92672>-eq</span> 0)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63</span><span>	{
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64</span><span>		Write-Host $index
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65</span><span>		$clientContext.ExecuteQuery()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66</span><span>	}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">67</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">68</span><span>$clientContext.ExecuteQuery()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">69</span><span>Write-Host <span style=color:#e6db74>&#34;Done!&#34;</span> -ForegroundColor Green
+</span></span></code></pre></div><p><a class=button href=/files/sharepoint/lists/CustomList/GenerateListTestData.ps1>open raw file</a></p><h3 id=code-example-2---document-libraries>Code Example 2 - Document libraries</h3><p>The second example makes use of the PnP PowerShell library and can be used for document-libraries</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-PowerShell data-lang=PowerShell><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1</span><span><span style=color:#75715e># Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2</span><span><span style=color:#75715e># This powerhell script will fill a SharePoint document library with random documents and random properties</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3</span><span><span style=color:#75715e># You need to install https://github.com/pnp/PnP-PowerShell first to make it work.</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5</span><span><span style=color:#75715e># Change these variables to your own needs</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6</span><span>$itemsToCreate = 10
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7</span><span>$credentials = <span style=color:#e6db74>&#34;Name of your credential in the windows credentialstore&#34;</span> <span style=color:#75715e># credentials are stored in the windows credentialstore</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8</span><span>$words = <span style=color:#e6db74>&#34;Airplay&#34;</span>,<span style=color:#e6db74>&#34;Cyanide&#34;</span>,<span style=color:#e6db74>&#34;Cyborgs&#34;</span>,<span style=color:#e6db74>&#34;Cycloon&#34;</span>,<span style=color:#e6db74>&#34;Dynamos&#34;</span>,<span style=color:#e6db74>&#34;Gameboy&#34;</span>,<span style=color:#e6db74>&#34;Hyacint&#34;</span>,<span style=color:#e6db74>&#34;Hydraat&#34;</span>,<span style=color:#e6db74>&#34;Hydrant&#34;</span>,<span style=color:#e6db74>&#34;Moyenne&#34;</span>,<span style=color:#e6db74>&#34;Penalty&#34;</span>,<span style=color:#e6db74>&#34;Symbool&#34;</span>,<span style=color:#e6db74>&#34;Typeren&#34;</span>,<span style=color:#e6db74>&#34;Yoghurt&#34;</span>,<span style=color:#e6db74>&#34;Cylinder&#34;</span>,<span style=color:#e6db74>&#34;Cytosine&#34;</span>,<span style=color:#e6db74>&#34;Monotype&#34;</span>,<span style=color:#e6db74>&#34;Mysterie&#34;</span>,<span style=color:#e6db74>&#34;Royement&#34;</span>,<span style=color:#e6db74>&#34;Typenaam&#34;</span>,<span style=color:#e6db74>&#34;Typering&#34;</span>,<span style=color:#e6db74>&#34;Baxters&#34;</span>,<span style=color:#e6db74>&#34;Complex&#34;</span>,<span style=color:#e6db74>&#34;Excerpt&#34;</span>,<span style=color:#e6db74>&#34;Exogeen&#34;</span>,<span style=color:#e6db74>&#34;Exogene&#34;</span>,<span style=color:#e6db74>&#34;Experts&#34;</span>,<span style=color:#e6db74>&#34;Laxeren&#34;</span>,<span style=color:#e6db74>&#34;Lexicon&#34;</span>,<span style=color:#e6db74>&#34;Mailbox&#34;</span>,<span style=color:#e6db74>&#34;Mentrix&#34;</span>,<span style=color:#e6db74>&#34;Mixture&#34;</span>,<span style=color:#e6db74>&#34;Sextant&#34;</span>,<span style=color:#e6db74>&#34;Textiel&#34;</span>,<span style=color:#e6db74>&#34;Xylitol&#34;</span>,<span style=color:#e6db74>&#34;Xanthoom&#34;</span>,<span style=color:#e6db74>&#34;Xenofiel&#34;</span>,<span style=color:#e6db74>&#34;Xenofobe&#34;</span>,<span style=color:#e6db74>&#34;Xenofoob&#34;</span>,<span style=color:#e6db74>&#34;Xenomani&#34;</span>,<span style=color:#e6db74>&#34;Cabaret&#34;</span>,<span style=color:#e6db74>&#34;Centers&#34;</span>,<span style=color:#e6db74>&#34;Cesuren&#34;</span>,<span style=color:#e6db74>&#34;Chianti&#34;</span>,<span style=color:#e6db74>&#34;Chinees&#34;</span>,<span style=color:#e6db74>&#34;Clement&#34;</span>,<span style=color:#e6db74>&#34;Collage&#34;</span>,<span style=color:#e6db74>&#34;Collega&#34;</span>,<span style=color:#e6db74>&#34;Curator&#34;</span>,<span style=color:#e6db74>&#34;Decente&#34;</span>,<span style=color:#e6db74>&#34;Lactose&#34;</span>,<span style=color:#e6db74>&#34;Lichter&#34;</span>,<span style=color:#e6db74>&#34;Locatie&#34;</span>,<span style=color:#e6db74>&#34;Narcose&#34;</span>,<span style=color:#e6db74>&#34;Scanner&#34;</span>,<span style=color:#e6db74>&#34;Sociale&#34;</span>,<span style=color:#e6db74>&#34;Calvados&#34;</span>,<span style=color:#e6db74>&#34;Cassette&#34;</span>,<span style=color:#e6db74>&#34;Ceintuur&#34;</span>,<span style=color:#e6db74>&#34;Checkbox&#34;</span>,<span style=color:#e6db74>&#34;Cynische&#34;</span>,<span style=color:#e6db74>&#34;Delicaat&#34;</span>,<span style=color:#e6db74>&#34;Scenario&#34;</span>,<span style=color:#e6db74>&#34;Antiqua&#34;</span>,<span style=color:#e6db74>&#34;Aquarel&#34;</span>,<span style=color:#e6db74>&#34;Aquaria&#34;</span>,<span style=color:#e6db74>&#34;Aquavit&#34;</span>,<span style=color:#e6db74>&#34;Attaque&#34;</span>,<span style=color:#e6db74>&#34;Cliques&#34;</span>,<span style=color:#e6db74>&#34;Croquet&#34;</span>,<span style=color:#e6db74>&#34;Enquete&#34;</span>,<span style=color:#e6db74>&#34;Equator&#34;</span>,<span style=color:#e6db74>&#34;Exquise&#34;</span>,<span style=color:#e6db74>&#34;Jacquet&#34;</span>,<span style=color:#e6db74>&#34;Kumquat&#34;</span>,<span style=color:#e6db74>&#34;Liquide&#34;</span>,<span style=color:#e6db74>&#34;Quanten&#34;</span>,<span style=color:#e6db74>&#34;Queeste&#34;</span>,<span style=color:#e6db74>&#34;Queueen&#34;</span>,<span style=color:#e6db74>&#34;Quotums&#34;</span>,<span style=color:#e6db74>&#34;Requiem&#34;</span>,<span style=color:#e6db74>&#34;Tequila&#34;</span>,<span style=color:#e6db74>&#34;Adequaat&#34;</span>,<span style=color:#e6db74>&#34;Aquaduct&#34;</span>,<span style=color:#e6db74>&#34;Aquanaut&#34;</span>,<span style=color:#e6db74>&#34;Aquarium&#34;</span>,<span style=color:#e6db74>&#34;Aquastop&#34;</span>,<span style=color:#e6db74>&#34;Aquavion&#34;</span>,<span style=color:#e6db74>&#34;Attaques&#34;</span>,<span style=color:#e6db74>&#34;Calqueer&#34;</span>,<span style=color:#e6db74>&#34;Choquant&#34;</span>,<span style=color:#e6db74>&#34;Claqueur&#34;</span>,<span style=color:#e6db74>&#34;Craquele&#34;</span>,<span style=color:#e6db74>&#34;Frequent&#34;</span>,<span style=color:#e6db74>&#34;Quartole&#34;</span>,<span style=color:#e6db74>&#34;Quotejes&#34;</span>,<span style=color:#e6db74>&#34;Quoteert&#34;</span>,<span style=color:#e6db74>&#34;Quoteren&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9</span><span>$user = <span style=color:#e6db74>&#34;set your user user@domain.nl&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10</span><span>$url = <span style=color:#e6db74>&#34;url of the web&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11</span><span>$listName = <span style=color:#e6db74>&#34;name of the list&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12</span><span>$contentTypeName = <span style=color:#e6db74>&#34;name of the contenttype&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13</span><span>$debug = $false
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15</span><span><span style=color:#66d9ef>function</span> GetAllTermsRecursive($terms)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16</span><span>{
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17</span><span>    $termIdList = @()
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18</span><span>    <span style=color:#66d9ef>ForEach</span>($item <span style=color:#66d9ef>in</span> $terms)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19</span><span>    {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20</span><span>        <span style=color:#66d9ef>if</span>($item.TermsCount <span style=color:#f92672>-gt</span> 0) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21</span><span>            GetAllTermsRecursive $item.Terms
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22</span><span>        } <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23</span><span>            $termIdList += $item.Id
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24</span><span>            <span style=color:#66d9ef>if</span>($debug) { Write-Host <span style=color:#e6db74>&#34;</span>$($item.Id)<span style=color:#e6db74>-</span>$($item.Name)<span style=color:#e6db74>&#34;</span> }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27</span><span>    <span style=color:#66d9ef>return</span> $termIdList
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30</span><span>Connect-PnPOnline $url -Credentials $credentials -UseAdfs -NoTelemetry -ErrorAction Stop
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32</span><span>$list = Get-PnPList -Identity $listName
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33</span><span><span style=color:#66d9ef>if</span>($null <span style=color:#f92672>-ne</span> $list) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34</span><span>    Write-Host <span style=color:#e6db74>&#34;Opened list&#34;</span> $list.Title -ForegroundColor Red -BackgroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35</span><span>} <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36</span><span>    Write-Host <span style=color:#e6db74>&#34;No list found&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37</span><span>    <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40</span><span>$contenttype = Get-PnPContentType -List $listName | Where-Object {$_.Name <span style=color:#f92672>-eq</span> $contentTypeName}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41</span><span><span style=color:#66d9ef>if</span>($null <span style=color:#f92672>-eq</span> $contenttype) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42</span><span>    Write-Host <span style=color:#e6db74>&#34;No $contenttype ContentType available on the list&#34;</span> -ForegroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43</span><span>    Get-PnPContentType -List $listName | ForEach-Object { Write-Host <span style=color:#e6db74>&#34;Available contenttype: &#34;</span> $_.Name -ForegroundColor Green }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44</span><span>    <span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47</span><span>Get-PnPproperty -clientobject $contenttype -property <span style=color:#e6db74>&#34;Fields&#34;</span> | Out-Null
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49</span><span>Write-Host <span style=color:#e6db74>&#34;Using ContentType: </span>$($contenttype.Name)<span style=color:#e6db74>&#34;</span> -ForegroundColor Green
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50</span><span><span style=color:#66d9ef>if</span>($debug) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51</span><span>    $contenttype.Fields | ForEach-Object {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52</span><span>        Write-Host $_.Title -ForegroundColor Green -NoNewline
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53</span><span>        Write-Host <span style=color:#e6db74>&#34; &#34;</span> $_.InternalName -ForegroundColor Yellow -NoNewline
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54</span><span>        Write-Host <span style=color:#e6db74>&#34; &#34;</span> $_.TypeAsString -ForegroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56</span><span>    <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59</span><span><span style=color:#66d9ef>for</span>($index = 1; $index <span style=color:#f92672>-lt</span> $itemsToCreate+1; $index++) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60</span><span>    $randomText = $words | Get-Random -count 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61</span><span>    $randomNr = Get-Random -Minimum 10000 -Maximum 99999
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62</span><span>    $titleText = <span style=color:#e6db74>&#34;$randomNr-$randomText&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63</span><span>    $fileName = <span style=color:#e6db74>&#34;</span>$($titleText)<span style=color:#e6db74>.</span>$($fileExtension)<span style=color:#e6db74>&#34;</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65</span><span>    $spprops = @{}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66</span><span>    $taxFields = @{}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68</span><span>    $contenttype.Fields | Where-Object { <span style=color:#f92672>-Not</span> $_.InternalName.StartsWith(<span style=color:#e6db74>&#34;_&#34;</span>) } | ForEach-Object {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69</span><span>        <span style=color:#66d9ef>if</span>($_.InternalName <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Title&#34;</span>) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70</span><span>            
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71</span><span>            $spprops[$_.InternalName] = $titleText
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73</span><span>        <span style=color:#66d9ef>if</span>($_.InternalName <span style=color:#f92672>-ne</span> <span style=color:#e6db74>&#34;Title&#34;</span> <span style=color:#f92672>-and</span> $_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Text&#34;</span> <span style=color:#f92672>-or</span> ($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Note&#34;</span> <span style=color:#f92672>-and</span> $_.Hidden <span style=color:#f92672>-eq</span> $false)) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74</span><span>            <span style=color:#75715e># hidden - false -&gt; make sure we do not set hidden taxfields</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75</span><span>            $spprops[$_.InternalName] = $randomText
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77</span><span>        <span style=color:#66d9ef>if</span>($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;User&#34;</span>) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78</span><span>            $spprops[$_.InternalName] = $user
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80</span><span>        <span style=color:#66d9ef>if</span>($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;Choice&#34;</span>) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81</span><span>            $spprops[$_.InternalName] = $_.Choices | Get-Random -Count 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83</span><span>        <span style=color:#66d9ef>if</span>($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;DateTime&#34;</span>) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84</span><span>            $days = Get-Random -Minimum -100 -Maximum 100
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85</span><span>            $spprops[$_.InternalName] = <span style=color:#66d9ef>[System.DateTime]</span>::Now.AddDays($days)
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87</span><span>        <span style=color:#66d9ef>if</span>($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;TaxonomyFieldType&#34;</span>) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88</span><span>            $terms = Get-PnPTerm -TermSet $_.TermSetId -TermGroup $_.Group -IncludeChildTerms -Recursive 
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89</span><span>            $results = GetAllTermsRecursive $terms
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90</span><span>            $randomTerm =  $results | Get-Random -Count 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91</span><span>            $taxFields[$_.InternalName] = $randomTerm
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93</span><span>        <span style=color:#66d9ef>if</span>($_.TypeAsString <span style=color:#f92672>-eq</span> <span style=color:#e6db74>&#34;TaxonomyFieldTypeMulti&#34;</span> <span style=color:#f92672>-and</span> $_.InternalName <span style=color:#f92672>-ne</span> <span style=color:#e6db74>&#34;TaxKeyword&#34;</span>) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94</span><span>            $terms = Get-PnPTerm -TermSet $_.TermSetId -TermGroup $_.Group -IncludeChildTerms -Recursive -ErrorAction <span style=color:#66d9ef>Continue</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95</span><span>            $results = GetAllTermsRecursive $terms
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96</span><span>            $randomTerm =  $results | Get-Random -Count 1
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97</span><span>            <span style=color:#66d9ef>if</span>($randomTerm <span style=color:#f92672>-ne</span> $null) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98</span><span>                $taxFields[$_.InternalName] = $randomTerm
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99</span><span>            }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">100</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">101</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">102</span><span>        <span style=color:#66d9ef>if</span>($($spprops[$_.InternalName]) <span style=color:#f92672>-ne</span> $null) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">103</span><span>            Write-Host <span style=color:#e6db74>&#34;</span>$($_.InternalName)<span style=color:#e6db74>:&#34;</span> -NoNewline -ForegroundColor Red
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">104</span><span>            Write-Host <span style=color:#e6db74>&#34;</span>$($spprops[$_.InternalName])<span style=color:#e6db74>&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">105</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">106</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">107</span><span>    $file = Add-PnPFile -Path $filePath -Folder $list.EntityTypeName -NewFileName $fileName -Values $spprops 
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">108</span><span>    <span style=color:#66d9ef>if</span>($null <span style=color:#f92672>-ne</span> $file) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">109</span><span>        Write-Host <span style=color:#e6db74>&#34;Added List item: </span>$($file.ListItemAllFields.Id)<span style=color:#e6db74> - </span>$($file.Title)<span style=color:#e6db74>&#34;</span> -ForegroundColor Green
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">110</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">111</span><span>        <span style=color:#75715e># I was unable to set the taxonomy fields directly, so I do it here by using Set-PnpTaxonomyFieldValue</span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">112</span><span>        <span style=color:#66d9ef>foreach</span> ($h <span style=color:#66d9ef>in</span> $taxFields.GetEnumerator()) {
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">113</span><span>            Write-Host <span style=color:#e6db74>&#34;Setting Taxfield: &#34;</span>  -ForegroundColor Green -NoNewline
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">114</span><span>            Write-Host <span style=color:#e6db74>&#34;</span>$($h.Name)<span style=color:#e6db74> - </span>$($h.Value)<span style=color:#e6db74>&#34;</span> -ForegroundColor Yellow
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">115</span><span>            Set-PnPTaxonomyFieldValue -ListItem $file.ListItemAllFields -InternalFieldName $h.Name -TermId  $h.Value
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">116</span><span>        }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">117</span><span>    }
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">118</span><span>}
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">119</span><span>
+</span></span><span style=display:flex><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">120</span><span>Write-Host <span style=color:#e6db74>&#34;Done!&#34;</span> -ForegroundColor Green
+</span></span></code></pre></div><p><a class=button href=/files/sharepoint/lists/DocumentLibrary/generateDocumentLibraryItems.ps1>open raw file</a></p><p>Make sure you have a dummy text-file in the same directory named &rsquo;testfile1.txt&rsquo;</p></div></div></div></div></div></div></div><script src=https://jurjan.info/js/jquery.min.js></script>
 <script src=https://jurjan.info/js/bootstrap.min.js></script>
 <script src=https://jurjan.info/js/jquery.cookie.js></script>
 <script src=https://jurjan.info/js/ekko-lightbox.js></script>
@@ -309,5 +261,4 @@ In this example I only use a field called &ldquo;<strong>QuestionType</strong>&r
 <script src=https://jurjan.info/js/imagesloaded.pkgd.min.js></script>
 <script src=https://jurjan.info/js/owl.carousel.min.js></script>
 <script src=https://jurjan.info/js/front.js></script>
-</body>
-</html>
+</body></html>
