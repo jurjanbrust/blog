@@ -1,4 +1,4 @@
-﻿# Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)
+﻿# Copyright (C) www.jurjanbrust.nl - All Rights Reserved (MIT License)
 
 $input = Import-Csv "./log/20199005-Werkomgeving-ERROR.csv" #-Header "Status" 
 

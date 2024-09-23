@@ -1,4 +1,4 @@
-﻿# Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)
+﻿# Copyright (C) www.jurjanbrust.nl - All Rights Reserved (MIT License)
 
 Param(
     [Parameter(Mandatory = $True, Position = 0)] [string]$url,

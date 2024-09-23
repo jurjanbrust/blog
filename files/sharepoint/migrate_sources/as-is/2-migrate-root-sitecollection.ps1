@@ -1,4 +1,4 @@
-﻿# Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)
+﻿# Copyright (C) www.jurjanbrust.nl - All Rights Reserved (MIT License)
 
 $srcSite = Connect-Site -Url "https://sourcesite" -Browser
 $dstSite = Connect-Site -Url "https://destinationsite" -UseCredentialsFrom $srcSite

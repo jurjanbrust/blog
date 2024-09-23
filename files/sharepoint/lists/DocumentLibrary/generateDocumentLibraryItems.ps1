@@ -1,4 +1,4 @@
-# Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)
+# Copyright (C) www.jurjanbrust.nl - All Rights Reserved (MIT License)
 # This powerhell script will fill a SharePoint document library with random documents and random properties
 # You need to install https://github.com/pnp/PnP-PowerShell first to make it work.
 

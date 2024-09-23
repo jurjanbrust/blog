@@ -1,4 +1,4 @@
-﻿# Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)
+﻿# Copyright (C) www. - All Rights Reserved (MIT License)
 
 $input = [Array](Import-Csv -Path "sites.csv")
 

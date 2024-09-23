@@ -1,4 +1,4 @@
-# Copyright (C) www.jurjan.info - All Rights Reserved (MIT License)
+# Copyright (C) www.jurjanbrust.nl - All Rights Reserved (MIT License)
 
 param(
     [Parameter(Mandatory = $False, Position = 1)] [string]$siteUrlOnPrem,
