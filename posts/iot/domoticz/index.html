@@ -24,15 +24,22 @@ sudo apt-get upgrade
 	* Login shell to be accessible &gt; NO
     * Serial port hardware enable &gt; Yes
 </code></pre><ol start=9><li>Reboot your raspberry</li><li>Install Mosquitto (optional) MQTT message broker</li></ol><pre tabindex=0><code>sudo apt install mosquitto
-</code></pre><ol start=11><li>Install Domoticz</li></ol><pre tabindex=0><code>curl -L install.domoticz.com | sudo bash 
-</code></pre><ol start=12><li>Install software for 433 Mhz</li></ol><pre tabindex=0><code>git clone https://github.com/WiringPi/WiringPi.git
+</code></pre><p>create a password file:</p><pre tabindex=0><code>cd /etc/mosquitto
+sudo mosquitto_passwd -c password_file mqtt
+sudo chmod +777 /etc/mosquitto/password_file
+sudo nano mosquitto.conf
+&gt;&gt; add the following two lines:
+listener 1883
+password_file /etc/mosquitto/password_file
+</code></pre><ol><li>Install Domoticz</li></ol><pre tabindex=0><code>curl -L install.domoticz.com | sudo bash 
+</code></pre><ol><li>Install software for 433 Mhz</li></ol><pre tabindex=0><code>git clone https://github.com/WiringPi/WiringPi.git
 cd WiringPi
 ./build
 cd ..
 git clone git://github.com/jurjanbrust/433Utils.git --recursive
 cd 433Utils/RPi_utils
 make all
-</code></pre><ol start=13><li><p>Installation of Dashticz (optional) > Useful for advanced home screen customizations
+</code></pre><ol><li><p>Installation of Dashticz (optional) > Useful for advanced home screen customizations
 See <a href=https://dashticz.readthedocs.io/en/master/gettingstarted/installation.html>dashticz installation instructions</a></p></li><li><p>Install PiHole (optional) > The raspberry is also a great add-blocker and since it is always running why not make use of this</p></li></ol><pre tabindex=0><code>curl -sSL https://install.pi-hole.net | bash
 </code></pre><p>Software installation part is all DONE, Congratulations. lets go to the configuration of Domoticz.</p><h3 id=backup>Backup</h3><p>SD cards WILL fail after some period, so it is highly recommended to make backups of your Domoticz database. I use a USB stick for this that is permanently attached to one of the USB ports of the raspberry PI. For this only a small USB stick is needed, I used a 4 gig stick that I got for free somewhere.
 We need to mount this USB stick automatically on every boot using the following instructions:</p><ol><li>Get the ID of the USB device, it will be named sda1</li></ol><pre tabindex=0><code>ls -l /dev/disk/by-uuid/
@@ -50,7 +57,8 @@ rsync -avzh ./domoticz/domoticz-db.tar /media/usb/daily/
 <img src=/img/domoticz/domoticz_2020-03-24-20-59-28.png alt=shadow></p><p>First, lets add the hardware to see if we can get data from the smart-meter.
 Add a device with the following settings:
 <img src=/img/domoticz/domoticz_2020-03-24-20-59-50.png alt=shadow></p><p>Next add the MQTT device
-<img src=/img/domoticz/domoticz_2020-03-24-21-00-45.png alt=shadow></p><p>Finally add a Dummy device
+<img src=/img/domoticz/domoticz_2020-03-24-21-00-45.png alt=shadow></p><p>In Sonoff set the MQTT parameters like this:
+<img src=/img/domoticz/2025-10-28-15-21-27.png alt=shadow></p><p>Finally add a Dummy device
 <img src=/img/domoticz/domoticz_2020-03-24-21-02-31.png alt=shadow></p><p>If everything is fine you should be able to see the following:</p><p><img src=/img/domoticz/domoticz_2020-03-24-21-06-30.png alt=shadow></p><p><img src=/img/domoticz/domoticz_2020-03-24-21-05-25.png alt=shadow></p><h4 id=add-a-switch-to-operate-433mhz-devices>Add a switch to operate 433Mhz devices</h4><p>Here you can see some of my switches, most are WIFI connected devices, but some are still 433Mhz klikaanklikuit. I will describe how to add these.</p><p><img src=/img/domoticz/domoticz_2020-03-24-21-08-26.png alt=shadow></p><p>First you will need to know the code of the 433 signal. So you will need the remote that came with the 433 device. This remote works best for me:
 <img src=/img/domoticz/domoticz_2020-03-24-21-14-59.png alt=shadow></p><ol><li>Login on your domoticz server using SSH</li></ol><pre tabindex=0><code>cd 433Utils/RPi_utils/
 ./RFSniffer
